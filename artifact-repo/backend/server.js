@@ -24,7 +24,9 @@ connection.once('open', () => {
 
 // requires and uses the user router
 const userRouter = require('./routes/user');
+const itemRouter = require('./routes/items');
 app.use('/user', userRouter);
+app.use('/items', itemRouter);
 
 // starts the server
 app.listen(port, () => {
