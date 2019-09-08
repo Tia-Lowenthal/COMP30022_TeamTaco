@@ -22,6 +22,10 @@ connection.once('open', () => {
     console.log("MongoDB databse connection established successfully");
 })
 
+// requires and uses the user router
+const userRouter = require('./routes/user');
+app.use('/user', userRouter);
+
 // starts the server
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
