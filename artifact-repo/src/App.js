@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/home.component";
 import Upload from "./components/upload.component";
 import MyProfile from "./components/profile.component";
-import ItemTest from "./components/itemtest.component";
 
 class App extends Component {
   render() {
@@ -25,16 +24,12 @@ class App extends Component {
                 <li className="navbar-item">
                   <Link to="/profile" className="nav-link">My Profile</Link>
                 </li>
-                <li className="navbar-item">
-                  <Link to="/itemtest" className="nav-link">Item Test</Link>
-                </li>
               </ul>
             </div>
           </nav>
-          <Route path="/" exact component={Home} />
           <Route path="/upload" component={Upload} />
           <Route path="/profile" component={MyProfile} />
-          <Route path="/itemtest" component={ItemTest} />
+          <Route exact path="/" component={Home} />
         </div>
       </Router>
     );
