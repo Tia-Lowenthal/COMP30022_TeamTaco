@@ -34,7 +34,7 @@ router.route('/add').post((req, res) => {
 });
 
 router.route('/:id').get((req, res) => {
-    Item.findById(req.params.itemId)
+    Item.findById(req.params.id)
         .then(items => res.json(items))
         .catch(err => res.status(400).json('Error: ' + err));
 });
