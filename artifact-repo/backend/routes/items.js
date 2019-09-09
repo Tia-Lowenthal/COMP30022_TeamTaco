@@ -15,7 +15,7 @@ router.route('/add').post((req, res) => {
     const title = req.body.title;
     const description = req.body.description;
     const condition = req.body.condition;
-    const dateUploaded = Date.parse(req.body.dateUploaded);
+    const dateUploaded = req.body.dateUploaded;
     
     const newItem = new Item({
         itemId,
@@ -55,7 +55,7 @@ router.route('/update/:id').post((req, res) => {
             item.title = req.body.title;
             item.description = req.body.description;
             item.condition = req.body.condition;
-            item.dateUploaded = Date.parse(req.body.dateUploaded);
+            item.dateUploaded = req.body.dateUploaded;
 
             item.save()
                 .then(() => res.json('Exercise updated!'))
