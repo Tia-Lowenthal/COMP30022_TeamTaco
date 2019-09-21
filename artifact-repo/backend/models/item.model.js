@@ -3,14 +3,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
-    itemId: { type: String },
-    userId: { type: String },
-    subCatId: { type: String  },
+    itemId: { type: String, unique: true, required: true },
+    userId: { type: String, required: true },
+    subCatId: { type: String },
     sizeAttributesId: { type: String },
-    title: { type: String}, 
-    description: { type: Date },
+    title: { type: String, required: true }, 
+    description: { type: String },
     condition: { type: Number },
-    dateUploaded: { type: Date}
+    dateUploaded: { type: Date },
+    itemCurrentInfo: { type: String }
 }, {
     timestamps: true
 });
