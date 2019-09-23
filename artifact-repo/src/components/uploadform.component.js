@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import toBoolean from 'validator/lib/toBoolean';
 import toInt from 'validator/lib/toInt';
+import axios from 'axios';
 
 export default class Upload extends Component {
     constructor(){
@@ -10,7 +11,9 @@ export default class Upload extends Component {
             category: '',
             condition: '',
             description: '',
-            image: '',
+            image1: '',
+            image2: '',
+            image3: '',
             tags: '',
             placeOfOrigin: '',
             yearOfOrigin: '',
@@ -49,7 +52,9 @@ export default class Upload extends Component {
             category: this.state.category,
             condition: this.state.condition,
             description: this.state.description,
-            image: this.state.image,
+            image1: this.state.image1,
+            image2: this.state.image2,
+            image3: this.state.image3,
             tags: this.state.tags,
             placeOfOrigin: this.state.placeOfOrigin,
             yearOfOrigin: this.state.yearOfOrigin,
@@ -69,7 +74,9 @@ export default class Upload extends Component {
 
         console.log(newItem);
 
-        window.location = '/';
+        axios.post('http://localhost:5000/add', newItem).then(res => console.log(res.data));
+
+        /*window.location = '/';*/
 
     }
 
@@ -107,8 +114,16 @@ export default class Upload extends Component {
                         <textarea className="form-control rounded-0" name="description" rows="3" value={this.state.description} onChange={this.handleChange}></textarea>
                     </div>
                     <div className="form-group">
-                        <label>Image</label>
-                        <input type="file" className="form-control-file" name="image" value={this.state.image} onChange={this.handleChange}></input>
+                        <label>Image 1</label>
+                        <input type="file" className="form-control-file" name="image1" value={this.state.image1} onChange={this.handleChange}></input>
+                    </div>
+                    <div className="form-group">
+                        <label>Image 2</label>
+                        <input type="file" className="form-control-file" name="image2" value={this.state.image2} onChange={this.handleChange}></input>
+                    </div>
+                    <div className="form-group">
+                        <label>Image 3</label>
+                        <input type="file" className="form-control-file" name="image3" value={this.state.image3} onChange={this.handleChange}></input>
                     </div>
                     <div className="form-group">
                         <label>Tags</label>
