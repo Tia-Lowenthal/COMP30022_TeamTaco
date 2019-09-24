@@ -23,10 +23,10 @@ connection.once('open', () => {
 })
 
 // requires and uses the user, items and tags routers
-const userRouter = require('./routes/user');
+const userRouter = require('./routes/users');
 const itemRouter = require('./routes/items');
 const tagRouter = require('./routes/tags');
-app.use('/user', userRouter);
+app.use('/users', userRouter);
 app.use('/items', itemRouter);
 app.use('/tags', tagRouter);
 
