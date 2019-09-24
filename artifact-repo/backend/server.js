@@ -22,11 +22,13 @@ connection.once('open', () => {
     console.log("MongoDB databse connection established successfully");
 })
 
-// requires and uses the user router
+// requires and uses the user, items and tags routers
 const userRouter = require('./routes/user');
 const itemRouter = require('./routes/items');
+const tagRouter = require('./routes/tags');
 app.use('/user', userRouter);
 app.use('/items', itemRouter);
+app.use('/tags', tagRouter);
 
 // starts the server
 app.listen(port, () => {
