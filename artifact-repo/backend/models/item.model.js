@@ -13,7 +13,7 @@ const itemSchema = new Schema({
     weight: { type: Number },
     title: { type: String, unique: true, required: true }, 
     description: { type: String },
-    condition: { type: Number },
+    condition: { type: Number, enum: [1, 2, 3, 4, 5] },
     currentLocation: { type: String },
     needLicense: { type: Boolean },
     saleStatus: { type: String, enum: ['not for sale', 'for sale', 'sold'] },
@@ -30,9 +30,9 @@ const itemSchema = new Schema({
     originalPrice: { type: Number },
     originalPriceCurrency: { type: String },
     dateAcquired: { type: Date },
-    history: { type: String},
+    history: { type: String },
     owner: { type: String },
-    tags: [ String ],
+    tags: [ String ]
 }, {
     timestamps: true
 });
