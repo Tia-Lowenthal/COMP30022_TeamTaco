@@ -69,12 +69,12 @@ export default class Upload extends Component {
             currentLocation: this.state.currentLocation,
             saleStatus: this.state.saleStatus,
             displayStatus: this.state.displayStatus,
-            needLicense: this.state.needLicense,
+            needLicense: this.state.needLicense
         };
 
         console.log(newItem);
 
-        axios.post('http://localhost:5000/add', newItem).then(res => console.log(res.data));
+        axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));
 
         /*window.location = '/';*/
 
@@ -93,8 +93,18 @@ export default class Upload extends Component {
                             <label>Category (required)</label>
                             <select className="form-control" name="category" value={this.state.category} onChange={this.handleChange} required>
                                 <option value="">Select category...</option>
-                                <option>Category1</option>
-                                <option>Category2</option>
+                                <option>Photos</option>
+                                <option>Jewellery</option>
+                                <option>Kitchenware</option>
+                                <option>Clothes</option>
+                                <option>Collectibles</option>
+                                <option>Art</option>
+                                <option>Musical Instruments</option>
+                                <option>Furniture</option>
+                                <option>Weapons</option>
+                                <option>Official Documents</option>
+                                <option>Personal Documents</option>
+                                <option>Miscellaneous</option>
                             </select>
                         </div>
                         <div className="col-2">
