@@ -74,7 +74,7 @@ export default class Upload extends Component {
 
         console.log(newItem);
 
-        /*axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));*/
+        axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));
 
         /*window.location = '/';*/
 
