@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 const Item = props => (
-    <tr>
-        <td>{props.item.title}</td>
-        <td>{props.item.category}</td>
-        <td>{props.item.itemId}</td>
-        <td>{props.item.userId}</td>
+    <div>
+        <h5>{props.item.title}</h5>
+        <div>ID: {props.item.itemId}</div>
+        <i>{props.item.category}</i>   
+        <div>{props.item.description}</div>
+        <br/>
         {/*have to link to item page eventually*/}
-    </tr>
+    </div>
 )
 
 export default class ItemGroup extends Component {
@@ -56,14 +57,6 @@ export default class ItemGroup extends Component {
                 <input type="text" className="form-control" placeholder="Search..." onChange={this.handleChange}/>
                 <br/>
                 <table className="table">
-                    <thead className="thead-light">
-                        <tr>
-                            <th>Title</th>
-                            <th>Category</th>
-                            <th>ID</th>
-                            <th>User</th>
-                        </tr>
-                    </thead>
                     <tbody>
                         {this.itemList()}
                     </tbody>
