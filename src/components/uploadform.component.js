@@ -3,6 +3,14 @@ import toBoolean from 'validator/lib/toBoolean';
 import toInt from 'validator/lib/toInt';
 import axios from 'axios';
 
+function generateItemId(){
+    var today = new Date();
+    var date = parseInt(today.getFullYear().toString()+(today.getMonth()+1).toString()+today.getDate().toString());
+    var time = parseInt(today.getHours().toString()+today.getMinutes().toString()+today.getSeconds().toString());
+    var dateTime = date+time;
+    return dateTime.toString();
+}
+
 export default class Upload extends Component {
     constructor(){
         super();
@@ -28,7 +36,9 @@ export default class Upload extends Component {
             currentLocation: '',
             saleStatus: '',
             displayStatus: '',
-            needLicense: ''
+            needLicense: '',
+            itemId: '',
+            userId: "1"
         }
     }
 
@@ -47,34 +57,21 @@ export default class Upload extends Component {
     onSubmit = (e) => {
         e.preventDefault();
 
-        const newItem = {
-            title: this.state.title,
-            category: this.state.category,
-            condition: this.state.condition,
-            description: this.state.description,
-            image1: this.state.image1,
-            image2: this.state.image2,
-            image3: this.state.image3,
-            tags: this.state.tags,
-            placeOfOrigin: this.state.placeOfOrigin,
-            yearOfOrigin: this.state.yearOfOrigin,
-            dateAcquired: this.state.dateAcquired,
-            originalPrice: this.state.originalPrice,
-            history: this.state.history,
-            certifiedAuthentic: this.state.certifiedAuthentic,
-            estimatedValue: this.state.estimatedValue,
-            valuer: this.state.valuer,
-            insuredValue: this.state.insuredValue,
-            insurer: this.state.insurer,
-            currentLocation: this.state.currentLocation,
-            saleStatus: this.state.saleStatus,
-            displayStatus: this.state.displayStatus,
-            needLicense: this.state.needLicense
-        };
+        var newItem = {};
+
+        // Only submit state attributes with given values
+        Object.entries(this.state).forEach(([key, value]) => {
+            if (key === "itemId"){
+                newItem[key] = generateItemId();
+            }
+            else if (value !== ''){
+                newItem[key] = value;
+            }
+        })
 
         console.log(newItem);
 
-        /*axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));*/
+        axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));
 
         /*window.location = '/';*/
 
