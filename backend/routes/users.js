@@ -9,7 +9,7 @@ router.route('/').get((req, res) => {
 });
 
 
-router.route('/add').post((req, res) => {
+router.route('/signup').post((req, res) => {
     const userId = req.body.userId;
     const email = req.body.email;
     const password = req.body.password;
@@ -18,19 +18,50 @@ router.route('/add').post((req, res) => {
     const dob = req.body.dob;
     const userType = req.body.userType;
 
-    const newUser = new User({
-        userId, 
-        email, 
-        password, 
-        firstname, 
-        lastname, 
-        dob, 
-        userType
-    })
+    if (!email) {
+        return res.send({
+          success: false,
+          message: 'Error: Email cannot be blank.'
+        });
+    }
 
-    newUser.save()
-        .then(() => res.json('User added!'))
-        .catch(err => res.status(400).json('Error: ' + err));
+    if (!password) {
+        return res.send({
+          success: false,
+          message: 'Error: Password cannot be blank.'
+        });
+    }
+
+    User.find({
+        email: email
+    }, (err, previousUsers) => {
+        if (err) {
+            return res.send({
+              success: false,
+              message: 'Error: Server error'
+            });
+          } else if (previousUsers.length > 0) {
+            return res.send({
+              success: false,
+              message: 'Error: Account already exist.'
+            });
+        }
+
+        const newUser = new User({
+            userId, 
+            email, 
+            password, 
+            firstname, 
+            lastname, 
+            dob, 
+            userType
+        })
+
+        newUser.save()
+            .then(() => res.json('User added!'))
+            .catch(err => res.status(400).json('Error: ' + err));
+        }
+    );
 });
 
 
