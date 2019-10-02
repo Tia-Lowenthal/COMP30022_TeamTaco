@@ -14,13 +14,13 @@ const Item = props => (
 export default class ItemGroup extends Component {
     constructor(props) {
         super(props);
-        this.state = {items: []};
+        this.state = {items: [], filtered: []};
     }
 
     componentDidMount() {
         axios.get('http://localhost:5000/items/')
          .then(response => {
-           this.setState({items: response.data});
+           this.setState({items: response.data, filtered : response.data});
          })
          .catch((error) => {
             console.log(error);
@@ -28,14 +28,33 @@ export default class ItemGroup extends Component {
     }
 
     itemList() {
-        return this.state.items.map(currentitem => {
+        return this.state.filtered.map(currentitem => {
           return <Item item={currentitem} key={currentitem.itemId}/>;
         })
+    }
+
+    handleChange = (e) => {
+        let currentList = this.state.items;
+        let newList = [];
+
+        if (e.target.value !== ""){
+            newList = currentList.filter(item => {
+                const lowerItem = item.title.toLowerCase();
+                const lowerSearch = e.target.value.toLowerCase();
+                return lowerItem.includes(lowerSearch);
+            });
+        } else{
+            newList = currentList;
+        }
+        this.setState({filtered: newList});
+        console.log(newList);
     }
 
     render() {
         return (
             <div>
+                <input type="text" className="form-control" placeholder="Search..." onChange={this.handleChange}/>
+                <br/>
                 <table className="table">
                     <thead className="thead-light">
                         <tr>
