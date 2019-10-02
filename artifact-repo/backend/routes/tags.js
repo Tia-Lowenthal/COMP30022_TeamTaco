@@ -26,7 +26,7 @@ router.route('/add').post((req, res) => {
 
 
 router.route('/:tagId').delete((req, res) => {
-    Item.findOneAndDelete({"tagId":req.params.tagId})
+    Tag.findOneAndDelete({"tagId":req.params.tagId})
         .then(() => res.json('Tag deleted!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });

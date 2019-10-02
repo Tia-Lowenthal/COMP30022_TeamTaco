@@ -19,7 +19,7 @@ const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true});
 const connection = mongoose.connection;
 connection.once('open', () => {
-    console.log("MongoDB databse connection established successfully");
+    console.log("MongoDB database connection established successfully");
 })
 
 // requires and uses the user, items and tags routers
