@@ -50,18 +50,27 @@ router.route('/signup').post((req, res) => {
         const newUser = new User({
             userId, 
             email, 
-            password, 
             firstname, 
             lastname, 
             dob, 
             userType
         })
 
-        newUser.save()
-            .then(() => res.json('User added!'))
-            .catch(err => res.status(400).json('Error: ' + err));
-        }
-    );
+        newUser.password = newUser.generateHash(password);
+
+        newUser.save((err, user) => {
+            if (err) {
+              return res.send({
+                success: false,
+                message: 'Error: Server error'
+              });
+            }
+            return res.send({
+              success: true,
+              message: 'Signed up'
+            });
+        });
+    });
 });
 
 
@@ -80,7 +89,7 @@ router.route('/:userId').delete((req, res) => {
 
 
 router.route('/update/:userId').post((req, res) => {
-    Item.findOne({"userId":req.params.userId}, {'new':true})
+    User.findOne({"userId":req.params.userId}, {'new':true})
         .then(user => {
             user.userId = req.body.userId;
             user.email = req.body.email;
