@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import toBoolean from 'validator/lib/toBoolean';
 import toInt from 'validator/lib/toInt';
+import isInt from 'validator/lib/isInt';
 import axios from 'axios';
 
 function generateItemId(){
@@ -45,11 +46,15 @@ export default class Upload extends Component {
     handleChange = (e) => {
         if (e.target.name === "certifiedAuthentic" || e.target.name === "needLicense"){
             this.setState({[e.target.name]: toBoolean(e.target.value, false)});
-        }
-        else if (e.target.name === "condition"){
+        } else if (e.target.name === "condition"){
             this.setState({[e.target.name]: toInt(e.target.value, false)});
-        }
-        else{
+        } else if (e.target.name === "originalPrice" || e.target.name === "estimatedValue" || e.target.name === "insuredValue"){
+            if (e.target.value === '') {
+                this.setState({[e.target.name]: e.target.value});
+            } else if (isInt(e.target.value.replace(/\D/g,''))){
+                this.setState({[e.target.name]: toInt(e.target.value.replace(/\D/g,''), false)});
+            }
+        } else{
             this.setState({[e.target.name]: e.target.value});
         }
     }
@@ -162,7 +167,7 @@ export default class Upload extends Component {
                                 </div>
                                 <div className="col-6">
                                     <label>Original price</label>
-                                    <input type="text" className="form-control" name="originalPrice" value={this.state.originalPrice} placeholder="Enter original price..." onChange={this.handleChange}/>
+                                    <input type="text" className="form-control" name="originalPrice" value={this.state.originalPrice} placeholder="Enter original price ($)..." onChange={this.handleChange}/>
                                 </div>
                             </div>
                             <br/>
@@ -188,7 +193,7 @@ export default class Upload extends Component {
                                 </div>
                                 <div className="col-4">
                                     <label>Estimated value</label>
-                                    <input type="text" className="form-control" name="estimatedValue" value={this.state.estimatedValue} placeholder="Enter estimated value" onChange={this.handleChange}/>
+                                    <input type="text" className="form-control" name="estimatedValue" value={this.state.estimatedValue} placeholder="Enter estimated value ($)..." onChange={this.handleChange}/>
                                 </div>
                                 <div className="col-4">
                                     <label>Valuer</label>
@@ -199,7 +204,7 @@ export default class Upload extends Component {
                             <div className="row">
                                 <div className="col-6">
                                     <label>Insured value</label>
-                                    <input type="text" className="form-control" name="insuredValue" value={this.state.insuredValue} placeholder="Enter insured value..." onChange={this.handleChange}/>
+                                    <input type="text" className="form-control" name="insuredValue" value={this.state.insuredValue} placeholder="Enter insured value ($)..." onChange={this.handleChange}/>
                                 </div>
                                 <div className="col-6">
                                     <label>Insurer</label>

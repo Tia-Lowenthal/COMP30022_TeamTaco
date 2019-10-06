@@ -20,6 +20,15 @@ const CategoryOptionRender = props => (
     </div>
 )
 
+const PriceOptionRender = props => (
+    <div>
+        <input className="form-check-input" type="checkbox" value="" defaultChecked={true} onClick={props.handleClick} id={props.id}/>
+        <label className="form-check-label" htmlFor={props.id}>
+        {props.id}
+        </label>
+    </div>
+)
+
 export default class ItemSearch extends Component {
     constructor(props) {
         super(props);
@@ -36,10 +45,12 @@ export default class ItemSearch extends Component {
             "officialDocsCheck",
             "personalDocsCheck",
             "miscCheck"];
+        this.priceChecks = ["$0-100", "$101-500", "$501-1000", "$1000+"];
         this.state = {items: [], 
                     filtered: [], 
                     searchQuery:'', 
-                    categoryFilters: [...this.categoryChecks]};
+                    categoryFilters: [...this.categoryChecks],
+                    priceFilters: [...this.priceChecks]};
         this.categoryOptions = [
             {id: "photoCheck", text: "Photos"},
             {id: "jewelleryCheck", text: "Jewellery"},
@@ -85,6 +96,29 @@ export default class ItemSearch extends Component {
         return false;
     }
 
+    priceBracket(price) {
+        if (price <= 100){
+            return "$0-100";
+        } else if (price <= 500) {
+            return "$101-500";
+        } else if (price <= 1000) {
+            return "$501-1000";
+        } else {
+            return "$1000+";
+        }
+    }
+
+    // finds the price bracket of an item and indicates if it is in an active price filter
+    priceSearch(item) {
+        if (!("estimatedValue" in item)){
+            if ("originalPrice" in item){
+                return (this.state.priceFilters.includes(this.priceBracket(item.originalPrice)))
+            }
+            return true;
+        }
+        return (this.state.priceFilters.includes(this.priceBracket(item.estimatedValue)));
+    }
+
     handleSearchBar = (e) => {
         this.setState({searchQuery: e.target.value.toLowerCase()});
     }
@@ -93,9 +127,7 @@ export default class ItemSearch extends Component {
     handleSearchClick = (e) => {
         let currentList = this.state.items;
         let newList = [];
-
-        console.log(this.state.categoryFilters);
-
+        // filter by title
         if (this.state.searchQuery !== ""){
             newList = currentList.filter(item => {
                 const lowerTitle = item.title.toLowerCase();
@@ -104,6 +136,7 @@ export default class ItemSearch extends Component {
         } else{
             newList = currentList;
         }
+        //filter by category
         newList = newList.filter(item => {
             if ("category" in item){
                 if (this.categorySearch(item.category)){
@@ -114,19 +147,24 @@ export default class ItemSearch extends Component {
             }
             return false;
         })
+        //filter by price
+        newList = newList.filter(item => this.priceSearch(item));
         this.setState({filtered: newList});
     }
 
     // sets all checkboxes to either checked or unchecked
     handleAllChecks(boolArg) {
-        var i;
+        var i, j;
         for (i = 0; i < this.categoryOptions.length; i++){
             document.getElementById(this.categoryOptions[i].id).checked = boolArg;
         }
+        for (j = 0; j < this.priceChecks.length; j++){
+            document.getElementById(this.priceChecks[j]).checked = boolArg;
+        }
         if (boolArg){
-            this.setState({categoryFilters: [...this.categoryChecks]});
+            this.setState({categoryFilters: [...this.categoryChecks], priceFilters: [...this.priceChecks]});
         } else {
-            this.setState({categoryFilters: []});
+            this.setState({categoryFilters: [], priceFilters: []});
         }
     }
 
@@ -154,6 +192,17 @@ export default class ItemSearch extends Component {
         }
     }
 
+    // handles price checkboxes
+    handlePriceClick = (e) => {
+        if (e.target.checked){
+            this.setState({priceFilters: this.state.priceFilters.concat(e.target.id)});
+        } else{
+            this.setState({priceFilters: this.state.priceFilters.filter(function(price) {
+                return price !== e.target.id;})
+            });
+        }
+    }
+
     render() {
         return (
             <div>
@@ -172,6 +221,12 @@ export default class ItemSearch extends Component {
                                 <div className="form-check">
                                 {this.categoryOptions.map(currentCategory => {
                                     return <CategoryOptionRender id={currentCategory.id} key={currentCategory.id} text={currentCategory.text} handleClick={this.handleCategoryClick}/>;
+                                })}
+                                </div>
+                                <div className="dropdown-divider"></div>
+                                <div className="form-check">
+                                {this.priceChecks.map(currentPrice => {
+                                    return <PriceOptionRender id={currentPrice} key={currentPrice} handleClick={this.handlePriceClick}/>;
                                 })}
                                 </div>
                                 <div className="dropdown-divider"></div>
