@@ -47,9 +47,9 @@ router.route('/:itemId').get((req, res) => {
 router.route('/add').post(upload.array('images',3), (req, res) => {
   console.log(req.files);  
   const itemId = req.body.itemId;
-  const images = req.files.path;
+  const images = req.files[0].path;
   
-  const newImages = new Image({
+  const newImages = new Images({
       itemId,
       images
   })
