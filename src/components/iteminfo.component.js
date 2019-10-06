@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-export default class ViewCurrentInfo extends Component {
+export default class ItemInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,21 +45,19 @@ export default class ViewCurrentInfo extends Component {
             console.log(error);
           })
     }
+
     render() {
         return (
-            <div>
-                 <button className="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#currentinfocollapse" aria-expanded="false" aria-controls="currentinfocollapse">
-                     Current Info
-                 </button>
-                 <div className="collapse" id="currentinfocollapse">
-                     <ul className="list-group list-group-flush">
-                     <li className="list-group-item"><b>Current location:</b> {this.state.fetchedItem.currentLocation}</li>
-                     <li className="list-group-item"> <b>License required:</b> {this.state.fetchedItem.needLicense}</li>
-                     <li className="list-group-item"> <b>Sale status:</b> {this.state.fetchedItem.saleStatus}</li>
-                     <li className="list-group-item"> <b>Display status: </b> {this.state.fetchedItem.displayStatus}</li>
-                     </ul>
-                 </div>
-            </div>
+            <div className = "infobox">
+                Category <br/>
+                
+                <h4> {this.state.fetchedItem.title} </h4>
+        
+                <p> {this.state.fetchedItem.description} </p>
+           </div>
         )
     }
+    
 }
+
+
