@@ -23,22 +23,23 @@ const CategoryOptionRender = props => (
 export default class ItemSearch extends Component {
     constructor(props) {
         super(props);
+        this.categoryChecks = [
+            "photoCheck",
+            "jewelleryCheck",
+            "kitchenwareCheck",
+            "clothesCheck",
+            "collectiblesCheck",
+            "artCheck",
+            "instrumentCheck",
+            "furnitureCheck",
+            "weaponsCheck",
+            "officialDocsCheck",
+            "personalDocsCheck",
+            "miscCheck"];
         this.state = {items: [], 
                     filtered: [], 
                     searchQuery:'', 
-                    categoryFilters: [ "photoCheck",
-                                       "jewelleryCheck",
-                                       "kitchenwareCheck",
-                                       "clothesCheck",
-                                       "collectiblesCheck",
-                                       "artCheck",
-                                       "instrumentCheck",
-                                       "furnitureCheck",
-                                       "weaponsCheck",
-                                       "officialDocsCheck",
-                                       "personalDocsCheck",
-                                       "miscCheck"
-                                    ]};
+                    categoryFilters: [...this.categoryChecks]};
         this.categoryOptions = [
             {id: "photoCheck", text: "Photos"},
             {id: "jewelleryCheck", text: "Jewellery"},
@@ -52,7 +53,7 @@ export default class ItemSearch extends Component {
             {id: "officialDocsCheck", text: "Official Documents"},
             {id: "personalDocsCheck", text: "Personal Documents"},
             {id: "miscCheck", text: "Miscellaneous"}
-        ]
+        ];
     }
 
     componentDidMount() {
@@ -71,10 +72,10 @@ export default class ItemSearch extends Component {
         })
     }
 
+    // checks if the inputted category is in the array of active category filters
     categorySearch(categoryText) {
         var i;
         for (i = 0; i < this.categoryOptions.length; i++){
-            // checks if the inputted category is in the array of active category filters
             if (this.categoryOptions[i].text.toLowerCase() === categoryText.toLowerCase()){
                 if (this.state.categoryFilters.includes(this.categoryOptions[i].id)){
                     return true;
@@ -88,6 +89,7 @@ export default class ItemSearch extends Component {
         this.setState({searchQuery: e.target.value.toLowerCase()});
     }
 
+    // handles clicking of the search button
     handleSearchClick = (e) => {
         let currentList = this.state.items;
         let newList = [];
@@ -110,39 +112,42 @@ export default class ItemSearch extends Component {
                     return false;
                 }
             }
-            return true;
+            return false;
         })
         this.setState({filtered: newList});
     }
 
-    handleClearClick = (e) => {
+    // sets all checkboxes to either checked or unchecked
+    handleAllChecks(boolArg) {
         var i;
         for (i = 0; i < this.categoryOptions.length; i++){
-            document.getElementById(this.categoryOptions[i].id).checked = true;
+            document.getElementById(this.categoryOptions[i].id).checked = boolArg;
         }
-        this.setState({filtered: this.state.items, 
-                        searchQuery: '',
-                        categoryFilters: [ "photoCheck",
-                                       "jewelleryCheck",
-                                       "kitchenwareCheck",
-                                       "clothesCheck",
-                                       "collectiblesCheck",
-                                       "artCheck",
-                                       "instrumentCheck",
-                                       "furnitureCheck",
-                                       "weaponsCheck",
-                                       "officialDocsCheck",
-                                       "personalDocsCheck",
-                                       "miscCheck"
-                                    ]
-                        });
+        if (boolArg){
+            this.setState({categoryFilters: [...this.categoryChecks]});
+        } else {
+            this.setState({categoryFilters: []});
+        }
     }
 
+    checkAll = (e) => {
+        this.handleAllChecks(true);
+    }
+
+    checkNone = (e) => {
+        this.handleAllChecks(false);
+    }
+
+    handleClearClick = (e) => {
+        this.handleAllChecks(true);
+        this.setState({filtered: this.state.items, searchQuery: ''});
+    }
+
+    // handles category checkboxes
     handleCategoryClick = (e) => {
         if (e.target.checked){
             this.setState({categoryFilters: this.state.categoryFilters.concat(e.target.id)});
-        }
-        else{
+        } else{
             this.setState({categoryFilters: this.state.categoryFilters.filter(function(cat) {
                 return cat !== e.target.id;})
             });
@@ -169,6 +174,9 @@ export default class ItemSearch extends Component {
                                     return <CategoryOptionRender id={currentCategory.id} key={currentCategory.id} text={currentCategory.text} handleClick={this.handleCategoryClick}/>;
                                 })}
                                 </div>
+                                <div className="dropdown-divider"></div>
+                                <div><button type="button" className="btn btn-dark btn-sm" onClick={this.checkAll}>Check All</button></div>
+                                <div><button type="button" className="btn btn-secondary btn-sm" onClick={this.checkNone}>Check None</button></div>
                                 </form>
                             </div>
                             </div>
