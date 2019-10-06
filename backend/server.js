@@ -35,13 +35,20 @@ connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
 
+
+// make the uploads folder accessible everywhere
+app.use('./uploads', express.static('uploads'));
+
+
 // requires and uses the user, items and tags routers
 const userRouter = require('./routes/users');
 const itemRouter = require('./routes/items');
 const tagRouter = require('./routes/tags');
+const imagesRouter = require('./routes/images');
 app.use('/users', userRouter);
 app.use('/items', itemRouter);
 app.use('/tags', tagRouter);
+app.use('/images', imagesRouter);
 
 // starts the server
 app.listen(port, () => {
