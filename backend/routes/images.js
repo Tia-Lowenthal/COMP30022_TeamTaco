@@ -12,8 +12,8 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, callback) => {
-  // only accept images which are of type .jpeg or .png
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+  // only accept files of type jpeg, jpg, png, pdf and html
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png' || file.mimetype == 'application/pdf' || file.mimetype == 'text/html') {
     callback(null, true);
   } else {
     callback(new Error('incorrect file type'), false);
