@@ -24,7 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install &&  npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && nodemon server --prefix backend && npm run build --prefix COMP30022_TeamTaco"
   },
   "eslintConfig": {
     "extends": "react-app"
