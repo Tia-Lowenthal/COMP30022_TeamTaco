@@ -44,18 +44,22 @@ export default class Upload extends Component {
     }
 
     handleChange = (e) => {
-        if (e.target.name === "certifiedAuthentic" || e.target.name === "needLicense"){
-            this.setState({[e.target.name]: toBoolean(e.target.value, false)});
-        } else if (e.target.name === "condition"){
-            this.setState({[e.target.name]: toInt(e.target.value, false)});
-        } else if (e.target.name === "originalPrice" || e.target.name === "estimatedValue" || e.target.name === "insuredValue"){
-            if (e.target.value === '') {
-                this.setState({[e.target.name]: e.target.value});
-            } else if (isInt(e.target.value.replace(/\D/g,''))){
-                this.setState({[e.target.name]: toInt(e.target.value.replace(/\D/g,''), false)});
+        let key = e.target.name;
+        let val = e.target.value;
+        if (key === "certifiedAuthentic" || key === "needLicense"){
+            this.setState({[key]: toBoolean(val, false)});
+        } else if (key === "condition"){
+            this.setState({[key]: toInt(val, false)});
+        } else if (key === "originalPrice" || key === "estimatedValue" || key === "insuredValue"){
+            if (val === '') {
+                this.setState({[key]: val});
+            } else if (isInt(val.replace(/\D/g,''))){
+                this.setState({[key]: toInt(val.replace(/\D/g,''), false)});
             }
+        } else if (key === "image1" || key === "image2" || key === "image3") {
+            this.setState({[key]: e.target.files[0]});
         } else{
-            this.setState({[e.target.name]: e.target.value});
+            this.setState({[key]: val});
         }
     }
 
@@ -66,15 +70,23 @@ export default class Upload extends Component {
 
         // Only submit state attributes with given values
         Object.entries(this.state).forEach(([key, value]) => {
+            const generatedId = generateItemId();
             if (key === "itemId"){
-                newItem[key] = generateItemId();
-            }
-            else if (value !== ''){
+                newItem[key] = generatedId;
+            } else if (value !== '' && (key === "image1" || key === "image2" || key === "image3")) {
+                let formData = new FormData();
+                formData.append("images", value);
+                formData.append("itemId", generatedId);
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                };
+                axios.post('http://localhost:5000/images/add', formData, config).then(res => console.log(res.data));
+            } else if (value !== ''){
                 newItem[key] = value;
             }
         })
-
-        console.log(newItem);
 
         axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));
 
@@ -127,15 +139,15 @@ export default class Upload extends Component {
                     </div>
                     <div className="form-group">
                         <label>Image 1</label>
-                        <input type="file" className="form-control-file" name="image1" value={this.state.image1} onChange={this.handleChange}></input>
+                        <input type="file" className="form-control-file" name="image1" onChange={this.handleChange}></input>
                     </div>
                     <div className="form-group">
                         <label>Image 2</label>
-                        <input type="file" className="form-control-file" name="image2" value={this.state.image2} onChange={this.handleChange}></input>
+                        <input type="file" className="form-control-file" name="image2" onChange={this.handleChange}></input>
                     </div>
                     <div className="form-group">
                         <label>Image 3</label>
-                        <input type="file" className="form-control-file" name="image3" value={this.state.image3} onChange={this.handleChange}></input>
+                        <input type="file" className="form-control-file" name="image3" onChange={this.handleChange}></input>
                     </div>
                     <div className="form-group">
                         <label>Tags</label>
