@@ -3,6 +3,7 @@ import toBoolean from 'validator/lib/toBoolean';
 import toInt from 'validator/lib/toInt';
 import isInt from 'validator/lib/isInt';
 import axios from 'axios';
+import TagGroup from './taggroup.component';
 
 function generateItemId(){
     var today = new Date();
@@ -23,6 +24,7 @@ export default class Upload extends Component {
             image1: '',
             image2: '',
             image3: '',
+            tagBar: '',
             tags: [],
             placeOfOrigin: '',
             yearOfOrigin: '',
@@ -44,7 +46,18 @@ export default class Upload extends Component {
     }
 
     handleAddTag = (e) => {
-        
+        if (!this.state.tags.includes(this.state.tagBar)){
+            this.setState({tags: this.state.tags.concat(this.state.tagBar)});
+        }
+        this.setState({tagBar: ''});
+    }
+
+    handleDeleteTag = (e) => {
+        if (this.state.tags.includes(e.target.name)){
+            this.setState({tags: this.state.tags.filter(function(tag) {
+                return tag !== e.target.name;})
+            });
+        }
     }
 
     handleChange = (e) => {
@@ -91,7 +104,7 @@ export default class Upload extends Component {
                 if (value.length > 0) {
                     newItem[key] = value;
                 }
-            } else if (value !== ''){
+            } else if (value !== '' && key !== "tagBar"){
                 newItem[key] = value;
             }
         })
@@ -160,9 +173,14 @@ export default class Upload extends Component {
                     <div className="form-group">
                         <label>Tags</label>
                         <div className="form-row">
-                            <div className="col-5"><input type="text" className="form-control" name="tags" placeholder="Enter tag name..."/></div>
-                            <div className="col"><button type="button" className="btn btn-primary" value={this.state.tags} onChange={this.handleChange}>Input tag</button></div>
+                            <div className="col-5"><input type="text" className="form-control" name="tagBar" placeholder="Enter tag name..." value={this.state.tagBar} onChange={this.handleChange}/></div>
+                            <div className="col">
+                            <button type="button" className="btn btn-primary" name="tagEnter" onClick={this.handleAddTag}>Input Tag</button>
+                            </div>
                         </div>
+                    </div>
+                    <div className="form-group">
+                            <TagGroup tagArray={this.state.tags} handleDeleteTag={this.handleDeleteTag} mode="edit"/>
                     </div>
                     <div className="form-group">
                         <button className="btn btn-secondary btn-block" type="button" data-toggle="collapse" data-target="#historyformcollapse" aria-expanded="false" aria-controls="historyformcollapse">
