@@ -23,7 +23,7 @@ export default class Upload extends Component {
             image1: '',
             image2: '',
             image3: '',
-            tags: '',
+            tags: [],
             placeOfOrigin: '',
             yearOfOrigin: '',
             dateAcquired: '',
@@ -41,6 +41,10 @@ export default class Upload extends Component {
             itemId: '',
             userId: "1"
         }
+    }
+
+    handleAddTag = (e) => {
+        
     }
 
     handleChange = (e) => {
@@ -83,6 +87,10 @@ export default class Upload extends Component {
                     }
                 };
                 axios.post('http://localhost:5000/images/add', formData, config).then(res => console.log(res.data));
+            } else if (key === "tags") {
+                if (value.length > 0) {
+                    newItem[key] = value;
+                }
             } else if (value !== ''){
                 newItem[key] = value;
             }
