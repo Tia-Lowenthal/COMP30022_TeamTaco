@@ -8,25 +8,25 @@ require('dotenv').config();
 // create express server
 const app = express();
 
-// serve static assets if in production
-//if(process.env.NODE_ENV === 'production') {
-    // set static folder
- //   app.use(express.static('build'));
-
-//    app.get('*', (req, res)=> {
- //       res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-//    })
-
-//}
-
+//serve static assets if in production
 if(process.env.NODE_ENV === 'production') {
-    /*Adds the react production build to serve react requests*/
-    app.use(express.static(path.join(__dirname, '../client/build')));
-    /*React root*/
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '../client/build/index.html'));
-    });
+    // set static folder
+    app.use(express.static('build'));
+
+    app.get('*', (req, res)=> {
+        res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+    })
+
 }
+
+//if(process.env.NODE_ENV === 'production') {
+//    /*Adds the react production build to serve react requests*/
+//    app.use(express.static(path.join(__dirname, '../client/build')));
+    /*React root*/
+//    app.get('*', (req, res) => {
+ //       res.sendFile(path.join(__dirname, '../client/build/index.html'));
+ //   });
+//}
 
 const port = process.env.PORT || 5000;
 
