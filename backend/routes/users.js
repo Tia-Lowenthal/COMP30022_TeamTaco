@@ -152,6 +152,35 @@ router.route('/login').post((req, res) => {
   });
 });
 
+
+router.route('/logout').get((req, res) => {
+  // Get the token
+  const { query } = req;
+  const { token } = query;
+  // ?token=test
+  // Verify the token is one of a kind and it's not deleted.
+  UserSession.findOneAndUpdate({
+    _id: token,
+    isDeleted: false
+  }, {
+    $set: {
+      isDeleted:true
+    }
+  }, null, (err, sessions) => {
+    if (err) {
+      console.log(err);
+      return res.send({
+        success: false,
+        message: 'Error: Server error'
+      });
+    }
+    return res.send({
+      success: true,
+      message: 'Good'
+    });
+  });
+});
+
 router.route('/:userId').get((req, res) => {
     User.find({"userId":req.params.userId})
         .then(users => res.json(users))
