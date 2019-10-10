@@ -9,12 +9,9 @@ router.route('/').get((req, res) => {
 
 
 router.route('/add').post((req, res) => {
-    const tagId = req.body.tagId;
     const tagName = req.body.tagName;
 
-    
     const newTag = new Tag({
-        tagId,
         tagName
     })
 
@@ -25,8 +22,8 @@ router.route('/add').post((req, res) => {
 });
 
 
-router.route('/:tagId').delete((req, res) => {
-    Tag.findOneAndDelete({"tagId":req.params.tagId})
+router.route('/:tagName').delete((req, res) => {
+    Tag.findOneAndDelete({"tagName":req.params.tagName})
         .then(() => res.json('Tag deleted!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
