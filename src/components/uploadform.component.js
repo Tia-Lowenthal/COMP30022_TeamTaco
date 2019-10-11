@@ -103,6 +103,12 @@ export default class Upload extends Component {
             } else if (key === "tags") {
                 if (value.length > 0) {
                     newItem[key] = value;
+                    value.forEach(function(tag) {
+                        var newTag = {};
+                        newTag["tagName"] = tag;
+                        console.log(newTag);
+                        axios.post('http://localhost:5000/tags/add', newTag).then(res => console.log(res.data));
+                    })  
                 }
             } else if (value !== '' && key !== "tagBar"){
                 newItem[key] = value;
