@@ -14,14 +14,16 @@ app.use(cors());
 app.use(express.json()); //allows us to parse json
 
 // database uri we get from the ATLAS dashboard
-//const uri = process.env.ATLAS_URI;
+// const uri = process.env.ATLAS_URI;
 
 
-if(process.env.NODE_ENV === 'testing'){
-    var uri = config.testing.uri;
+
+var uri = "";
+if(process.env.NODE_ENV === 'test'){
+    uri = config.test.uri;
 }
 else{
-    var uri = config.development.uri;
+    uri = config.development.uri;
 }
 
 
@@ -68,3 +70,5 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
 });
+
+module.exports = app;
