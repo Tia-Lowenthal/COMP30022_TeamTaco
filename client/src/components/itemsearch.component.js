@@ -68,7 +68,7 @@ export default class ItemSearch extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/items/')
+        axios.get('/items/')
          .then(response => {
            this.setState({items: response.data, filtered : response.data});
          })

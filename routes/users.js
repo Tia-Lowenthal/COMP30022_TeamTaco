@@ -49,7 +49,7 @@ router.route('/:userId').delete((req, res) => {
 
 
 router.route('/update/:userId').post((req, res) => {
-    Item.findOne({"userId":req.params.userId}, {'new':true})
+    User.findOne({"userId":req.params.userId}, {'new':true})
         .then(user => {
             user.userId = req.body.userId;
             user.email = req.body.email;
