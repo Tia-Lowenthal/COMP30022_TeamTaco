@@ -82,13 +82,13 @@ export default class Upload extends Component {
                         'content-type': 'multipart/form-data'
                     }
                 };
-                axios.post('http://localhost:5000/images/add', formData, config).then(res => console.log(res.data));
+                axios.post('/images/add', formData, config).then(res => console.log(res.data));
             } else if (value !== ''){
                 newItem[key] = value;
             }
         })
 
-        axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));
+        axios.post('/items/add', newItem).then(res => console.log(res.data));
 
         /*window.location = '/';*/
 
