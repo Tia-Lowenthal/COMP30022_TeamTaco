@@ -8,7 +8,6 @@ require('dotenv').config();
 // create express server
 const app = express();
 
-
 // create cors middleware
 app.use(cors());
 app.use(express.json()); //allows us to parse json
