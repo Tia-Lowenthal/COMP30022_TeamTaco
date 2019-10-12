@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
+const config = require('./config');
 
 require('dotenv').config();
 
@@ -13,7 +14,16 @@ app.use(cors());
 app.use(express.json()); //allows us to parse json
 
 // database uri we get from the ATLAS dashboard
-const uri = process.env.ATLAS_URI;
+//const uri = process.env.ATLAS_URI;
+
+
+if(process.env.NODE_ENV === 'testing'){
+    var uri = config.testing.uri;
+}
+else{
+    var uri = config.development.uri;
+}
+
 
 //starts the connection to the database
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true});
