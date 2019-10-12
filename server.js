@@ -8,27 +8,6 @@ require('dotenv').config();
 // create express server
 const app = express();
 
-//serve static assets if in production
-if(process.env.NODE_ENV === 'production') {
-    // set static folder
-    app.use(express.static('build'));
-
-    app.get('*', (req, res)=> {
-        res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-    })
-
-}
-
-//if(process.env.NODE_ENV === 'production') {
-//    /*Adds the react production build to serve react requests*/
-//    app.use(express.static(path.join(__dirname, '../client/build')));
-    /*React root*/
-//    app.get('*', (req, res) => {
- //       res.sendFile(path.join(__dirname, '../client/build/index.html'));
- //   });
-//}
-
-const port = process.env.PORT || 5000;
 
 // create cors middleware
 app.use(cors());
@@ -58,6 +37,31 @@ app.use('/users', userRouter);
 app.use('/items', itemRouter);
 app.use('/tags', tagRouter);
 app.use('/images', imagesRouter);
+
+
+
+//serve static assets if in production
+if(process.env.NODE_ENV === 'production') {
+    // set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res)=> {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+}
+
+//if(process.env.NODE_ENV === 'production') {
+//    /*Adds the react production build to serve react requests*/
+//    app.use(express.static(path.join(__dirname, '../client/build')));
+    /*React root*/
+//    app.get('*', (req, res) => {
+ //       res.sendFile(path.join(__dirname, '../client/build/index.html'));
+ //   });
+//}
+
+const port = process.env.PORT || 5000;
+
+
 
 // starts the server
 app.listen(port, () => {
