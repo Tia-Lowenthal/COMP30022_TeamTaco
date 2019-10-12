@@ -1,8 +1,8 @@
 {
-  "name": "backend",
+  "name": "comp30022_teamtaco",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
