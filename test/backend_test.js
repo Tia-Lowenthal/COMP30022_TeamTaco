@@ -10,10 +10,6 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 
-it('should return true', () => {
-  assert.equal(true, true)
-})
-
 describe('Items', () => {
 
   describe("GET /", () => {
@@ -24,7 +20,6 @@ describe('Items', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.an('array');
-        done();
       });
     });
   });
@@ -42,7 +37,7 @@ describe('Items', () => {
       })
       .end((err, res) => {
         res.should.have.status(200);
-        done();
+        console.log(res);
       });
     });
   });
@@ -55,7 +50,6 @@ describe('Items', () => {
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.an('array');
-        done();
       });
     });
   });
@@ -67,7 +61,6 @@ describe('Items', () => {
       .delete('/items/testingItemId5')
       .end((err, res) => {
         res.should.have.status(200);
-        done();
       });
     });
   });
