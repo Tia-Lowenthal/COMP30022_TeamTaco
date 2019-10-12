@@ -140,7 +140,7 @@ export default class Upload extends Component {
                         'content-type': 'multipart/form-data'
                     }
                 };
-                axios.post('http://localhost:5000/images/add', formData, config).then(res => console.log(res.data));
+                axios.post('/images/add', formData, config).then(res => console.log(res.data));
             } else if (key === "tags") {
                 if (value.length > 0) {
                     newItem[key] = value;
@@ -148,7 +148,7 @@ export default class Upload extends Component {
                         if (!this.state.dbTags.includes(tag)){
                             var newTag = {};
                             newTag["tagName"] = tag;
-                            axios.post('http://localhost:5000/tags/add', newTag).then(res => console.log(res.data));
+                            axios.post('/tags/add', newTag).then(res => console.log(res.data));
                         }
                     })  
                 }
@@ -157,7 +157,7 @@ export default class Upload extends Component {
             }
         })
 
-        axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));
+        axios.post('/items/add', newItem).then(res => console.log(res.data));
 
         /*window.location = '/';*/
 
