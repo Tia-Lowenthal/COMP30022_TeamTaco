@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import toBoolean from 'validator/lib/toBoolean';
 import toInt from 'validator/lib/toInt';
+import isInt from 'validator/lib/isInt';
 import axios from 'axios';
+
+function generateItemId(){
+    var today = new Date();
+    var date = parseInt(today.getFullYear().toString()+(today.getMonth()+1).toString()+today.getDate().toString());
+    var time = parseInt(today.getHours().toString()+today.getMinutes().toString()+today.getSeconds().toString());
+    var dateTime = date+time;
+    return dateTime.toString();
+}
 
 export default class Upload extends Component {
     constructor(){
@@ -28,53 +37,58 @@ export default class Upload extends Component {
             currentLocation: '',
             saleStatus: '',
             displayStatus: '',
-            needLicense: ''
+            needLicense: '',
+            itemId: '',
+            userId: "1"
         }
     }
 
     handleChange = (e) => {
-        if (e.target.name === "certifiedAuthentic" || e.target.name === "needLicense"){
-            this.setState({[e.target.name]: toBoolean(e.target.value, false)});
-        }
-        else if (e.target.name === "condition"){
-            this.setState({[e.target.name]: toInt(e.target.value, false)});
-        }
-        else{
-            this.setState({[e.target.name]: e.target.value});
+        let key = e.target.name;
+        let val = e.target.value;
+        if (key === "certifiedAuthentic" || key === "needLicense"){
+            this.setState({[key]: toBoolean(val, false)});
+        } else if (key === "condition"){
+            this.setState({[key]: toInt(val, false)});
+        } else if (key === "originalPrice" || key === "estimatedValue" || key === "insuredValue"){
+            if (val === '') {
+                this.setState({[key]: val});
+            } else if (isInt(val.replace(/\D/g,''))){
+                this.setState({[key]: toInt(val.replace(/\D/g,''), false)});
+            }
+        } else if (key === "image1" || key === "image2" || key === "image3") {
+            this.setState({[key]: e.target.files[0]});
+        } else{
+            this.setState({[key]: val});
         }
     }
 
     onSubmit = (e) => {
         e.preventDefault();
 
-        const newItem = {
-            title: this.state.title,
-            category: this.state.category,
-            condition: this.state.condition,
-            description: this.state.description,
-            image1: this.state.image1,
-            image2: this.state.image2,
-            image3: this.state.image3,
-            tags: this.state.tags,
-            placeOfOrigin: this.state.placeOfOrigin,
-            yearOfOrigin: this.state.yearOfOrigin,
-            dateAcquired: this.state.dateAcquired,
-            originalPrice: this.state.originalPrice,
-            history: this.state.history,
-            certifiedAuthentic: this.state.certifiedAuthentic,
-            estimatedValue: this.state.estimatedValue,
-            valuer: this.state.valuer,
-            insuredValue: this.state.insuredValue,
-            insurer: this.state.insurer,
-            currentLocation: this.state.currentLocation,
-            saleStatus: this.state.saleStatus,
-            displayStatus: this.state.displayStatus,
-            needLicense: this.state.needLicense
-        };
+        var newItem = {};
 
-        console.log(newItem);
+        // Only submit state attributes with given values
+        Object.entries(this.state).forEach(([key, value]) => {
+            const generatedId = generateItemId();
+            if (key === "itemId"){
+                newItem[key] = generatedId;
+            } else if (value !== '' && (key === "image1" || key === "image2" || key === "image3")) {
+                let formData = new FormData();
+                formData.append("images", value);
+                formData.append("itemId", generatedId);
+                const config = {
+                    headers: {
+                        'content-type': 'multipart/form-data'
+                    }
+                };
+                axios.post('/images/add', formData, config).then(res => console.log(res.data));
+            } else if (value !== ''){
+                newItem[key] = value;
+            }
+        })
 
-        /*axios.post('http://localhost:5000/items/add', newItem).then(res => console.log(res.data));*/
+        axios.post('/items/add', newItem).then(res => console.log(res.data));
 
         /*window.location = '/';*/
 
@@ -125,15 +139,15 @@ export default class Upload extends Component {
                     </div>
                     <div className="form-group">
                         <label>Image 1</label>
-                        <input type="file" className="form-control-file" name="image1" value={this.state.image1} onChange={this.handleChange}></input>
+                        <input type="file" className="form-control-file" name="image1" onChange={this.handleChange}></input>
                     </div>
                     <div className="form-group">
                         <label>Image 2</label>
-                        <input type="file" className="form-control-file" name="image2" value={this.state.image2} onChange={this.handleChange}></input>
+                        <input type="file" className="form-control-file" name="image2" onChange={this.handleChange}></input>
                     </div>
                     <div className="form-group">
                         <label>Image 3</label>
-                        <input type="file" className="form-control-file" name="image3" value={this.state.image3} onChange={this.handleChange}></input>
+                        <input type="file" className="form-control-file" name="image3" onChange={this.handleChange}></input>
                     </div>
                     <div className="form-group">
                         <label>Tags</label>
@@ -165,7 +179,7 @@ export default class Upload extends Component {
                                 </div>
                                 <div className="col-6">
                                     <label>Original price</label>
-                                    <input type="text" className="form-control" name="originalPrice" value={this.state.originalPrice} placeholder="Enter original price..." onChange={this.handleChange}/>
+                                    <input type="text" className="form-control" name="originalPrice" value={this.state.originalPrice} placeholder="Enter original price ($)..." onChange={this.handleChange}/>
                                 </div>
                             </div>
                             <br/>
@@ -191,7 +205,7 @@ export default class Upload extends Component {
                                 </div>
                                 <div className="col-4">
                                     <label>Estimated value</label>
-                                    <input type="text" className="form-control" name="estimatedValue" value={this.state.estimatedValue} placeholder="Enter estimated value" onChange={this.handleChange}/>
+                                    <input type="text" className="form-control" name="estimatedValue" value={this.state.estimatedValue} placeholder="Enter estimated value ($)..." onChange={this.handleChange}/>
                                 </div>
                                 <div className="col-4">
                                     <label>Valuer</label>
@@ -202,7 +216,7 @@ export default class Upload extends Component {
                             <div className="row">
                                 <div className="col-6">
                                     <label>Insured value</label>
-                                    <input type="text" className="form-control" name="insuredValue" value={this.state.insuredValue} placeholder="Enter insured value..." onChange={this.handleChange}/>
+                                    <input type="text" className="form-control" name="insuredValue" value={this.state.insuredValue} placeholder="Enter insured value ($)..." onChange={this.handleChange}/>
                                 </div>
                                 <div className="col-6">
                                     <label>Insurer</label>

@@ -7,6 +7,7 @@ require('dotenv').config();
 
 // create express server
 const app = express();
+<<<<<<< HEAD:server.js
 
 // serve static assets if in production
 if(process.env.NODE_ENV === 'production') {
@@ -20,6 +21,8 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 const port = process.env.PORT || 5000;
+=======
+>>>>>>> origin/master:server.js
 
 // create cors middleware
 app.use(cors());
@@ -35,13 +38,37 @@ connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 })
 
+
+// make the uploads folder accessible everywhere
+app.use('./uploads', express.static('uploads'));
+
+
 // requires and uses the user, items and tags routers
 const userRouter = require('./routes/users');
 const itemRouter = require('./routes/items');
 const tagRouter = require('./routes/tags');
+const imagesRouter = require('./routes/images');
 app.use('/users', userRouter);
 app.use('/items', itemRouter);
 app.use('/tags', tagRouter);
+app.use('/images', imagesRouter);
+
+
+
+//serve static assets if in production
+if(process.env.NODE_ENV === 'production') {
+    // set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res)=> {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    })
+}
+
+
+const port = process.env.PORT || 5000;
+
+
 
 // starts the server
 app.listen(port, () => {
