@@ -19,7 +19,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
-    "mongoose": "^5.7.1",
+    "mongoose": "^5.6.13",
     "multer": "^1.4.2"
   },
   "eslintConfig": {
@@ -36,9 +36,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "mocha": "^6.2.1",
-    "request": "^2.88.0"
   }
 }
