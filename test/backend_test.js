@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'test';
+
 const assert = require('assert');
 let mongoose = require("mongoose");
 let Item = require('../routes/items.js');
@@ -37,7 +39,6 @@ describe('Items', () => {
       })
       .end((err, res) => {
         res.should.have.status(200);
-        console.log(res);
       });
     });
   });
@@ -61,6 +62,7 @@ describe('Items', () => {
       .delete('/items/testingItemId5')
       .end((err, res) => {
         res.should.have.status(200);
+      app.close();
       });
     });
   });
