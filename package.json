@@ -9,12 +9,14 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chai-http": "^4.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
@@ -22,6 +24,8 @@
     "multer": "^1.4.2"
   },
   "devDependencies": {
-    "concurrently": "^5.0.0"
+    "chai": "^4.2.0",
+    "concurrently": "^5.0.0",
+    "mocha": "^6.2.1"
   }
 }
