@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD:client/package.json
-  "name": "comp30022teamtaco",
-=======
   "name": "client",
->>>>>>> origin/master:client/package.json
   "version": "0.1.0",
   "private": true,
   "dependencies": {

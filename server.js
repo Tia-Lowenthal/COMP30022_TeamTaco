@@ -7,22 +7,6 @@ require('dotenv').config();
 
 // create express server
 const app = express();
-<<<<<<< HEAD:server.js
-
-// serve static assets if in production
-if(process.env.NODE_ENV === 'production') {
-    // set static folder
-    app.use(express.static('build'));
-
-    app.get('*', (req, res)=> {
-        res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-    })
-
-}
-
-const port = process.env.PORT || 5000;
-=======
->>>>>>> origin/master:server.js
 
 // create cors middleware
 app.use(cors());
