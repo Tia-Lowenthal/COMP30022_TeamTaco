@@ -14,12 +14,13 @@ describe('Items', () => {
 
   describe("GET /", () => {
     it("should get all items", (done) => {
-      setTimeout(done,0);
+      // setTimeout(done,0);
       chai.request(app)
       .get('/items/')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.an('array');
+        done();
       });
     });
   });
@@ -27,7 +28,7 @@ describe('Items', () => {
 
   describe('POST /', () => {
     it('should post a new item', (done) => {
-      setTimeout(done,0);
+      // setTimeout(done,0);
       chai.request(app)
       .post('/items/add')
       .send({
@@ -37,29 +38,32 @@ describe('Items', () => {
       })
       .end((err, res) => {
         res.should.have.status(200);
+        done();
       });
     });
   });
 
   describe("GET /", () => {
     it("should get item by id", (done) => {
-      setTimeout(done,0);
+      // setTimeout(done,0);
       chai.request(app)
       .get('/items/testingItemId5')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.should.be.an('array');
+        done();
       });
     });
   });
 
   describe("DELETE /", () => {
     it("should delete item by id", (done) => {
-      setTimeout(done,0);
+      // setTimeout(done,0);
       chai.request(app)
       .delete('/items/testingItemId5')
       .end((err, res) => {
         res.should.have.status(200);
+        done();
       });
     });
   });
