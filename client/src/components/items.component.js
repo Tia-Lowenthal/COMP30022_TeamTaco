@@ -7,7 +7,7 @@ import ViewHistory from "./viewhistory.component";
 import ViewFinance from "./viewfinance.component";
 import ViewCurrentInfo from "./viewcurrentinfo.component";
 
-export default class ItemTest extends Component {
+export default class Items extends Component {
         constructor(props) {
             super(props);
             this.state = {

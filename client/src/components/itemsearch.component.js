@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 
 const Item = props => (
     <div>
-        <h5>{props.item.title}</h5>
+        <Link to="/items">{props.item.title}</Link> <br/>
         <i>{props.item.category}</i>   
         <div>{props.item.description}</div>
         <br/>

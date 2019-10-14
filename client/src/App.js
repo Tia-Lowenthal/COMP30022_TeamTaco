@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./components/home.component";
 import Upload from "./components/upload.component";
 import MyProfile from "./components/profile.component";
-import ItemTest from "./components/itemtest.component";
 import Account from "./components/accounts.component";
+import Items from "./components/items.component";
 
 class App extends Component {
   render() {
@@ -31,9 +31,9 @@ class App extends Component {
           </nav>
           <Route path="/upload" component={Upload} />
           <Route path="/profile" component={MyProfile} />
-          <Route exact path="/itemtest" component={ItemTest} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/" component={Account}/>
+          <Route exact path="/items" component={Items}/>
         </div>
       </Router>
     );
