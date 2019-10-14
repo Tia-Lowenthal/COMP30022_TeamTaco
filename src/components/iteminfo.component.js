@@ -33,7 +33,7 @@ export default class ItemInfo extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://localhost:5000/items/1')
+        axios.get('http://localhost:5000/items/2')
         .then(response => {
             console.log("response", response);
             this.setState({
@@ -49,7 +49,7 @@ export default class ItemInfo extends Component {
     render() {
         return (
             <div className = "infobox">
-                Category <br/>
+                {this.state.fetchedItem.category} <br/>
                 
                 <h4> {this.state.fetchedItem.title} </h4>
         

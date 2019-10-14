@@ -39,7 +39,7 @@ export default class ItemTest extends Component {
         }
         
         componentDidMount() {
-            axios.get('http://localhost:5000/items/1')
+            axios.get('http://localhost:5000/items/2')
             .then(response => {
                 console.log("response", response);
                 this.setState({
