@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 
+
+
 import {
   getFromStorage,
   setInStorage,
 } from '../utils/storage';
+
+function generateUserId(){
+    var today = new Date();
+    var date = parseInt(today.getFullYear().toString()+(today.getMonth()+1).toString()+today.getDate().toString());
+    var time = parseInt(today.getHours().toString()+today.getMinutes().toString()+today.getSeconds().toString());
+    var dateTime = date+time;
+    return dateTime.toString();
+}
 
 class Account extends Component {
   constructor(props) {
@@ -106,6 +116,8 @@ class Account extends Component {
       signUpLastname
     } = this.state;
 
+    const userId = generateUserId();
+
     this.setState({
       isLoading: true,
     });
@@ -116,12 +128,13 @@ class Account extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
+      
       body: JSON.stringify({
         email: signUpEmail,
         password: signUpPassword,
         firstname: signUpFirstname,
         lastname: signUpLastname,
-        userId: "888"
+        userId: userId
       }),
     }).then(res => res.json())
       .then(json => {

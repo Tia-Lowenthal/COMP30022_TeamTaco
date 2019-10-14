@@ -14,11 +14,11 @@ class App extends Component {
       <Router>
         <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <Link to="/" className="navbar-brand">Artifacts Register</Link>
+            <Link to="/home" className="navbar-brand">Artifacts Register</Link>
             <div className="collpase navbar-collapse">
               <ul className="navbar-nav mr-auto">
                 <li className="navbar-item">
-                  <Link to="/" className="nav-link">Home</Link>
+                  <Link to="/home" className="nav-link">Home</Link>
                 </li>
                 <li className="navbar-item">
                   <Link to="/upload" className="nav-link">Upload</Link>
@@ -32,8 +32,8 @@ class App extends Component {
           <Route path="/upload" component={Upload} />
           <Route path="/profile" component={MyProfile} />
           <Route exact path="/itemtest" component={ItemTest} />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/signups" component={Account}/>
+          <Route exact path="/home" component={Home} />
+          <Route exact path="/" component={Account}/>
         </div>
       </Router>
     );
