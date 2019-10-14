@@ -34,7 +34,7 @@ export default class ViewHistory extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://localhost:5000/items/2')
+        axios.get('/items/2')
         .then(response => {
             console.log("response", response);
             this.setState({
