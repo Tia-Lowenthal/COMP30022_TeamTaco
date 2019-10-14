@@ -3,6 +3,7 @@ import toBoolean from 'validator/lib/toBoolean';
 import toInt from 'validator/lib/toInt';
 import isInt from 'validator/lib/isInt';
 import axios from 'axios';
+import TagGroup from './taggroup.component';
 
 function generateItemId(){
     var today = new Date();
@@ -11,6 +12,15 @@ function generateItemId(){
     var dateTime = date+time;
     return dateTime.toString();
 }
+
+const TagOptionRender = props => (
+    <div>
+        <input className="form-check-input" type="checkbox" value="" onClick={props.handleClick} id={props.id}/>
+        <label className="form-check-label" htmlFor={props.id}>
+        {props.id}
+        </label>
+    </div>
+)
 
 export default class Upload extends Component {
     constructor(){
@@ -23,7 +33,10 @@ export default class Upload extends Component {
             image1: '',
             image2: '',
             image3: '',
-            tags: '',
+            tagBar: '',
+            tagSelect: [],
+            dbTags: [],
+            tags: [],
             placeOfOrigin: '',
             yearOfOrigin: '',
             dateAcquired: '',
@@ -40,6 +53,51 @@ export default class Upload extends Component {
             needLicense: '',
             itemId: '',
             userId: "1"
+        }
+    }
+
+    componentDidMount() {
+        axios.get('http://localhost:5000/tags/')
+         .then(response => {
+            this.setState({dbTags: response.data.map(dbTag => dbTag.tagName)});
+         })
+         .catch((error) => {
+            console.log(error);
+         })
+    }
+
+    handleTagClick = (e) => {
+        if (e.target.checked){
+            this.setState({tagSelect: this.state.tagSelect.concat(e.target.id)});
+        } else{
+            this.setState({tagSelect: this.state.tagSelect.filter(function(tag) {
+                return tag !== e.target.id;})
+            });
+        }
+    }
+
+    handleAddTag = (e) => {
+        var j;
+        let currentTags = [...this.state.tags];
+        this.state.tagSelect.forEach((checkedTag) => {
+            if (!this.state.tags.includes(checkedTag)){
+                currentTags = currentTags.concat(checkedTag);
+            }
+        });
+        if (this.state.tagBar !== '' && !this.state.tags.includes(this.state.tagBar)){
+            currentTags = currentTags.concat(this.state.tagBar);
+        }
+        this.setState({tagBar: '', tagSelect: [], tags: currentTags});
+        for (j = 0; j < this.state.dbTags.length; j++){
+            document.getElementById(this.state.dbTags[j]).checked = false;
+        }
+    }
+
+    handleDeleteTag = (e) => {
+        if (this.state.tags.includes(e.target.name)){
+            this.setState({tags: this.state.tags.filter(function(tag) {
+                return tag !== e.target.name;})
+            });
         }
     }
 
@@ -83,7 +141,18 @@ export default class Upload extends Component {
                     }
                 };
                 axios.post('/images/add', formData, config).then(res => console.log(res.data));
-            } else if (value !== ''){
+            } else if (key === "tags") {
+                if (value.length > 0) {
+                    newItem[key] = value;
+                    value.forEach((tag) => {
+                        if (!this.state.dbTags.includes(tag)){
+                            var newTag = {};
+                            newTag["tagName"] = tag;
+                            axios.post('/tags/add', newTag).then(res => console.log(res.data));
+                        }
+                    })  
+                }
+            } else if (value !== '' && key !== "tagBar" && key !== "dbTags" && key !== "tagSelect"){
                 newItem[key] = value;
             }
         })
@@ -152,9 +221,28 @@ export default class Upload extends Component {
                     <div className="form-group">
                         <label>Tags</label>
                         <div className="form-row">
-                            <div className="col-5"><input type="text" className="form-control" name="tags" placeholder="Enter tag name..."/></div>
-                            <div className="col"><button type="button" className="btn btn-primary" value={this.state.tags} onChange={this.handleChange}>Input tag</button></div>
+                            <div className="col-5">
+                            <div className="input-group">
+                                <input type="text" className="form-control" name="tagBar" placeholder="Enter tag name..." value={this.state.tagBar} onChange={this.handleChange}/>
+                                <div className="input-group-append">
+                                    <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <div className="dropdown-menu">
+                                        <div className="form-check px-5">
+                                            {this.state.dbTags.map(currentTag => {
+                                                return <TagOptionRender id={currentTag} key={currentTag} handleClick={this.handleTagClick}/>;
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div className="col">
+                            <button type="button" className="btn btn-primary" name="tagEnter" onClick={this.handleAddTag}>Add</button>
+                            </div>
                         </div>
+                    </div>
+                    <div className="form-group">
+                            <TagGroup tagArray={this.state.tags} handleDeleteTag={this.handleDeleteTag} mode="edit"/>
                     </div>
                     <div className="form-group">
                         <button className="btn btn-secondary btn-block" type="button" data-toggle="collapse" data-target="#historyformcollapse" aria-expanded="false" aria-controls="historyformcollapse">
