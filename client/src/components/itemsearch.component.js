@@ -289,7 +289,7 @@ export default class ItemSearch extends Component {
                                 })}
                                 <div className="dropdown-divider"></div>
                                 <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "category", e)}>Check All</button></p>
-                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "category", e)}>Check None</button></div>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "category", e)}>Uncheck All</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
                                 <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#priceCollapse" aria-expanded="false" aria-controls="priceCollapse">
@@ -301,7 +301,7 @@ export default class ItemSearch extends Component {
                                 })}
                                 <div className="dropdown-divider"></div>
                                 <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "price", e)}>Check All</button></p>
-                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "price", e)}>Check None</button></div>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "price", e)}>Uncheck All</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
                                 <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse">
@@ -313,7 +313,7 @@ export default class ItemSearch extends Component {
                                 })}
                                 <div className="dropdown-divider"></div>
                                 <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "tag", e)}>Check All</button></p>
-                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "tag", e)}>Check None</button></div>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "tag", e)}>Uncheck All</button></div>
                                 </div>
                                 
                                 </form>
