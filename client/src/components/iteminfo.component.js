@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-
-export default class ViewHistory extends Component {
+export default class ItemInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +33,7 @@ export default class ViewHistory extends Component {
     }
     
     componentDidMount() {
-        axios.get('/items/2')
+        axios.get('items/2')
         .then(response => {
             console.log("response", response);
             this.setState({
@@ -46,23 +45,19 @@ export default class ViewHistory extends Component {
             console.log(error);
           })
     }
+
     render() {
         return (
-            <div>
-                 <div><button className="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#historycollapse" aria-expanded="true" aria-controls="historycollapse">
-                     History
-                 </button>
-                 </div>
-                 <div className="collapse" id="historycollapse">
-                     <ul className="list-group list-group-flush">
-                     <li className="list-group-item"> <b>Place of Origin:</b> {this.state.fetchedItem.placeOfOrigin}</li>
-                     <li className="list-group-item"> <b>Year of Origin:</b> {this.state.fetchedItem.yearOfOrigin}</li>
-                     <li className="list-group-item"> <b>Original Price:</b> {this.state.fetchedItem.originalPrice}</li>
-                     <li className="list-group-item"> <b>Date Aqcuired:</b> {this.state.fetchedItem.dateAcquired}</li>
-                     <li className="list-group-item"> <b>History:</b> {this.state.fetchedItem.history}</li>
-                     </ul>
-                 </div>
-            </div>
+            <div className = "infobox">
+                {this.state.fetchedItem.category} <br/>
+                
+                <h4> {this.state.fetchedItem.title} </h4>
+        
+                <p> {this.state.fetchedItem.description} </p>
+           </div>
         )
     }
+    
 }
+
+
