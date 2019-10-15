@@ -266,26 +266,35 @@ export default class ItemSearch extends Component {
                             </button>
                             <div className="dropdown-menu">
                                 <form className="px-3 py-3">
-                                <div className="form-check">
+                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
+                                    By Category
+                                </button>
+                                <div className="form-check collapse py-3" id="categoryCollapse">
                                 {this.categoryOptions.map(currentCategory => {
                                     return <CategoryOptionRender id={currentCategory.id} key={currentCategory.id} text={currentCategory.text} handleClick={this.handleCategoryClick}/>;
                                 })}
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <div className="form-check">
+                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#priceCollapse" aria-expanded="false" aria-controls="priceCollapse">
+                                    By Price
+                                </button>
+                                <div className="form-check collapse py-3" id="priceCollapse">
                                 {this.priceChecks.map(currentPrice => {
                                     return <PriceOptionRender id={currentPrice} key={currentPrice} handleClick={this.handlePriceClick}/>;
                                 })}
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <div className="form-check">
+                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse">
+                                    By Tags
+                                </button>
+                                <div className="form-check collapse py-3" id="tagCollapse">
                                 {this.state.tagOptions.map(currentTag => {
                                     return <TagOptionRender id={currentTag} key={currentTag} handleClick={this.handleTagClick}/>;
                                 })}
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <div><button type="button" className="btn btn-dark btn-sm" onClick={this.checkAll}>Check All</button></div>
-                                <div><button type="button" className="btn btn-secondary btn-sm" onClick={this.checkNone}>Check None</button></div>
+                                <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={this.checkAll}>Check All</button></p>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={this.checkNone}>Check None</button></div>
                                 </form>
                             </div>
                             </div>
