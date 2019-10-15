@@ -54,7 +54,7 @@ export default class ItemSearch extends Component {
             "officialDocsCheck",
             "personalDocsCheck",
             "miscCheck"];
-        this.priceChecks = ["$0-100", "$101-500", "$501-1000", "$1000+"];
+        this.priceChecks = ["$0-100", "$101-500", "$501-1000", "$1000+", "Unknown Value"];
         this.state = {items: [], 
                     filtered: [], 
                     searchQuery:'', 
@@ -91,7 +91,7 @@ export default class ItemSearch extends Component {
          axios.get('/tags/')
          .then(response => {
             var allTags = response.data.map(dbTag => dbTag.tagName);
-            allTags = allTags.concat(["Untagged"]);
+            allTags = allTags.concat(["Untagged Items"]);
             this.setState({tagOptions: [...allTags], tagFilters: [...allTags]});
          })
          .catch((error) => {
@@ -136,7 +136,7 @@ export default class ItemSearch extends Component {
             if ("originalPrice" in item){
                 return (this.state.priceFilters.includes(this.priceBracket(item.originalPrice)))
             }
-            return true;
+            return (this.state.priceFilters.includes("Unknown Value"));
         }
         return (this.state.priceFilters.includes(this.priceBracket(item.estimatedValue)));
     }
@@ -146,7 +146,7 @@ export default class ItemSearch extends Component {
             return item.tags.some(tag => this.state.tagFilters.includes(tag));
         }
         else {
-            return this.state.tagFilters.includes("Untagged");
+            return this.state.tagFilters.includes("Untagged Items");
         }
     }
 
@@ -187,34 +187,72 @@ export default class ItemSearch extends Component {
     }
 
     // sets all checkboxes to either checked or unchecked
-    handleAllChecks(boolArg) {
-        var i, j, k;
-        for (i = 0; i < this.categoryOptions.length; i++){
-            document.getElementById(this.categoryOptions[i].id).checked = boolArg;
-        }
-        for (j = 0; j < this.priceChecks.length; j++){
-            document.getElementById(this.priceChecks[j]).checked = boolArg;
-        }
-        for (k = 0; k < this.state.tagOptions.length; k++){
-            document.getElementById(this.state.tagOptions[k]).checked = boolArg;
-        }
-        if (boolArg){
-            this.setState({categoryFilters: [...this.categoryChecks], priceFilters: [...this.priceChecks], tagFilters: [...this.state.tagOptions]});
+    handleCheckType(boolArg, filterType, event) {
+        //var i, j, k;
+        //for (i = 0; i < this.categoryOptions.length; i++){
+            //document.getElementById(this.categoryOptions[i].id).checked = boolArg;
+        //}
+        //for (j = 0; j < this.priceChecks.length; j++){
+            //document.getElementById(this.priceChecks[j]).checked = boolArg;
+        //}
+        //for (k = 0; k < this.state.tagOptions.length; k++){
+            //document.getElementById(this.state.tagOptions[k]).checked = boolArg;
+        //}
+        //if (boolArg){
+            //this.setState({categoryFilters: [...this.categoryChecks], priceFilters: [...this.priceChecks], tagFilters: [...this.state.tagOptions]});
+        //} else {
+            //this.setState({categoryFilters: [], priceFilters: [], tagFilters: []});
+        //}
+        var i, optionArray, filterArray;
+        if (filterType === "category") {
+            optionArray = this.categoryOptions;
+            filterArray = "categoryFilters";
+            for (i = 0; i < optionArray.length; i++){
+                document.getElementById(optionArray[i].id).checked = boolArg;
+            }
+            if (boolArg) {
+                this.setState({[filterArray] : [...this.categoryChecks]});
+            }
+            else {
+                this.setState({[filterArray] : []});
+            }
         } else {
-            this.setState({categoryFilters: [], priceFilters: [], tagFilters: []});
-        }
+            if (filterType === "price") {
+                optionArray = this.priceChecks;
+                filterArray = "priceFilters";
+            } else if (filterType === "tag") {
+                optionArray = this.state.tagOptions;
+                filterArray = "tagFilters";
+            }
+            for (i = 0; i < optionArray.length; i++){
+                document.getElementById(optionArray[i]).checked = boolArg;
+            }
+            if (boolArg) {
+                this.setState({[filterArray] : [...optionArray]});
+            }
+            else {
+                this.setState({[filterArray] : []});
+            }
+        } 
     }
 
-    checkAll = (e) => {
-        this.handleAllChecks(true);
+    handleAllChecks(boolArg, e) {
+        this.handleCheckType(boolArg, "category", e);
+        this.handleCheckType(boolArg, "price", e);
+        this.handleCheckType(boolArg, "tag", e);
     }
 
-    checkNone = (e) => {
-        this.handleAllChecks(false);
-    }
+    //checkAll(e) {
+        //this.handleAllChecks(true);
+
+    //}
+
+    //checkNone(e) {
+        //this.handleAllChecks(false);
+    //}
 
     handleClearClick = (e) => {
-        this.handleAllChecks(true);
+        this.handleAllChecks(true, e);
         this.setState({filtered: this.state.items, searchQuery: ''});
     }
 
@@ -273,15 +311,21 @@ export default class ItemSearch extends Component {
                                 {this.categoryOptions.map(currentCategory => {
                                     return <CategoryOptionRender id={currentCategory.id} key={currentCategory.id} text={currentCategory.text} handleClick={this.handleCategoryClick}/>;
                                 })}
+                                <div className="dropdown-divider"></div>
+                                <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "category", e)}>Check All</button></p>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "category", e)}>Check None</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
                                 <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#priceCollapse" aria-expanded="false" aria-controls="priceCollapse">
-                                    By Price
+                                    By Value
                                 </button>
                                 <div className="form-check collapse py-3" id="priceCollapse">
                                 {this.priceChecks.map(currentPrice => {
                                     return <PriceOptionRender id={currentPrice} key={currentPrice} handleClick={this.handlePriceClick}/>;
                                 })}
+                                <div className="dropdown-divider"></div>
+                                <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "price", e)}>Check All</button></p>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "price", e)}>Check None</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
                                 <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse">
@@ -291,10 +335,11 @@ export default class ItemSearch extends Component {
                                 {this.state.tagOptions.map(currentTag => {
                                     return <TagOptionRender id={currentTag} key={currentTag} handleClick={this.handleTagClick}/>;
                                 })}
-                                </div>
                                 <div className="dropdown-divider"></div>
-                                <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={this.checkAll}>Check All</button></p>
-                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={this.checkNone}>Check None</button></div>
+                                <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "tag", e)}>Check All</button></p>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "tag", e)}>Check None</button></div>
+                                </div>
+                                
                                 </form>
                             </div>
                             </div>
