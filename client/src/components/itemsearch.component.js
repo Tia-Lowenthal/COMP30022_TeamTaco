@@ -188,21 +188,6 @@ export default class ItemSearch extends Component {
 
     // sets all checkboxes to either checked or unchecked
     handleCheckType(boolArg, filterType, event) {
-        //var i, j, k;
-        //for (i = 0; i < this.categoryOptions.length; i++){
-            //document.getElementById(this.categoryOptions[i].id).checked = boolArg;
-        //}
-        //for (j = 0; j < this.priceChecks.length; j++){
-            //document.getElementById(this.priceChecks[j]).checked = boolArg;
-        //}
-        //for (k = 0; k < this.state.tagOptions.length; k++){
-            //document.getElementById(this.state.tagOptions[k]).checked = boolArg;
-        //}
-        //if (boolArg){
-            //this.setState({categoryFilters: [...this.categoryChecks], priceFilters: [...this.priceChecks], tagFilters: [...this.state.tagOptions]});
-        //} else {
-            //this.setState({categoryFilters: [], priceFilters: [], tagFilters: []});
-        //}
         var i, optionArray, filterArray;
         if (filterType === "category") {
             optionArray = this.categoryOptions;
@@ -241,15 +226,6 @@ export default class ItemSearch extends Component {
         this.handleCheckType(boolArg, "price", e);
         this.handleCheckType(boolArg, "tag", e);
     }
-
-    //checkAll(e) {
-        //this.handleAllChecks(true);
-
-    //}
-
-    //checkNone(e) {
-        //this.handleAllChecks(false);
-    //}
 
     handleClearClick = (e) => {
         this.handleAllChecks(true, e);
