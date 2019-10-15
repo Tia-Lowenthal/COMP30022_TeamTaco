@@ -4,9 +4,10 @@ import axios from 'axios';
 
 const Item = props => (
     <div>
-        <Link to="/items">{props.item.title}</Link> <br/>
+        <Link to="/items/:userId">{props.item.title}</Link> <br/>
         <i>{props.item.category}</i>   
         <div>{props.item.description}</div>
+        <div>{props.item.itemId}</div>
         <br/>
         {/*have to link to item page eventually*/}
     </div>

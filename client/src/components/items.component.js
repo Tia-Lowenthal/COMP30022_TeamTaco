@@ -9,7 +9,8 @@ import ViewCurrentInfo from "./viewcurrentinfo.component";
 
 export default class Items extends Component {
         constructor(props) {
-            super(props);
+            super(props);    
+            this.currentItemId = this.props.match.params.itemId;      
             this.state = {
                 fetchedItem: {
                     title: '',
@@ -33,13 +34,14 @@ export default class Items extends Component {
                     currentLocation: '',
                     saleStatus: '',
                     displayStatus: '',
-                    needLicense: ''
+                    needLicense: '',
+                    itemId: ''
                 }
             } 
         }
         
         componentDidMount() {
-            axios.get('http://localhost:5000/items/2')
+            axios.get('http://localhost:5000/items/'+ this.props.match.params.itemId)
             .then(response => {
                 console.log("response", response);
                 this.setState({
@@ -51,11 +53,14 @@ export default class Items extends Component {
                 console.log(error);
               })
         }
+        
     render() {
+        
         return (
             <div className = "row">
                 <div className = "col">
-                    <ItemImages/><br/> 
+
+                    <ItemImages currentItemId = {this.currentItemId}/><br/> 
                     <b>Tags: </b> {this.state.fetchedItem.tags}>
                     <br/>
                     <button type = "delete" className = "btn btn-primary btn-lg">Delete</button> 
@@ -64,10 +69,10 @@ export default class Items extends Component {
                     
                 </div>
                 <div className = "col">
-                    <ItemInfo/><br/> 
-                    <ViewHistory/><br/>
-                    <ViewFinance/><br/>
-                    <ViewCurrentInfo/><br/>
+                    <ItemInfo currentItemId = {this.currentItemId}/><br/> 
+                    <ViewHistory currentItemId = {this.currentItemId}/><br/>
+                    <ViewFinance currentItemId = {this.currentItemId}/><br/>
+                    <ViewCurrentInfo currentItemId = {this.currentItemId}/><br/>
                     <br/>
                     
                 </div>

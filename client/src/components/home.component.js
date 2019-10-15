@@ -10,7 +10,6 @@ export default class Home extends Component {
         return (
             <div>
                 <h3>Home</h3>
-                <Link to="/itemtest">Item Test</Link>
                 <h4>Items</h4>
                 <ItemSearch/>
             </div>

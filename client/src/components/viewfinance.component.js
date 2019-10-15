@@ -33,7 +33,7 @@ export default class ViewFinance extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://localhost:5000/items/2')
+        axios.get('http://localhost:5000/items/' + this.props.currentItemId)
         .then(response => {
             console.log("response", response);
             this.setState({
