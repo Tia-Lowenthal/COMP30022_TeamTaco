@@ -29,6 +29,15 @@ const PriceOptionRender = props => (
     </div>
 )
 
+const TagOptionRender = props => (
+    <div>
+        <input className="form-check-input" type="checkbox" value="" defaultChecked={true} onClick={props.handleClick} id={props.id}/>
+        <label className="form-check-label" htmlFor={props.id}>
+        {props.id}
+        </label>
+    </div>
+)
+
 export default class ItemSearch extends Component {
     constructor(props) {
         super(props);
@@ -50,7 +59,9 @@ export default class ItemSearch extends Component {
                     filtered: [], 
                     searchQuery:'', 
                     categoryFilters: [...this.categoryChecks],
-                    priceFilters: [...this.priceChecks]};
+                    priceFilters: [...this.priceChecks],
+                    tagOptions: [],
+                    tagFilters: []};
         this.categoryOptions = [
             {id: "photoCheck", text: "Photos"},
             {id: "jewelleryCheck", text: "Jewellery"},
@@ -70,7 +81,18 @@ export default class ItemSearch extends Component {
     componentDidMount() {
         axios.get('/items/')
          .then(response => {
-           this.setState({items: response.data, filtered : response.data});
+            this.setState({items: response.data, filtered : response.data});
+         })
+         .catch((error) => {
+            console.log(error);
+         })
+
+         
+         axios.get('/tags/')
+         .then(response => {
+            var allTags = response.data.map(dbTag => dbTag.tagName);
+            allTags = allTags.concat(["Untagged"]);
+            this.setState({tagOptions: [...allTags], tagFilters: [...allTags]});
          })
          .catch((error) => {
             console.log(error);
@@ -119,6 +141,15 @@ export default class ItemSearch extends Component {
         return (this.state.priceFilters.includes(this.priceBracket(item.estimatedValue)));
     }
 
+    tagSearch(item) {
+        if ("tags" in item && item.tags.length>0) {
+            return item.tags.some(tag => this.state.tagFilters.includes(tag));
+        }
+        else {
+            return this.state.tagFilters.includes("Untagged");
+        }
+    }
+
     handleSearchBar = (e) => {
         this.setState({searchQuery: e.target.value.toLowerCase()});
     }
@@ -149,22 +180,28 @@ export default class ItemSearch extends Component {
         })
         //filter by price
         newList = newList.filter(item => this.priceSearch(item));
+        //filter by tag
+        newList = newList.filter(item => this.tagSearch(item));
+        console.log(this.state.tagFilters);
         this.setState({filtered: newList});
     }
 
     // sets all checkboxes to either checked or unchecked
     handleAllChecks(boolArg) {
-        var i, j;
+        var i, j, k;
         for (i = 0; i < this.categoryOptions.length; i++){
             document.getElementById(this.categoryOptions[i].id).checked = boolArg;
         }
         for (j = 0; j < this.priceChecks.length; j++){
             document.getElementById(this.priceChecks[j]).checked = boolArg;
         }
+        for (k = 0; k < this.state.tagOptions.length; k++){
+            document.getElementById(this.state.tagOptions[k]).checked = boolArg;
+        }
         if (boolArg){
-            this.setState({categoryFilters: [...this.categoryChecks], priceFilters: [...this.priceChecks]});
+            this.setState({categoryFilters: [...this.categoryChecks], priceFilters: [...this.priceChecks], tagFilters: [...this.state.tagOptions]});
         } else {
-            this.setState({categoryFilters: [], priceFilters: []});
+            this.setState({categoryFilters: [], priceFilters: [], tagFilters: []});
         }
     }
 
@@ -203,6 +240,17 @@ export default class ItemSearch extends Component {
         }
     }
 
+    handleTagClick = (e) => {
+        if (e.target.checked){
+            this.setState({tagFilters: this.state.tagFilters.concat(e.target.id)});
+        } else{
+            this.setState({tagFilters: this.state.tagFilters.filter(function(tag) {
+                return tag !== e.target.id;})
+            });
+        }
+        console.log(this.state.tagFilters);
+    }
+
     render() {
         return (
             <div>
@@ -227,6 +275,12 @@ export default class ItemSearch extends Component {
                                 <div className="form-check">
                                 {this.priceChecks.map(currentPrice => {
                                     return <PriceOptionRender id={currentPrice} key={currentPrice} handleClick={this.handlePriceClick}/>;
+                                })}
+                                </div>
+                                <div className="dropdown-divider"></div>
+                                <div className="form-check">
+                                {this.state.tagOptions.map(currentTag => {
+                                    return <TagOptionRender id={currentTag} key={currentTag} handleClick={this.handleTagClick}/>;
                                 })}
                                 </div>
                                 <div className="dropdown-divider"></div>
