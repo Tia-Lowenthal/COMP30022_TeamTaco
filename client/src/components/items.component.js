@@ -41,7 +41,7 @@ export default class Items extends Component {
         }
         
         componentDidMount() {
-            axios.get('http://localhost:5000/items/'+ this.props.match.params.itemId)
+            axios.get('/items/'+ this.props.match.params.itemId)
             .then(response => {
                 console.log("response", response);
                 this.setState({

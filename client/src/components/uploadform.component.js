@@ -57,7 +57,7 @@ export default class Upload extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://localhost:5000/tags/')
+        axios.get('/tags/')
          .then(response => {
             this.setState({dbTags: response.data.map(dbTag => dbTag.tagName)});
          })

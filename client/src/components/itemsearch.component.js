@@ -31,6 +31,15 @@ const PriceOptionRender = props => (
     </div>
 )
 
+const TagOptionRender = props => (
+    <div>
+        <input className="form-check-input" type="checkbox" value="" defaultChecked={true} onClick={props.handleClick} id={props.id}/>
+        <label className="form-check-label" htmlFor={props.id}>
+        {props.id}
+        </label>
+    </div>
+)
+
 export default class ItemSearch extends Component {
     constructor(props) {
         super(props);
@@ -47,12 +56,14 @@ export default class ItemSearch extends Component {
             "officialDocsCheck",
             "personalDocsCheck",
             "miscCheck"];
-        this.priceChecks = ["$0-100", "$101-500", "$501-1000", "$1000+"];
+        this.priceChecks = ["$0-100", "$101-500", "$501-1000", "$1000+", "Unknown Value"];
         this.state = {items: [], 
                     filtered: [], 
                     searchQuery:'', 
                     categoryFilters: [...this.categoryChecks],
-                    priceFilters: [...this.priceChecks]};
+                    priceFilters: [...this.priceChecks],
+                    tagOptions: [],
+                    tagFilters: []};
         this.categoryOptions = [
             {id: "photoCheck", text: "Photos"},
             {id: "jewelleryCheck", text: "Jewellery"},
@@ -72,7 +83,18 @@ export default class ItemSearch extends Component {
     componentDidMount() {
         axios.get('/items/')
          .then(response => {
-           this.setState({items: response.data, filtered : response.data});
+            this.setState({items: response.data, filtered : response.data});
+         })
+         .catch((error) => {
+            console.log(error);
+         })
+
+         
+         axios.get('/tags/')
+         .then(response => {
+            var allTags = response.data.map(dbTag => dbTag.tagName);
+            allTags = allTags.concat(["Untagged Items"]);
+            this.setState({tagOptions: [...allTags], tagFilters: [...allTags]});
          })
          .catch((error) => {
             console.log(error);
@@ -116,9 +138,18 @@ export default class ItemSearch extends Component {
             if ("originalPrice" in item){
                 return (this.state.priceFilters.includes(this.priceBracket(item.originalPrice)))
             }
-            return true;
+            return (this.state.priceFilters.includes("Unknown Value"));
         }
         return (this.state.priceFilters.includes(this.priceBracket(item.estimatedValue)));
+    }
+
+    tagSearch(item) {
+        if ("tags" in item && item.tags.length>0) {
+            return item.tags.some(tag => this.state.tagFilters.includes(tag));
+        }
+        else {
+            return this.state.tagFilters.includes("Untagged Items");
+        }
     }
 
     handleSearchBar = (e) => {
@@ -151,35 +182,55 @@ export default class ItemSearch extends Component {
         })
         //filter by price
         newList = newList.filter(item => this.priceSearch(item));
+        //filter by tag
+        newList = newList.filter(item => this.tagSearch(item));
+        console.log(this.state.tagFilters);
         this.setState({filtered: newList});
     }
 
     // sets all checkboxes to either checked or unchecked
-    handleAllChecks(boolArg) {
-        var i, j;
-        for (i = 0; i < this.categoryOptions.length; i++){
-            document.getElementById(this.categoryOptions[i].id).checked = boolArg;
-        }
-        for (j = 0; j < this.priceChecks.length; j++){
-            document.getElementById(this.priceChecks[j]).checked = boolArg;
-        }
-        if (boolArg){
-            this.setState({categoryFilters: [...this.categoryChecks], priceFilters: [...this.priceChecks]});
+    handleCheckType(boolArg, filterType, event) {
+        var i, optionArray, filterArray;
+        if (filterType === "category") {
+            optionArray = this.categoryOptions;
+            filterArray = "categoryFilters";
+            for (i = 0; i < optionArray.length; i++){
+                document.getElementById(optionArray[i].id).checked = boolArg;
+            }
+            if (boolArg) {
+                this.setState({[filterArray] : [...this.categoryChecks]});
+            }
+            else {
+                this.setState({[filterArray] : []});
+            }
         } else {
-            this.setState({categoryFilters: [], priceFilters: []});
-        }
+            if (filterType === "price") {
+                optionArray = this.priceChecks;
+                filterArray = "priceFilters";
+            } else if (filterType === "tag") {
+                optionArray = this.state.tagOptions;
+                filterArray = "tagFilters";
+            }
+            for (i = 0; i < optionArray.length; i++){
+                document.getElementById(optionArray[i]).checked = boolArg;
+            }
+            if (boolArg) {
+                this.setState({[filterArray] : [...optionArray]});
+            }
+            else {
+                this.setState({[filterArray] : []});
+            }
+        } 
     }
 
-    checkAll = (e) => {
-        this.handleAllChecks(true);
-    }
-
-    checkNone = (e) => {
-        this.handleAllChecks(false);
+    handleAllChecks(boolArg, e) {
+        this.handleCheckType(boolArg, "category", e);
+        this.handleCheckType(boolArg, "price", e);
+        this.handleCheckType(boolArg, "tag", e);
     }
 
     handleClearClick = (e) => {
-        this.handleAllChecks(true);
+        this.handleAllChecks(true, e);
         this.setState({filtered: this.state.items, searchQuery: ''});
     }
 
@@ -205,6 +256,17 @@ export default class ItemSearch extends Component {
         }
     }
 
+    handleTagClick = (e) => {
+        if (e.target.checked){
+            this.setState({tagFilters: this.state.tagFilters.concat(e.target.id)});
+        } else{
+            this.setState({tagFilters: this.state.tagFilters.filter(function(tag) {
+                return tag !== e.target.id;})
+            });
+        }
+        console.log(this.state.tagFilters);
+    }
+
     render() {
         return (
             <div>
@@ -220,20 +282,42 @@ export default class ItemSearch extends Component {
                             </button>
                             <div className="dropdown-menu">
                                 <form className="px-3 py-3">
-                                <div className="form-check">
+                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
+                                    By Category
+                                </button>
+                                <div className="form-check collapse py-3" id="categoryCollapse">
                                 {this.categoryOptions.map(currentCategory => {
                                     return <CategoryOptionRender id={currentCategory.id} key={currentCategory.id} text={currentCategory.text} handleClick={this.handleCategoryClick}/>;
                                 })}
+                                <div className="dropdown-divider"></div>
+                                <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "category", e)}>Check All</button></p>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "category", e)}>Uncheck All</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <div className="form-check">
+                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#priceCollapse" aria-expanded="false" aria-controls="priceCollapse">
+                                    By Value
+                                </button>
+                                <div className="form-check collapse py-3" id="priceCollapse">
                                 {this.priceChecks.map(currentPrice => {
                                     return <PriceOptionRender id={currentPrice} key={currentPrice} handleClick={this.handlePriceClick}/>;
                                 })}
+                                <div className="dropdown-divider"></div>
+                                <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "price", e)}>Check All</button></p>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "price", e)}>Uncheck All</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <div><button type="button" className="btn btn-dark btn-sm" onClick={this.checkAll}>Check All</button></div>
-                                <div><button type="button" className="btn btn-secondary btn-sm" onClick={this.checkNone}>Check None</button></div>
+                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse">
+                                    By Tags
+                                </button>
+                                <div className="form-check collapse py-3" id="tagCollapse">
+                                {this.state.tagOptions.map(currentTag => {
+                                    return <TagOptionRender id={currentTag} key={currentTag} handleClick={this.handleTagClick}/>;
+                                })}
+                                <div className="dropdown-divider"></div>
+                                <p><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(true, "tag", e)}>Check All</button></p>
+                                <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "tag", e)}>Uncheck All</button></div>
+                                </div>
+                                
                                 </form>
                             </div>
                             </div>

@@ -33,7 +33,7 @@ export default class ViewCurrentInfo extends Component {
     }
     
     componentDidMount() {
-        axios.get('http://localhost:5000/items/' + this.props.currentItemId)
+        axios.get('/items/' + this.props.currentItemId)
         .then(response => {
             console.log("response", response);
             this.setState({
