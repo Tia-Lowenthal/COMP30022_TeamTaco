@@ -55,9 +55,11 @@ export default class ItemSearch extends Component {
             "personalDocsCheck",
             "miscCheck"];
         this.priceChecks = ["$0-100", "$101-500", "$501-1000", "$1000+", "Unknown Value"];
+        this.searchTypes = ["Title", "Category", "Description"];
         this.state = {items: [], 
                     filtered: [], 
-                    searchQuery:'', 
+                    searchQuery:'',
+                    searchType: "Title", 
                     categoryFilters: [...this.categoryChecks],
                     priceFilters: [...this.priceChecks],
                     tagOptions: [],
@@ -157,12 +159,19 @@ export default class ItemSearch extends Component {
     // handles clicking of the search button
     handleSearchClick = (e) => {
         let currentList = this.state.items;
+        let currentSearchType = this.state.searchType.toLowerCase();
         let newList = [];
         // filter by title
         if (this.state.searchQuery !== ""){
             newList = currentList.filter(item => {
-                const lowerTitle = item.title.toLowerCase();
-                return (lowerTitle.includes(this.state.searchQuery));
+                if (currentSearchType in item) {
+                    var lowerTitle = item[currentSearchType].toLowerCase();
+                    return (lowerTitle.includes(this.state.searchQuery));
+                }
+                else {
+                    return false;
+                }
+                
             });
         } else{
             newList = currentList;
@@ -182,7 +191,6 @@ export default class ItemSearch extends Component {
         newList = newList.filter(item => this.priceSearch(item));
         //filter by tag
         newList = newList.filter(item => this.tagSearch(item));
-        console.log(this.state.tagFilters);
         this.setState({filtered: newList});
     }
 
@@ -265,22 +273,33 @@ export default class ItemSearch extends Component {
         console.log(this.state.tagFilters);
     }
 
+    handleSearchTypeChange = (e) => {
+        this.setState({searchType: e.target.value});
+    }
+
     render() {
         return (
             <div>
                 <div className="form-group">
                     <div className="form-row">
-                        <div className="col-8">
+                        <div className="col-5">
                             <input type="text" className="form-control" placeholder="Search..." value={this.state.searchQuery} onChange={this.handleSearchBar}/>
                         </div>
                         <div className="col">
+                            <select className="form-control" name="searchType" value={this.state.searchType} onChange={this.handleSearchTypeChange}>
+                                {this.searchTypes.map(currentSearchType => {
+                                    return (<option key={currentSearchType}>{currentSearchType}</option>)
+                                })}
+                            </select>
+                        </div>
+                        <div className="col">
                             <div className="dropdown">
-                            <button className="btn btn-outline-secondary dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button className="btn btn-secondary dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select Filters
                             </button>
                             <div className="dropdown-menu">
                                 <form className="px-3 py-3">
-                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
+                                <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
                                     By Category
                                 </button>
                                 <div className="form-check collapse py-3" id="categoryCollapse">
@@ -292,7 +311,7 @@ export default class ItemSearch extends Component {
                                 <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "category", e)}>Uncheck All</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#priceCollapse" aria-expanded="false" aria-controls="priceCollapse">
+                                <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#priceCollapse" aria-expanded="false" aria-controls="priceCollapse">
                                     By Value
                                 </button>
                                 <div className="form-check collapse py-3" id="priceCollapse">
@@ -304,7 +323,7 @@ export default class ItemSearch extends Component {
                                 <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "price", e)}>Uncheck All</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <button class="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse">
+                                <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse">
                                     By Tags
                                 </button>
                                 <div className="form-check collapse py-3" id="tagCollapse">
