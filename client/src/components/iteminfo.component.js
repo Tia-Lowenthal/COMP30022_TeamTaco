@@ -27,13 +27,15 @@ export default class ItemInfo extends Component {
                 currentLocation: '',
                 saleStatus: '',
                 displayStatus: '',
-                needLicense: ''
+                needLicense: '',
+                itemId: ''
             }
         } 
     }
     
     componentDidMount() {
-        axios.get('items/2')
+        console.log(this.props.currentItemId)
+        axios.get('/items/'+ this.props.currentItemId)
         .then(response => {
             console.log("response", response);
             this.setState({

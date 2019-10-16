@@ -6,10 +6,12 @@ import ItemInfo from "./iteminfo.component";
 import ViewHistory from "./viewhistory.component";
 import ViewFinance from "./viewfinance.component";
 import ViewCurrentInfo from "./viewcurrentinfo.component";
+import TagGroup from './taggroup.component';
 
-export default class ItemTest extends Component {
+export default class Items extends Component {
         constructor(props) {
-            super(props);
+            super(props);    
+            this.currentItemId = this.props.match.params.itemId;      
             this.state = {
                 fetchedItem: {
                     title: '',
@@ -33,13 +35,14 @@ export default class ItemTest extends Component {
                     currentLocation: '',
                     saleStatus: '',
                     displayStatus: '',
-                    needLicense: ''
+                    needLicense: '',
+                    itemId: ''
                 }
             } 
         }
         
         componentDidMount() {
-            axios.get('/items/2')
+            axios.get('/items/'+ this.props.match.params.itemId)
             .then(response => {
                 console.log("response", response);
                 this.setState({
@@ -51,12 +54,16 @@ export default class ItemTest extends Component {
                 console.log(error);
               })
         }
+
+        
     render() {
+        
         return (
             <div className = "row">
                 <div className = "col">
-                    <ItemImages/><br/> 
-                    <b>Tags: </b> {this.state.fetchedItem.tags}>
+
+                    <ItemImages currentItemId = {this.currentItemId}/><br/>  
+                    <b>Tags: </b> {this.state.fetchedItem.tags}
                     <br/>
                     <button type = "delete" className = "btn btn-primary btn-lg">Delete</button> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -64,10 +71,10 @@ export default class ItemTest extends Component {
                     
                 </div>
                 <div className = "col">
-                    <ItemInfo/><br/> 
-                    <ViewHistory/><br/>
-                    <ViewFinance/><br/>
-                    <ViewCurrentInfo/><br/>
+                    <ItemInfo currentItemId = {this.currentItemId}/><br/> 
+                    <ViewHistory currentItemId = {this.currentItemId}/><br/>
+                    <ViewFinance currentItemId = {this.currentItemId}/><br/>
+                    <ViewCurrentInfo currentItemId = {this.currentItemId}/><br/>
                     <br/>
                     
                 </div>
