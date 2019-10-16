@@ -55,7 +55,7 @@ export default class ItemSearch extends Component {
             "personalDocsCheck",
             "miscCheck"];
         this.priceChecks = ["$0-100", "$101-500", "$501-1000", "$1000+", "Unknown Value"];
-        this.searchTypes = ["Title", "Category", "Description"];
+        this.searchTypes = ["Title", "Category", "Description", "CurrentLocation", "PlaceOfOrigin", "History", "Tags"];
         this.state = {items: [], 
                     filtered: [], 
                     searchQuery:'',
@@ -153,7 +153,7 @@ export default class ItemSearch extends Component {
     }
 
     handleSearchBar = (e) => {
-        this.setState({searchQuery: e.target.value.toLowerCase()});
+        this.setState({searchQuery: e.target.value});
     }
 
     // handles clicking of the search button
@@ -165,8 +165,12 @@ export default class ItemSearch extends Component {
         if (this.state.searchQuery !== ""){
             newList = currentList.filter(item => {
                 if (currentSearchType in item) {
-                    var lowerTitle = item[currentSearchType].toLowerCase();
-                    return (lowerTitle.includes(this.state.searchQuery));
+                    if (currentSearchType === "tags") {
+                        return item.tags.includes(this.state.searchQuery);
+                    } else {
+                        var lowerType = item[currentSearchType].toLowerCase();
+                        return (lowerType.includes(this.state.searchQuery.toLowerCase()));
+                    }
                 }
                 else {
                     return false;
@@ -237,7 +241,7 @@ export default class ItemSearch extends Component {
 
     handleClearClick = (e) => {
         this.handleAllChecks(true, e);
-        this.setState({filtered: this.state.items, searchQuery: ''});
+        this.setState({filtered: this.state.items, searchQuery: '', searchType: "Title"});
     }
 
     // handles category checkboxes
