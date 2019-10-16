@@ -6,6 +6,7 @@ import ItemInfo from "./iteminfo.component";
 import ViewHistory from "./viewhistory.component";
 import ViewFinance from "./viewfinance.component";
 import ViewCurrentInfo from "./viewcurrentinfo.component";
+import TagGroup from './taggroup.component';
 
 export default class Items extends Component {
         constructor(props) {
@@ -53,6 +54,7 @@ export default class Items extends Component {
                 console.log(error);
               })
         }
+
         
     render() {
         
@@ -60,8 +62,8 @@ export default class Items extends Component {
             <div className = "row">
                 <div className = "col">
 
-                    <ItemImages currentItemId = {this.currentItemId}/><br/> 
-                    <b>Tags: </b> {this.state.fetchedItem.tags}>
+                    <ItemImages currentItemId = {this.currentItemId}/><br/>  
+                    <b>Tags: </b> {this.state.fetchedItem.tags}
                     <br/>
                     <button type = "delete" className = "btn btn-primary btn-lg">Delete</button> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
