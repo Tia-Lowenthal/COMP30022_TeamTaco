@@ -54,6 +54,7 @@ export default class Upload extends Component {
             itemId: '',
             userId: "1"
         }
+        this.bannedTags = ["Untagged Items", "Unknown Value", "tags", "title", "category", "condition", "description"];
     }
 
     componentDidMount() {
@@ -84,7 +85,7 @@ export default class Upload extends Component {
                 currentTags = currentTags.concat(checkedTag);
             }
         });
-        if (this.state.tagBar !== '' && !this.state.tags.includes(this.state.tagBar)){
+        if (this.state.tagBar !== '' && !this.state.tags.includes(this.state.tagBar) && !this.bannedTags.includes(this.state.tagBar)){
             currentTags = currentTags.concat(this.state.tagBar);
         }
         this.setState({tagBar: '', tagSelect: [], tags: currentTags});
@@ -255,15 +256,15 @@ export default class Upload extends Component {
                                     <input type="text" className="form-control" name="placeOfOrigin" value={this.state.placeOfOrigin} placeholder="Enter place of origin..." onChange={this.handleChange}/>
                                 </div>
                                 <div className="col-6">
-                                    <label>Year of origin</label>
-                                    <input type="text" className="form-control" name="yearOfOrigin" value={this.state.yearOfOrigin} placeholder="Enter year of origin..." onChange={this.handleChange}/>
+                                    <label>Date of origin</label>
+                                    <input type="text" className="form-control" name="yearOfOrigin" value={this.state.yearOfOrigin} placeholder="YYYY-MM-DD" onChange={this.handleChange}/>
                                 </div>
                             </div>
                             <br/>
                             <div className="row">
                                 <div className="col-6">
                                     <label>Date acquired</label>
-                                    <input type="text" className="form-control" name="dateAcquired" value={this.state.dateAcquired} placeholder="Enter date of acquiry..." onChange={this.handleChange}/>
+                                    <input type="text" className="form-control" name="dateAcquired" value={this.state.dateAcquired} placeholder="YYYY-MM-DD" onChange={this.handleChange}/>
                                 </div>
                                 <div className="col-6">
                                     <label>Original price</label>

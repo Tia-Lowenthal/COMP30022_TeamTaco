@@ -21,7 +21,7 @@ export default class Items extends Component {
                     image1: '',
                     image2: '',
                     image3: '',
-                    tags: '',
+                    tags: [],
                     placeOfOrigin: '',
                     yearOfOrigin: '',
                     dateAcquired: '',
@@ -63,7 +63,8 @@ export default class Items extends Component {
                 <div className = "col">
 
                     <ItemImages currentItemId = {this.currentItemId}/><br/>  
-                    <b>Tags: </b> {this.state.fetchedItem.tags}
+                    <b>Tags: </b> 
+                    <TagGroup tagArray={this.state.fetchedItem.tags} mode="static"/>
                     <br/>
                     <button type = "delete" className = "btn btn-primary btn-lg">Delete</button> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
