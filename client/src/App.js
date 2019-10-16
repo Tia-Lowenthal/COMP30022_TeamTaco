@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Home from "./components/home.component";
 import Upload from "./components/upload.component";
-import MyProfile from "./components/profile.component";
 import Account from "./components/accounts.component";
 import Items from "./components/items.component";
 
@@ -24,13 +23,12 @@ class App extends Component {
                   <Link to="/upload" className="nav-link">Upload</Link>
                 </li>
                 <li className="navbar-item">
-                  <Link to="/profile" className="nav-link">My Profile</Link>
+                  <Link to="/" className="nav-link">Logout</Link>
                 </li>
               </ul>
             </div>
           </nav>
           <Route path="/upload" component={Upload} />
-          <Route path="/profile" component={MyProfile} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/" component={Account}/>
           <Route path="/items/:itemId" component={Items}/>
