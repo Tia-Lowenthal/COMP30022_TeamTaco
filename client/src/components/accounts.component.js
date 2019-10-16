@@ -107,6 +107,10 @@ class Account extends Component {
     });
   }
 
+  handlePageChange () {
+    window.location = "/home";
+  }
+
   onSignUp() {
     // Grab state
     const {
@@ -155,6 +159,8 @@ class Account extends Component {
           });
         }
       });
+    //go to home page
+    this.handlePageChange();
   }
 
   onSignIn() {
@@ -197,6 +203,8 @@ class Account extends Component {
           });
         }
       });
+    // go to home page
+    this.handlePageChange();
   }
 
   logout() {
@@ -282,17 +290,9 @@ class Account extends Component {
             }
             <p>Sign Up</p>
             <input
-              type="email"
-              placeholder="Email"
-              value={signUpEmail}
-              onChange={this.onTextboxChangeSignUpEmail}
-            /><br />
+              type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
             <input
-              type="password"
-              placeholder="Password"
-              value={signUpPassword}
-              onChange={this.onTextboxChangeSignUpPassword}
-            /><br />
+              type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br />
             <input
               type="firstname"
               placeholder="First Name"
