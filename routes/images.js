@@ -1,6 +1,7 @@
 const router = require('express').Router();
 let Images = require('../models/images.model');
 const multer = require('multer');
+const fs = require('fs');
 
 const storage = multer.diskStorage({
   destination: function(req, file, callback) {
@@ -45,14 +46,10 @@ router.route('/:itemId').get((req, res) => {
 
 
 router.route('/add').post(upload.single('images'), (req, res) => {
-  console.log(req.file);  
-  const itemId = req.body.itemId;
-  const images = req.file.path;
-  
-  const newImages = new Images({
-      itemId,
-      images
-  })
+  var newImages = new Images();
+  newImages.images.data = fs.readFileSync(req.file.path);
+  newImages.itemId = req.body.itemId;
+  newImages.images.contentType = req.file.mimetype;
 
 
     newImages.save()
