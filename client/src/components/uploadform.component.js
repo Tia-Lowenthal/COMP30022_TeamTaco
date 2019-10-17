@@ -134,7 +134,6 @@ export default class Upload extends Component {
             } else if (value !== '' && (key === "image1" || key === "image2" || key === "image3")) {
                 let formData = new FormData();
                 formData.append("images", value);
-                formData.append("itemId", generatedId);
                 const config = {
                     headers: {
                         'content-type': 'multipart/form-data'
