@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 
@@ -196,6 +197,9 @@ class Account extends Component {
             signInEmail: '',
             token: json.token,
           });
+
+          // go to home page
+          this.handlePageChange();
         } else {
           this.setState({
             signInError: json.message,
@@ -203,8 +207,8 @@ class Account extends Component {
           });
         }
       });
-    // go to home page
-    this.handlePageChange();
+    
+    
   }
 
   logout() {
