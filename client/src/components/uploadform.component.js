@@ -139,7 +139,14 @@ export default class Upload extends Component {
                         'content-type': 'multipart/form-data'
                     }
                 };
-                axios.post('/images/add', formData, config).then(res => console.log(res.data));
+                // axios.post('/images/add', formData, config).then(res => console.log(res.data));
+                var newMongoImage = {};
+                newMongoImage["itemId"] = generatedId;
+                axios.post('/images/add', formData, config).then((res) => {
+                    newMongoImage["images"] = res.data;
+                    console.log(newMongoImage);
+                    axios.post('/images/mongoadd', newMongoImage).then(res2 => console.log(res2.data))
+                });
             } else if (key === "tags") {
                 if (value.length > 0) {
                     newItem[key] = value;

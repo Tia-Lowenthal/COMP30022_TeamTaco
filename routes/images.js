@@ -22,7 +22,23 @@ router.route('/:itemId').get((req, res) => {
 
 router.route('/add').post(singleUpload, (req, res) => {
   console.log(req.file);
-  res.send({'imageUrl': req.file.location});
+  res.send(req.file.location);
+});
+
+router.route('/mongoadd').post((req, res) => {
+  console.log(req.file);  
+  const itemId = req.body.itemId;
+  const images = req.body.images;
+  
+  const newImages = new Images({
+      itemId,
+      images
+  })
+
+
+    newImages.save()
+        .then(() => res.json('Image added to MongoDB!'))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
 
 
