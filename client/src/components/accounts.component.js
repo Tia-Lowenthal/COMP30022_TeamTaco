@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
+import '../loginpage.css';
 
 
 
@@ -256,58 +257,62 @@ class Account extends Component {
 
     if (!token) {
       return (
+        
         <div>
-          <div>
-            {
-              (signInError) ? (
-                <p>{signInError}</p>
-              ) : (null)
-            }
-            <p>Sign In</p>
-            <input
-              type="email"
-              placeholder="Email"
-              value={signInEmail}
-              onChange={this.onTextboxChangeSignInEmail}
-            />
+          <h2>Artifacts Register</h2>
+          <div class="row">
+            <div class="column1">
+              {
+                (signInError) ? (
+                  <p>{signInError}</p>
+                ) : (null)
+              }
+              
+              <h4>Sign In</h4>
+              <input
+                type="email"
+                placeholder="Email"
+                value={signInEmail}
+                onChange={this.onTextboxChangeSignInEmail}
+              />
+              <br />
+              <input
+                type="password"
+                placeholder="Password"
+                value={signInPassword}
+                onChange={this.onTextboxChangeSignInPassword}
+              />
+              <br />
+              <button onClick={this.onSignIn}>Sign In</button>
+            </div>
             <br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={signInPassword}
-              onChange={this.onTextboxChangeSignInPassword}
-            />
             <br />
-            <button onClick={this.onSignIn}>Sign In</button>
+            <div class="column2">
+              {
+                (signUpError) ? (
+                  <p>{signUpError}</p>
+                ) : (null)
+              }
+              <h4>Sign Up</h4>
+              <input
+                type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
+              <input
+                type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br />
+              <input
+                type="firstname"
+                placeholder="First Name"
+                value={signUpFirstname}
+                onChange={this.onTextboxChangeSignUpFirstname}
+              /><br />
+              <input
+                type="lastname"
+                placeholder="Last Name"
+                value={signUpLastname}
+                onChange={this.onTextboxChangeSignUpLastname}
+              /><br />
+              <button onClick={this.onSignUp}>Sign Up</button>
+            </div>
           </div>
-          <br />
-          <br />
-          <div>
-            {
-              (signUpError) ? (
-                <p>{signUpError}</p>
-              ) : (null)
-            }
-            <p>Sign Up</p>
-            <input
-              type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
-            <input
-              type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br />
-            <input
-              type="firstname"
-              placeholder="First Name"
-              value={signUpFirstname}
-              onChange={this.onTextboxChangeSignUpFirstname}
-            /><br />
-            <input
-              type="lastname"
-              placeholder="Last Name"
-              value={signUpLastname}
-              onChange={this.onTextboxChangeSignUpLastname}
-            /><br />
-            <button onClick={this.onSignUp}>Sign Up</button>
-          </div>
-
         </div>
       );
     }
