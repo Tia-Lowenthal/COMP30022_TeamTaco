@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
+import './itemsearch.component.css';
 
 const Item = props => (
-    <div>
-        <Link to= {`/items/${props.item.itemId}`}>{props.item.title}</Link> <br/>
+    <div className="item-tile">
+        <div className="item-title"><Link to= {`/items/${props.item.itemId}`}>{props.item.title}</Link></div>
         <i>{props.item.category}</i>   
         <div>{props.item.description}</div>
-        <div>{props.item.itemId}</div>
         <br/>
     </div>
 )
@@ -291,16 +291,17 @@ export default class ItemSearch extends Component {
                         <div className="col-5">
                             <input type="text" className="form-control" placeholder="Search..." value={this.state.searchQuery} onChange={this.handleSearchBar}/>
                         </div>
-                        <div className="col">
+                        <div className="col input-caption">
                             <select className="form-control" name="searchType" value={this.state.searchType} onChange={this.handleSearchTypeChange}>
                                 {this.searchTypes.map(currentSearchType => {
                                     return (<option key={currentSearchType}>{currentSearchType}</option>)
                                 })}
                             </select>
+                            <small>*field to search by</small>
                         </div>
                         <div className="col">
                             <div className="dropdown">
-                            <button className="btn btn-secondary dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button className="btn btn-outline-secondary btn-block dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select Filters
                             </button>
                             <div className="dropdown-menu">
@@ -349,12 +350,12 @@ export default class ItemSearch extends Component {
                             <button type="button" className="btn btn-primary" onClick={this.handleSearchClick}>Search</button>
                         </div>
                         <div className="col">
-                            <button type="button" className="btn btn-outline-danger" onClick={this.handleClearClick}>Clear</button>
+                            <button type="button" className="btn btn-outline-danger" onClick={this.handleClearClick}>Clear Search</button>
                         </div>
                     </div>
                 </div>
                 <br/>
-                <div className="container" style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '10px', gridAutoRows: 'minMax(100px, auto)'}}>
+                <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '12px', gridAutoRows: 'minMax(100px, auto)'}}>
                     {this.itemList()}
                 </div>
             </div>
