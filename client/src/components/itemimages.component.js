@@ -36,7 +36,9 @@ export default class ItemImages extends Component {
     render() {
         
         return (
-            
+            <div>
+
+            {!this.state.isLoading ? (
             <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel">
             <ol className="carousel-indicators">
                 {this.state.fetchedItem.images.length>1 && <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>}
@@ -63,6 +65,11 @@ export default class ItemImages extends Component {
                 <span className="sr-only">Next</span>
             </a>
             </div>) :(null)}
+            </div>
+            ) : (null)}
+            
+
+
             </div>
         )
     }
