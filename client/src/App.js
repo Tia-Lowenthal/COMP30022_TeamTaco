@@ -23,7 +23,9 @@ class App extends Component {
                   <Link to="/upload" className="nav-link">Upload</Link>
                 </li>
                 <li className="navbar-item">
+                  
                   <Link to="/" className="nav-link">Logout</Link>
+                  
                 </li>
               </ul>
             </div>
