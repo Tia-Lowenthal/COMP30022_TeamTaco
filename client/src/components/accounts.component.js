@@ -23,6 +23,7 @@ class Account extends Component {
 
     this.state = {
       isLoading: true,
+      justLoggedIn: false,
       token: '',
       signUpError: '',
       signInError: '',
@@ -112,6 +113,10 @@ class Account extends Component {
     window.location = "/home";
   }
 
+  gotoSignin () {
+    window.location = "/";
+  }
+
   onSignUp() {
     // Grab state
     const {
@@ -174,7 +179,10 @@ class Account extends Component {
 
     this.setState({
       isLoading: true,
+      justLoggedIn: true
     });
+
+    console.log("in sign in", this.state.justLoggedIn);
 
     // Post request to backend
     fetch('/users/login', {
@@ -214,7 +222,10 @@ class Account extends Component {
   logout() {
     this.setState({
       isLoading: true,
+      justLoggedIn: false
     });
+    console.log("in logout", this.state.justLoggedIn);
+
     const obj = getFromStorage('the_main_app');
     if (obj && obj.token) {
       const { token } = obj;
@@ -225,7 +236,7 @@ class Account extends Component {
           if (json.success) {
             this.setState({
               token: '',
-              isLoading: false
+              isLoading: false,
             });
           } else {
             this.setState({
@@ -238,12 +249,14 @@ class Account extends Component {
         isLoading: false,
       });
     }
+    this.gotoSignin();
     //this.handlePageChange();
   }
 
   render() {
     const {
       isLoading,
+      justLoggedIn,
       token,
       signInError,
       signInEmail,
@@ -255,11 +268,14 @@ class Account extends Component {
       signUpError,
     } = this.state;
 
-    if (isLoading) {
-      return (<div><p>Loading...</p></div>);
-    }
-
-    if (!token) {
+    // if (isLoading) {
+    //   return (<div><p>Loading...</p></div>);
+    // }
+    // if (justLoggedIn) {
+    //   return (null);
+    // }
+    console.log("in render", justLoggedIn);
+    if (!token && !justLoggedIn) {
       return (
         
         <div>
@@ -323,13 +339,7 @@ class Account extends Component {
     }
 
     
-    return (
-      
-      <div>
-        <p>Are you sure you wish to logout?</p>
-        <button onClick={this.logout}>Logout</button>
-      </div>
-    );
+    return (null);
   }
 }
 

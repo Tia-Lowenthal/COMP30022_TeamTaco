@@ -7,6 +7,7 @@ import ViewHistory from "./viewhistory.component";
 import ViewFinance from "./viewfinance.component";
 import ViewCurrentInfo from "./viewcurrentinfo.component";
 import TagGroup from './taggroup.component';
+import Navbar from "./navbar.component";
 
 export default class Items extends Component {
         constructor(props) {
@@ -59,6 +60,8 @@ export default class Items extends Component {
     render() {
         
         return (
+            <div>
+            <Navbar/>
             <div className = "row">
                 <div className = "col">
 
@@ -79,6 +82,7 @@ export default class Items extends Component {
                     <br/>
                     
                 </div>
+            </div>
             </div>
         )
     }
