@@ -73,18 +73,21 @@ export default class Items extends Component {
         return (
             <div>
             <Navbar/>
+            <div className="item-container">
             <div className = "row">
                 <div className = "col">
 
-                    <ItemImages currentItemId = {this.currentItemId}/><br/>  
+                    <br/><ItemImages currentItemId = {this.currentItemId}/><br/>  
                     <b>Tags: </b> 
+                    <br/>
                     <TagGroup tagArray={this.state.fetchedItem.tags} mode="static"/>
                     <br/>
-                    <button type = "delete" className = "btn btn-primary btn-lg" onClick={this.onDelete}>Delete</button> 
+                    <button type = "delete" className = "search-button" onClick={this.onDelete}>Delete</button> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Link to= {'/edit/'+this.state.fetchedItem.itemId}>
-                    <button type = "edit" className = "btn btn-primary btn-lg">Edit</button>
+                    <Link to= {'/edit/'+this.currentItemId}>
+                    <button type = "edit" className = "search-button">Edit</button>
                     </Link>
+                    <br/>
                     
                 </div>
                 <div className = "col">
@@ -95,6 +98,7 @@ export default class Items extends Component {
                     <br/>
                     
                 </div>
+            <br/></div><br/>
             </div>
             </div>
         )

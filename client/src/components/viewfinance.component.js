@@ -48,7 +48,7 @@ export default class ViewFinance extends Component {
     render() {
         return (
             <div>
-                 <button className="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#financecollapse" aria-expanded="false" aria-controls="financecollapse">
+                 <button className="item-expand" type="button" data-toggle="collapse" data-target="#financecollapse" aria-expanded="false" aria-controls="financecollapse">
                      Valuation and Finance
                  </button>
                  <div className="collapse" id="financecollapse">
