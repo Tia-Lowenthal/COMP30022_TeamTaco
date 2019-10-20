@@ -112,6 +112,10 @@ class Account extends Component {
     window.location = "/home";
   }
 
+  gotoSignin () {
+    window.location = "/";
+  }
+
   onSignUp() {
     // Grab state
     const {
@@ -153,6 +157,7 @@ class Account extends Component {
             signUpFirstname: '',
             signUpLastname: ''
           });
+          
         } else {
           this.setState({
             signUpError: json.message,
@@ -161,7 +166,7 @@ class Account extends Component {
         }
       });
     //go to home page
-    this.handlePageChange();
+    //this.handlePageChange();
   }
 
   onSignIn() {
@@ -172,7 +177,7 @@ class Account extends Component {
     } = this.state;
 
     this.setState({
-      isLoading: true,
+      isLoading: true
     });
 
     // Post request to backend
@@ -189,6 +194,7 @@ class Account extends Component {
       .then(json => {
         console.log('json', json);
         if (json.success) {
+          this.handlePageChange();
           setInStorage('the_main_app', { token: json.token });
           this.setState({
             signInError: json.message,
@@ -197,6 +203,7 @@ class Account extends Component {
             signInEmail: '',
             token: json.token,
           });
+          
         } else {
           this.setState({
             signInError: json.message,
@@ -205,13 +212,14 @@ class Account extends Component {
         }
       });
     // go to home page
-    this.handlePageChange();
+    //this.handlePageChange();
   }
 
   logout() {
     this.setState({
-      isLoading: true,
+      isLoading: true
     });
+
     const obj = getFromStorage('the_main_app');
     if (obj && obj.token) {
       const { token } = obj;
@@ -222,7 +230,7 @@ class Account extends Component {
           if (json.success) {
             this.setState({
               token: '',
-              isLoading: false
+              isLoading: false,
             });
           } else {
             this.setState({
@@ -235,6 +243,8 @@ class Account extends Component {
         isLoading: false,
       });
     }
+    this.gotoSignin();
+    //this.handlePageChange();
   }
 
   render() {
@@ -251,10 +261,10 @@ class Account extends Component {
       signUpError,
     } = this.state;
 
-    if (isLoading) {
-      return (<div><p>Loading...</p></div>);
-    }
-
+    // if (isLoading) {
+    //   return (<div><p>Loading...</p></div>);
+    // }
+    
     if (!token) {
       return (
         
@@ -318,14 +328,8 @@ class Account extends Component {
       );
     }
 
-    
-    return (
-      
-      <div>
-        <p>Are you sure you wish to logout?</p>
-        <button onClick={this.logout}>Logout</button>
-      </div>
-    );
+    return (null);
+
   }
 }
 
