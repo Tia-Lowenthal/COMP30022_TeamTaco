@@ -51,7 +51,7 @@ export default class ItemInfo extends Component {
     render() {
         return (
             <div className = "infobox">
-                {this.state.fetchedItem.category} <br/>
+                {this.state.fetchedItem.category} <br/> 
                 
                 <h4> {this.state.fetchedItem.title} </h4>
         

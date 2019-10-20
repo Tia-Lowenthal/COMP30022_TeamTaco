@@ -71,9 +71,9 @@ export default class Items extends Component {
                     
                 </div>
                 <div className = "col">
-                    <ItemInfo currentItemId = {this.currentItemId}/><br/> 
-                    <ViewHistory currentItemId = {this.currentItemId}/><br/>
-                    <ViewFinance currentItemId = {this.currentItemId}/><br/>
+                    <ItemInfo currentItemId = {this.currentItemId}/><br/> <p/>
+                    <ViewHistory currentItemId = {this.currentItemId}/><br/> <p/>
+                    <ViewFinance currentItemId = {this.currentItemId}/><br/> <p/>
                     <ViewCurrentInfo currentItemId = {this.currentItemId}/><br/>
                     <br/>
                     
