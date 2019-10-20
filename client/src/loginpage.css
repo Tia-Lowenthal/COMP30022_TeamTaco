@@ -29,3 +29,7 @@
 .row-sign{
     margin-top: 70px;
 }
+
+.hide-this{
+    display: none;
+}

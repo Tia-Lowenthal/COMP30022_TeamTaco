@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Account from "./accounts.component";
+import '../loginpage.css';
 
 export default class Navbar extends Component {
     triggerLogout(){
@@ -22,8 +23,8 @@ export default class Navbar extends Component {
                         <Link to="/upload" className="nav-link">Upload</Link>
                         </li>
                         <li className="navbar-item">
-                        <Account ref={account => this.account = account} />
-                        <button onClick={this.triggerLogout.bind(this)}>Logout</button>
+                        <div class="hide-this"><Account ref={account => this.account = account} /></div>
+                        <Link to="" onClick={this.triggerLogout.bind(this)}className="nav-link">Logout</Link>
                         </li>
                     </ul>
                     </div>
