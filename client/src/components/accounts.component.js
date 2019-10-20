@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import '../loginpage.css';
-
+import logo from "./Assets/logo2.png"
 
 
 import {
@@ -269,7 +269,7 @@ class Account extends Component {
       return (
         
         <div class="entire-page">
-          <div class="title"><h2>Artifacts Register</h2></div>
+          <div class="title"><img src = {logo}></img></div>
           <div class="row-sign">
             
             <div class="column1">

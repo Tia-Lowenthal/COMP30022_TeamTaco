@@ -1,7 +1,8 @@
 .title {
-    margin:40 px;
+    
     text-align: center;
-    margin-top: 50px;
+    margin-top: 15px;
+    height:250px;
 }
 
 .entire-page {
@@ -68,7 +69,8 @@
 .row-sign{
     
     text-align: center;
-    padding: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 
