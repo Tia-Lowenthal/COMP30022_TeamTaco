@@ -111,7 +111,7 @@ img {
     width: 120px;
 }
 
-.form-row {
+.form-row-search {
     background-color: white;
     padding-top: 20px;
     padding-right: 20px;
@@ -136,6 +136,6 @@ img {
     color: grey;
 }
 
-.col {
+.right-buttons {
     text-align: right;
 }

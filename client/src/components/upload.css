@@ -1,6 +1,6 @@
 .heading {
-    margin-top: 50px;
-    margin-bottom: 30px;
+    margin-top: 40px;
+    margin-bottom: 50px;
 }
 
 .form-group {
@@ -17,14 +17,14 @@
     width: 100px;
 }
 
-.dropdown {
+.dropdown-upload {
     background-color: #ff9a00;
     border: 1px solid #ff9a00;
     color:  white;
     text-decoration: none;
     border-radius: 6px;
     height: 38px;
-    width: 1110px;
+    width: 1015px;
 }
 
 .form-control {
@@ -42,4 +42,11 @@
     background-color: white;
     border: 1px solid #ff9a00;
     border-radius: 3px;
+}
+
+.upload-form {
+    background-color: white;
+    padding-top: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
 }

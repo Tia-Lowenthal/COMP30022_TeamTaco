@@ -293,7 +293,7 @@ export default class Upload extends Component {
                             <TagGroup tagArray={this.state.tags} handleDeleteTag={this.handleDeleteTag} mode="edit"/>
                     </div>
                     <div className="form-group">
-                        <button className="dropdown" type="button" data-toggle="collapse" data-target="#historyformcollapse" aria-expanded="false" aria-controls="historyformcollapse">
+                        <button className="dropdown-upload" type="button" data-toggle="collapse" data-target="#historyformcollapse" aria-expanded="false" aria-controls="historyformcollapse">
                             History
                         </button>
                         <div className="collapse" id="historyformcollapse">
@@ -326,7 +326,7 @@ export default class Upload extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <button className="dropdown" type="button" data-toggle="collapse" data-target="#financeformcollapse" aria-expanded="false" aria-controls="financeformcollapse">
+                        <button className="dropdown-upload" type="button" data-toggle="collapse" data-target="#financeformcollapse" aria-expanded="false" aria-controls="financeformcollapse">
                             Valuation and Finance
                         </button>
                         <div className="collapse" id="financeformcollapse">
@@ -362,7 +362,7 @@ export default class Upload extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <button className="dropdown" type="button" data-toggle="collapse" data-target="#currentinfoformcollapse" aria-expanded="false" aria-controls="currentinfoformcollapse">
+                        <button className="dropdown-upload" type="button" data-toggle="collapse" data-target="#currentinfoformcollapse" aria-expanded="false" aria-controls="currentinfoformcollapse">
                             Current Info
                         </button>
                         <div className="collapse" id="currentinfoformcollapse">
@@ -410,6 +410,7 @@ export default class Upload extends Component {
                         </div>
                     </div>
                 </form>
+                <br/>
             </div>
         )
     }
