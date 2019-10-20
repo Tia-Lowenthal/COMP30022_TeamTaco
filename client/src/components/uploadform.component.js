@@ -253,17 +253,19 @@ export default class Upload extends Component {
                         <label>Description</label>
                         <textarea className="form-control rounded-0" name="description" rows="3" value={this.state.description} onChange={this.handleChange}></textarea>
                     </div>
-                    <div className="form-group">
-                        <label>Image 1</label>
-                        <input type="file" className="form-control-file" name="image1" onChange={this.handleChange}></input>
-                    </div>
-                    <div className="form-group">
-                        <label>Image 2</label>
-                        <input type="file" className="form-control-file" name="image2" onChange={this.handleChange}></input>
-                    </div>
-                    <div className="form-group">
-                        <label>Image 3</label>
-                        <input type="file" className="form-control-file" name="image3" onChange={this.handleChange}></input>
+                    <div className="form-group row">
+                        <div className="col-4">
+                            <label>Image 1</label>
+                            <input type="file" className="form-control-file" name="image1" onChange={this.handleChange}></input>
+                        </div>
+                        <div className="col-4">
+                            <label>Image 2</label>
+                            <input type="file" className="form-control-file" name="image2" onChange={this.handleChange}></input>
+                        </div>
+                        <div className="col-4">
+                            <label>Image 3</label>
+                            <input type="file" className="form-control-file" name="image3" onChange={this.handleChange}></input>
+                        </div>
                     </div>
                     <div className="form-group">
                         <label>Tags</label>
@@ -272,7 +274,7 @@ export default class Upload extends Component {
                             <div className="input-group">
                                 <input type="text" className="form-control" name="tagBar" placeholder="Enter tag name..." value={this.state.tagBar} onChange={this.handleChange}/>
                                 <div className="input-group-append">
-                                    <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                                    <button className="dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                     <div className="dropdown-menu">
                                         <div className="form-check px-5">
                                             {this.state.dbTags.map(currentTag => {
@@ -284,7 +286,7 @@ export default class Upload extends Component {
                             </div>
                             </div>
                             <div className="col">
-                            <button type="button" className="btn btn-primary" name="tagEnter" onClick={this.handleAddTag}>Add</button>
+                            <button type="button" className="add-button" name="tagEnter" onClick={this.handleAddTag}>Add</button>
                             </div>
                         </div>
                     </div>
@@ -292,7 +294,7 @@ export default class Upload extends Component {
                             <TagGroup tagArray={this.state.tags} handleDeleteTag={this.handleDeleteTag} mode="edit"/>
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#historyformcollapse" aria-expanded="false" aria-controls="historyformcollapse">
+                        <button className="dropdown" type="button" data-toggle="collapse" data-target="#historyformcollapse" aria-expanded="false" aria-controls="historyformcollapse">
                             History
                         </button>
                         <div className="collapse" id="historyformcollapse">
@@ -325,7 +327,7 @@ export default class Upload extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#financeformcollapse" aria-expanded="false" aria-controls="financeformcollapse">
+                        <button className="dropdown" type="button" data-toggle="collapse" data-target="#financeformcollapse" aria-expanded="false" aria-controls="financeformcollapse">
                             Valuation and Finance
                         </button>
                         <div className="collapse" id="financeformcollapse">
@@ -361,7 +363,7 @@ export default class Upload extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#currentinfoformcollapse" aria-expanded="false" aria-controls="currentinfoformcollapse">
+                        <button className="dropdown" type="button" data-toggle="collapse" data-target="#currentinfoformcollapse" aria-expanded="false" aria-controls="currentinfoformcollapse">
                             Current Info
                         </button>
                         <div className="collapse" id="currentinfoformcollapse">
@@ -402,7 +404,7 @@ export default class Upload extends Component {
                     </div>
                     <div className="row">
                         <div className="col-2">
-                        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+                        <button type="submit" className="add-button">Submit</button>
                         </div>
                         <div className="col">
                         {this.state.hasSent ? <VerifyUpload goToHome={this.returnHome} goToUpload={this.refreshUpload}/> : null}
