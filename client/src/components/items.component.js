@@ -82,7 +82,7 @@ export default class Items extends Component {
                     <br/>
                     <button type = "delete" className = "btn btn-primary btn-lg" onClick={this.onDelete}>Delete</button> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Link to= {'/edit/'+this.state.fetchedItem.itemId}>
+                    <Link to= {'/edit/'+this.currentItemId}>
                     <button type = "edit" className = "btn btn-primary btn-lg">Edit</button>
                     </Link>
                     
