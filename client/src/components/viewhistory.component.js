@@ -56,9 +56,9 @@ export default class ViewHistory extends Component {
                  <div className="collapse" id="historycollapse">
                      <ul className="list-group list-group-flush">
                      <li className="list-group-item"> <b>Place of Origin:</b> {this.state.fetchedItem.placeOfOrigin}</li>
-                     <li className="list-group-item"> <b>Year of Origin:</b> {this.state.fetchedItem.yearOfOrigin.slice(0,10)}</li>
+                     <li className="list-group-item"> <b>Year of Origin:</b> {"yearOfOrigin" in this.state.fetchedItem ? this.state.fetchedItem.yearOfOrigin.slice(0,10) : this.state.fetchedItem.yearOfOrigin} </li>
                      <li className="list-group-item"> <b>Original Price:</b> {this.state.fetchedItem.originalPrice}</li>
-                     <li className="list-group-item"> <b>Date Acquired:</b> {this.state.fetchedItem.dateAcquired.slice(0,10)}</li>
+                     <li className="list-group-item"> <b>Date Acquired:</b> {"dateAcquired" in this.state.fetchedItem ? this.state.fetchedItem.dateAcquired.slice(0,10) : this.state.fetchedItem.dateAcquired}</li>
                      <li className="list-group-item"> <b>History:</b> {this.state.fetchedItem.history}</li>
                      </ul>
                  </div>
