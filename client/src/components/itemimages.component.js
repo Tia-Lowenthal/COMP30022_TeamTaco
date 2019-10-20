@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import image1 from "./Assets/image1.jpg"
 import placeholder from "./Assets/placeholder.jpg"
-import image2 from "./Assets/image2.jpg"
-import image3 from "./Assets/image3.jpg"
+
 
 
 export default class ItemImages extends Component {
