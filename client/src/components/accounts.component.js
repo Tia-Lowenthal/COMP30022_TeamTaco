@@ -270,20 +270,20 @@ class Account extends Component {
               }
               
               <div class="subhead"><h4>Sign In</h4></div>
-              <input
+              <input class="form-control"
                 type="email"
                 placeholder="Email"
                 value={signInEmail}
                 onChange={this.onTextboxChangeSignInEmail}
               />
-              <br /><br />
-              <input
+              <br />
+              <input class="form-control"
                 type="password"
                 placeholder="Password"
                 value={signInPassword}
                 onChange={this.onTextboxChangeSignInPassword}
               />
-              <br /><br />
+              <br />
               <div ><button class="signbutton" onClick={this.onSignIn}>Sign In</button></div>
               
             </div>
@@ -295,24 +295,24 @@ class Account extends Component {
                   <p>{signUpError}</p>
                 ) : (null)
               }
-              <div class="subhead"><h4>Sign Up</h4></div>
-              <input
-                type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br /><br />
-              <input
-                type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br /><br />
-              <input
+              <div class="subhead"><h4>Register</h4></div>
+              <input class="form-control"
+                type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
+              <input class="form-control"
+                type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br />
+              <input class="form-control"
                 type="firstname"
                 placeholder="First Name"
                 value={signUpFirstname}
                 onChange={this.onTextboxChangeSignUpFirstname}
-              /><br /><br />
-              <input
+              /><br />
+              <input class="form-control"
                 type="lastname"
                 placeholder="Last Name"
                 value={signUpLastname}
                 onChange={this.onTextboxChangeSignUpLastname}
-              /><br /><br />
-              <div ><button class="signbutton" onClick={this.onSignUp}>Sign Up</button></div>
+              /><br />
+              <div ><button class="signbutton" onClick={this.onSignUp}>Register</button></div>
               
             </div>
             
