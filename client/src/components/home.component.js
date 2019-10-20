@@ -9,14 +9,10 @@ import Navbar from "./navbar.component";
 export default class Home extends Component {
     render() {
         return (
-            <div>
+            <div className="home-div">
 
                 <Navbar/>
-                <h3>Home</h3>
-                <h4>Items</h4>
-
                 <br/>
-
                 <ItemSearch/>
             </div>
         )

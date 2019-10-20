@@ -7,7 +7,7 @@ import placeholder from "./Assets/placeholder.jpg";
 
 
 const Item = props => (
-    <div className="item-tile"><Link to= {`/items/${props.item.itemId}`}>
+    <div className="item-tile"><Link className="tile-link" to= {`/items/${props.item.itemId}`}>
         <div className="tile-image">
             <img src={props.image}/>
         </div>
@@ -296,7 +296,7 @@ export default class ItemSearch extends Component {
 
     render() {
         return (
-            <div>
+            <div className="entire-searchpage">
                 <div className="form-group">
                     <div className="form-row">
                         <div className="col-5">
