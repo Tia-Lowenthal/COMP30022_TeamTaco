@@ -5,16 +5,9 @@ import toInt from 'validator/lib/toInt';
 import isInt from 'validator/lib/isInt';
 import axios from 'axios';
 import TagGroup from './taggroup.component';
+import Navbar from "./navbar.component";
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-
-function generateItemId(){
-    var today = new Date();
-    var date = parseInt(today.getFullYear().toString()+(today.getMonth()+1).toString()+today.getDate().toString());
-    var time = parseInt(today.getHours().toString()+today.getMinutes().toString()+today.getSeconds().toString());
-    var dateTime = date+time;
-    return dateTime.toString();
-}
 
 const TagOptionRender = props => (
     <div>
@@ -25,17 +18,19 @@ const TagOptionRender = props => (
     </div>
 )
 
-const VerifyUpload = props => (
+const VerifyUpdate = props => (
     <div className="row">
-       New item successfully added to the register!
-       <button type="button" onClick={props.goToUpload}>Upload another</button>
+       New item successfully updated in the register!
+       <Link to= {'/items/'+props.itemId}>
+            <button type = "button">Go to item</button>
+       </Link>
        <Link to= {'/home'}>
             <button type = "button">Return home</button>
        </Link>
     </div>
 )
 
-export default class Upload extends Component {
+export default class Edit extends Component {
     constructor(){
         super();
         this.state = {
@@ -80,11 +75,22 @@ export default class Upload extends Component {
          .catch((error) => {
             console.log(error);
          })
+         axios.get('/items/'+ this.props.match.params.itemId)
+         .then(response => {
+            this.setState(response.data[0]);
+         })
+         .catch((error) => {
+            console.log(error);
+         })
     }
 
-    refreshUpload() {
-        window.location = '/upload';
+    returnHome() {
+        window.location = '/home';
     }
+
+    //refreshItem() {
+        //window.location = '/item/'+this.state.itemId;
+    //}
 
     handleTagClick = (e) => {
         if (e.target.checked){
@@ -168,12 +174,12 @@ export default class Upload extends Component {
 
         // Only submit state attributes with given values
         Object.entries(this.state).forEach(([key, value]) => {
-            const generatedId = generateItemId();
-            if (key === "itemId"){
-                newItem[key] = generatedId;
-            } 
+            //const generatedId = generateItemId();
+            //if (key === "itemId"){
+                //newItem[key] = generatedId;
+            //} 
             
-            else if (key === "tags") {
+            if (key === "tags") {
                 if (value.length > 0) {
                     newItem[key] = value;
                     value.forEach((tag) => {
@@ -188,35 +194,23 @@ export default class Upload extends Component {
                 newItem[key] = value;
             }
         })
-
-        var imagePromises = [];
-        var imageURLs = [];
-        for(var i = 0; i < this.state.images.length; i++){
-            imagePromises.push(this.s3Request(this.state.images[i]));
-        }
-        Promise.all(imagePromises).then(function(res) {
-            imageURLs = res;
-        }).then(() => {
-            newItem["images"] = imageURLs;
-            axios.post('/items/add', newItem).then((res) => {
-                console.log(res.data);
-                this.setState({hasSent : true});
-                console.log(this.state.hasSent);
-            });
+        const postRoute = '../items/update/'+this.state.itemId;
+        axios.post(postRoute, newItem).then((res) => {
+            console.log(res.data);
+            this.setState({hasSent : true});
         });
-
-
 
     }
 
     render() {
         return (
             <div>
+                <Navbar/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group row">
                         <div className="col-6">
-                            <label>Title (required)</label>
-                            <input type="text" className="form-control" name="title" value={this.state.title} placeholder="Enter title..." onChange={this.handleChange} required/>
+                            <label>Title (cannot edit)</label>
+                            <input type="text" className="form-control" name="title" value={this.state.title} placeholder="Enter title..." onChange={this.handleChange} required disabled/>
                         </div>
                         <div className="col-4">
                             <label>Category (required)</label>
@@ -251,18 +245,6 @@ export default class Upload extends Component {
                     <div className="form-group">
                         <label>Description</label>
                         <textarea className="form-control rounded-0" name="description" rows="3" value={this.state.description} onChange={this.handleChange}></textarea>
-                    </div>
-                    <div className="form-group">
-                        <label>Image 1</label>
-                        <input type="file" className="form-control-file" name="image1" onChange={this.handleChange}></input>
-                    </div>
-                    <div className="form-group">
-                        <label>Image 2</label>
-                        <input type="file" className="form-control-file" name="image2" onChange={this.handleChange}></input>
-                    </div>
-                    <div className="form-group">
-                        <label>Image 3</label>
-                        <input type="file" className="form-control-file" name="image3" onChange={this.handleChange}></input>
                     </div>
                     <div className="form-group">
                         <label>Tags</label>
@@ -404,7 +386,7 @@ export default class Upload extends Component {
                         <button type="submit" className="btn btn-primary btn-lg">Submit</button>
                         </div>
                         <div className="col">
-                        {this.state.hasSent ? <VerifyUpload goToUpload={this.refreshUpload}/> : null}
+                        {this.state.hasSent ? <VerifyUpdate itemId={this.state.itemId}/> : null}
                         </div>
                     </div>
                 </form>

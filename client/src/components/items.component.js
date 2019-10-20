@@ -7,6 +7,9 @@ import ViewHistory from "./viewhistory.component";
 import ViewFinance from "./viewfinance.component";
 import ViewCurrentInfo from "./viewcurrentinfo.component";
 import TagGroup from './taggroup.component';
+import Navbar from "./navbar.component";
+// eslint-disable-next-line
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default class Items extends Component {
         constructor(props) {
@@ -54,11 +57,12 @@ export default class Items extends Component {
                 console.log(error);
               })
         }
-
         
     render() {
         
         return (
+            <div>
+            <Navbar/>
             <div className = "row">
                 <div className = "col">
 
@@ -68,7 +72,9 @@ export default class Items extends Component {
                     <br/>
                     <button type = "delete" className = "btn btn-primary btn-lg">Delete</button> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to= {'/edit/'+this.state.fetchedItem.itemId}>
                     <button type = "edit" className = "btn btn-primary btn-lg">Edit</button>
+                    </Link>
                     
                 </div>
                 <div className = "col">
@@ -79,6 +85,7 @@ export default class Items extends Component {
                     <br/>
                     
                 </div>
+            </div>
             </div>
         )
     }
