@@ -370,6 +370,7 @@ export default class ItemSearch extends Component {
                 <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '20px', gridAutoRows: 'minMax(100px, auto)'}}>
                     {this.itemList()}
                 </div>
+                <br/>
             </div>
         )
     }
