@@ -53,11 +53,15 @@ export default class ViewFinance extends Component {
                  </button>
                  <div className="collapse" id="financecollapse">
                      <ul className="list-group list-group-flush">
-                     <li className="list-group-item"> <b>Estimated value:</b> {this.state.fetchedItem.estimatedValue}</li>
+                     <li className="list-group-item"> <b>Estimated value:</b> ${this.state.fetchedItem.estimatedValue}</li>
                      <li className="list-group-item"> <b>Valuer: </b>{this.state.fetchedItem.valuer}</li>
-                     <li className="list-group-item"> <b>Insured value: </b> {this.state.fetchedItem.insuredValue}</li>
+                     <li className="list-group-item"> <b>Insured value: </b> ${this.state.fetchedItem.insuredValue}</li>
                      <li className="list-group-item"> <b>Insurer: </b>{this.state.fetchedItem.insurer}</li>
-                     <li className="list-group-item"> <b>Certified as authentic: </b> {this.state.fetchedItem.certifiedAuthentic}</li>
+                     {this.state.fetchedItem.certifiedAuthentic ? (
+                         <li className="list-group-item"> <b>Certified as authentic: </b> Yes</li>
+                     ):(
+                        <li className="list-group-item"> <b>Certified as authentic: </b> No</li>
+                     )}
                      </ul>
                  </div>
             </div>
