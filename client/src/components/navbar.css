@@ -1,0 +1,25 @@
+.navbar-logo {
+    height: 75px;
+}
+
+.whole-nav {
+    background: #ff9a00;
+    right: 0;
+    border-radius: 6px;
+
+}
+
+.nav-text {
+    color: white;
+    padding: 9px;
+    text-decoration: none;
+
+}
+
+.nav-text:hover {
+    color: white;
+    padding: 9px;
+    text-decoration: none;
+    font-weight:bold;
+
+}
