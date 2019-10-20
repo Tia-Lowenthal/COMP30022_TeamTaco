@@ -259,8 +259,8 @@ class Account extends Component {
       return (
         
         <div>
-          <h2>Artifacts Register</h2>
-          <div class="row">
+          <div class="title"><h2>Artifacts Register</h2></div>
+          <div class="row-sign">
             <div class="column1">
               {
                 (signInError) ? (
@@ -268,7 +268,7 @@ class Account extends Component {
                 ) : (null)
               }
               
-              <h4>Sign In</h4>
+              <div class="subhead"><h4>Sign In</h4></div>
               <input
                 type="email"
                 placeholder="Email"
@@ -283,17 +283,17 @@ class Account extends Component {
                 onChange={this.onTextboxChangeSignInPassword}
               />
               <br />
-              <button onClick={this.onSignIn}>Sign In</button>
+              <div class="signbutton"><button onClick={this.onSignIn}>Sign In</button></div>
+              
             </div>
-            <br />
-            <br />
+            
             <div class="column2">
               {
                 (signUpError) ? (
                   <p>{signUpError}</p>
                 ) : (null)
               }
-              <h4>Sign Up</h4>
+              <div class="subhead"><h4>Sign Up</h4></div>
               <input
                 type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
               <input
@@ -310,16 +310,19 @@ class Account extends Component {
                 value={signUpLastname}
                 onChange={this.onTextboxChangeSignUpLastname}
               /><br />
-              <button onClick={this.onSignUp}>Sign Up</button>
+              <div class="signbutton"><button onClick={this.onSignUp}>Sign Up</button></div>
+              
             </div>
           </div>
         </div>
       );
     }
 
+    
     return (
+      
       <div>
-        <p>Account</p>
+        <p>Are you sure you wish to logout?</p>
         <button onClick={this.logout}>Logout</button>
       </div>
     );

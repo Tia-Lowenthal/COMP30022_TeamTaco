@@ -1,34 +1,31 @@
-h2 {
+.title {
     margin:40 px;
     text-align: center;
     margin-top: 50px;
 }
 
-h4 {
+.subhead {
     margin-bottom: 20px
 }
 
-button {
+.signbutton {
     margin-top: 17px;
-}
-
-input {
-    margin-bottom: 3px;
 }
 
 .column1 {
     float: left;
     width: 50%;
     text-align: center;
-    border-right: 3px solid black;
-  }
+    
+}
 
 .column2 {
     float: left;
     width: 50%;
     text-align: center;
+    border-left: 3px solid black;
 }
 
-.row {
+.row-sign{
     margin-top: 70px;
 }
