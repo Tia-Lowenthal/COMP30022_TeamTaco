@@ -6,7 +6,7 @@ import Home from "./components/home.component";
 import Upload from "./components/upload.component";
 import Account from "./components/accounts.component";
 import Items from "./components/items.component";
-import Navbar from "./components/navbar.component";
+import Edit from "./components/edit.component";
 
 class App extends Component {
   render() {
@@ -18,6 +18,7 @@ class App extends Component {
           <Route exact path="/home" component={Home} />
           <Route exact path="/" component={Account}/>
           <Route path="/items/:itemId" component={Items}/>
+          <Route path="/edit/:itemId" component={Edit}/>
         </div>
       </Router>
     );
