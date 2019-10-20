@@ -298,7 +298,7 @@ export default class ItemSearch extends Component {
         return (
             <div className="entire-searchpage">
                 <div className="form-group">
-                    <div className="form-row-search">
+                    <div className="form-row">
                         <div className="col-5">
                             <input type="text" className="form-control" placeholder="Search..." value={this.state.searchQuery} onChange={this.handleSearchBar}/>
                         </div>
