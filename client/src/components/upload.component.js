@@ -9,8 +9,11 @@ export default class Upload extends Component {
         return (
             <div>
                 <Navbar/>
-                <h3 className="heading">Upload Item</h3>
-                <UploadForm/>
+                <br/>
+                <div className="upload-form">
+                    <h3 className="heading">Upload Item</h3>
+                    <UploadForm/>
+                </div>
             </div>
         )
     }
