@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import './items.component.css';
 
 export default class ItemInfo extends Component {
     constructor(props) {
@@ -51,10 +52,9 @@ export default class ItemInfo extends Component {
     render() {
         return (
             <div className = "infobox">
-                {this.state.fetchedItem.category} <br/>
-                
                 <h4> {this.state.fetchedItem.title} </h4>
-        
+                <i>{this.state.fetchedItem.category}</i>
+                <br/><br/>
                 <p> {this.state.fetchedItem.description} </p>
            </div>
         )

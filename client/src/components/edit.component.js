@@ -206,6 +206,9 @@ export default class Edit extends Component {
         return (
             <div>
                 <Navbar/>
+                <br/>
+                <div className="upload-form">
+                <h3 className="heading">Edit Item</h3>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group row">
                         <div className="col-6">
@@ -265,7 +268,7 @@ export default class Edit extends Component {
                             </div>
                             </div>
                             <div className="col">
-                            <button type="button" className="btn btn-primary" name="tagEnter" onClick={this.handleAddTag}>Add</button>
+                            <button type="button" className="add-button" name="tagEnter" onClick={this.handleAddTag}>Add</button>
                             </div>
                         </div>
                     </div>
@@ -273,7 +276,7 @@ export default class Edit extends Component {
                             <TagGroup tagArray={this.state.tags} handleDeleteTag={this.handleDeleteTag} mode="edit"/>
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#historyformcollapse" aria-expanded="false" aria-controls="historyformcollapse">
+                        <button className="dropdown-upload" type="button" data-toggle="collapse" data-target="#historyformcollapse" aria-expanded="false" aria-controls="historyformcollapse">
                             History
                         </button>
                         <div className="collapse" id="historyformcollapse">
@@ -306,7 +309,7 @@ export default class Edit extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#financeformcollapse" aria-expanded="false" aria-controls="financeformcollapse">
+                        <button className="dropdown-upload" type="button" data-toggle="collapse" data-target="#financeformcollapse" aria-expanded="false" aria-controls="financeformcollapse">
                             Valuation and Finance
                         </button>
                         <div className="collapse" id="financeformcollapse">
@@ -342,7 +345,7 @@ export default class Edit extends Component {
                         </div>
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#currentinfoformcollapse" aria-expanded="false" aria-controls="currentinfoformcollapse">
+                        <button className="dropdown-upload" type="button" data-toggle="collapse" data-target="#currentinfoformcollapse" aria-expanded="false" aria-controls="currentinfoformcollapse">
                             Current Info
                         </button>
                         <div className="collapse" id="currentinfoformcollapse">
@@ -383,13 +386,14 @@ export default class Edit extends Component {
                     </div>
                     <div className="row">
                         <div className="col-2">
-                        <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+                        <button type="submit" className="add-button">Submit</button>
                         </div>
                         <div className="col">
                         {this.state.hasSent ? <VerifyUpdate itemId={this.state.itemId}/> : null}
                         </div>
                     </div>
                 </form>
+                </div>
             </div>
         )
     }

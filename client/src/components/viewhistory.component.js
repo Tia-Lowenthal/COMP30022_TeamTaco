@@ -49,7 +49,7 @@ export default class ViewHistory extends Component {
     render() {
         return (
             <div>
-                 <div><button className="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#historycollapse" aria-expanded="true" aria-controls="historycollapse">
+                 <div><button className="item-expand" type="button" data-toggle="collapse" data-target="#historycollapse" aria-expanded="true" aria-controls="historycollapse">
                      History
                  </button>
                  </div>

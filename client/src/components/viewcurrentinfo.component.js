@@ -48,7 +48,7 @@ export default class ViewCurrentInfo extends Component {
     render() {
         return (
             <div>
-                 <button className="btn btn-primary btn-block" type="button" data-toggle="collapse" data-target="#currentinfocollapse" aria-expanded="false" aria-controls="currentinfocollapse">
+                 <button className="item-expand" type="button" data-toggle="collapse" data-target="#currentinfocollapse" aria-expanded="false" aria-controls="currentinfocollapse">
                      Current Info
                  </button>
                  <div className="collapse" id="currentinfocollapse">
