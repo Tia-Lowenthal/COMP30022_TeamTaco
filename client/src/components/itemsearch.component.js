@@ -358,10 +358,10 @@ export default class ItemSearch extends Component {
                             </div>
                         </div>
                         <div className="col"></div>
-                        <div className="col">
+                        <div className="col right-buttons">
                             <button type="button" className="search-button" onClick={this.handleSearchClick}>Search</button>
                         </div>
-                        <div className="col">
+                        <div className="col right-buttons">
                             <button type="button" className="clear-button" onClick={this.handleClearClick}>Clear Search</button>
                         </div>
                     </div>
