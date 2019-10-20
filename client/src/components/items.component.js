@@ -8,6 +8,8 @@ import ViewFinance from "./viewfinance.component";
 import ViewCurrentInfo from "./viewcurrentinfo.component";
 import TagGroup from './taggroup.component';
 import Navbar from "./navbar.component";
+// eslint-disable-next-line
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 export default class Items extends Component {
         constructor(props) {
@@ -56,6 +58,15 @@ export default class Items extends Component {
               })
         }
 
+    onDelete = () => {
+        axios.delete('/items/'+ this.currentItemId)
+            .then(response => {
+                console.log("response", response);
+                this.setState({
+                fetchedItem: response.data[0]
+        })});
+        window.location = '/home';
+    }
         
     render() {
         
@@ -69,9 +80,11 @@ export default class Items extends Component {
                     <b>Tags: </b> 
                     <TagGroup tagArray={this.state.fetchedItem.tags} mode="static"/>
                     <br/>
-                    <button type = "delete" className = "btn btn-primary btn-lg">Delete</button> 
+                    <button type = "delete" className = "btn btn-primary btn-lg" onClick={this.onDelete}>Delete</button> 
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to= {'/edit/'+this.state.fetchedItem.itemId}>
                     <button type = "edit" className = "btn btn-primary btn-lg">Edit</button>
+                    </Link>
                     
                 </div>
                 <div className = "col">

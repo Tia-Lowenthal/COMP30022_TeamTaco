@@ -4,32 +4,82 @@
     margin-top: 50px;
 }
 
+.entire-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
+    background:#ff9a00;
+}
+
 .subhead {
-    margin-bottom: 20px
+    margin-bottom: 25px
 }
 
 .signbutton {
     margin-top: 17px;
+    background-color: white;
+    border: 1px solid #ff9a00;
+    color:  #ff9a00;
+    text-decoration: none;
+    border-radius: 6px;
+    height: 38px;
+    width: 120px;
+}
+
+.signbutton:hover{
+    margin-top: 17px;
+    background-color: #ff9a00;
+    border: 1px solid #ff9a00;
+    color:  white;
+    text-decoration: none;
+    border-radius: 6px;
+    height: 38px;
+    width: 120px;
 }
 
 .column1 {
-    float: left;
-    width: 50%;
-    text-align: center;
-    
+    background: white;
+    display: inline-block;
+    vertical-align: top;
+    padding: 3%;
+    margin-right: 30px;
+    width: 400px;
+    height: 450px;
+    border-radius: 6px;
 }
 
 .column2 {
-    float: left;
-    width: 50%;
-    text-align: center;
-    border-left: 3px solid black;
+    
+    background: white;
+    display: inline-block;
+    padding: 3%;
+    margin-left: 30px;
+    width: 400px;
+    height: 450px;
+    border-radius: 6px;
+    
+
+    
 }
 
 .row-sign{
-    margin-top: 70px;
+    
+    text-align: center;
+    padding: 5%;
+}
+
+
+
+.form-control:focus{
+    border-color: #cccccc;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .hide-this{
     display: none;
+
 }

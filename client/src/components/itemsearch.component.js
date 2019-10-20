@@ -7,12 +7,15 @@ import placeholder from "./Assets/placeholder.jpg";
 
 
 const Item = props => (
-    <div className="item-tile">
-        <img src={props.image}/><br/>
-        <div className="item-title"><Link to= {`/items/${props.item.itemId}`}>{props.item.title}</Link></div>
-        <i>{props.item.category}</i>   
-        <div>{props.item.description}</div>
+    <div className="item-tile"><Link className="tile-link" to= {`/items/${props.item.itemId}`}>
+        <div className="tile-image">
+            <img src={props.image}/>
+        </div>
+        <div className="item-title">{props.item.title}</div>
+        <i className="tile-cat">{props.item.category}</i>   
+        <div className="tile-desc">{props.item.description}</div>
         <br/>
+        </Link>
     </div>
 )
 
@@ -293,28 +296,28 @@ export default class ItemSearch extends Component {
 
     render() {
         return (
-            <div>
+            <div className="entire-searchpage">
                 <div className="form-group">
                     <div className="form-row">
                         <div className="col-5">
                             <input type="text" className="form-control" placeholder="Search..." value={this.state.searchQuery} onChange={this.handleSearchBar}/>
                         </div>
-                        <div className="col input-caption">
+                        <div className="col-2">
                             <select className="form-control" name="searchType" value={this.state.searchType} onChange={this.handleSearchTypeChange}>
                                 {this.searchTypes.map(currentSearchType => {
                                     return (<option key={currentSearchType}>{currentSearchType}</option>)
                                 })}
                             </select>
-                            <small>*field to search by</small>
+                            <small className="field">* field to search by</small>
                         </div>
                         <div className="col">
                             <div className="dropdown">
-                            <button className="btn btn-outline-secondary btn-block dropdown-toggle" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button className="filter" type="button" id="filters" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select Filters
                             </button>
                             <div className="dropdown-menu">
                                 <form className="px-3 py-3">
-                                <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
+                                <button className="clear-button" type="button" data-toggle="collapse" data-target="#categoryCollapse" aria-expanded="false" aria-controls="categoryCollapse">
                                     By Category
                                 </button>
                                 <div className="form-check collapse py-3" id="categoryCollapse">
@@ -326,7 +329,7 @@ export default class ItemSearch extends Component {
                                 <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "category", e)}>Uncheck All</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#priceCollapse" aria-expanded="false" aria-controls="priceCollapse">
+                                <button className="clear-button" type="button" data-toggle="collapse" data-target="#priceCollapse" aria-expanded="false" aria-controls="priceCollapse">
                                     By Value
                                 </button>
                                 <div className="form-check collapse py-3" id="priceCollapse">
@@ -338,7 +341,7 @@ export default class ItemSearch extends Component {
                                 <div><button type="button" className="btn btn-light btn-sm btn-block" onClick={(e) => this.handleCheckType(false, "price", e)}>Uncheck All</button></div>
                                 </div>
                                 <div className="dropdown-divider"></div>
-                                <button className="btn btn-dark btn-block" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse">
+                                <button className="clear-button" type="button" data-toggle="collapse" data-target="#tagCollapse" aria-expanded="false" aria-controls="tagCollapse">
                                     By Tags
                                 </button>
                                 <div className="form-check collapse py-3" id="tagCollapse">
@@ -354,18 +357,20 @@ export default class ItemSearch extends Component {
                             </div>
                             </div>
                         </div>
+                        <div className="col"></div>
                         <div className="col">
-                            <button type="button" className="btn btn-primary" onClick={this.handleSearchClick}>Search</button>
+                            <button type="button" className="search-button" onClick={this.handleSearchClick}>Search</button>
                         </div>
                         <div className="col">
-                            <button type="button" className="btn btn-outline-danger" onClick={this.handleClearClick}>Clear Search</button>
+                            <button type="button" className="clear-button" onClick={this.handleClearClick}>Clear Search</button>
                         </div>
                     </div>
                 </div>
                 <br/>
-                <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '12px', gridAutoRows: 'minMax(100px, auto)'}}>
+                <div style={{display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gridGap: '20px', gridAutoRows: 'minMax(100px, auto)'}}>
                     {this.itemList()}
                 </div>
+                <br/>
             </div>
         )
     }
