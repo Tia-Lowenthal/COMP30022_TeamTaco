@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 import toBoolean from 'validator/lib/toBoolean';
 import toInt from 'validator/lib/toInt';
 import isInt from 'validator/lib/isInt';
@@ -20,6 +21,14 @@ const TagOptionRender = props => (
         <label className="form-check-label" htmlFor={props.id}>
         {props.id}
         </label>
+    </div>
+)
+
+const VerifyUpload = props => (
+    <div className="row">
+       New item successfully added to the register!
+       <button type="button" onClick={props.goToUpload}>Upload another</button>
+       <button type="button" onClick={props.goToHome}>Return home</button>
     </div>
 )
 
@@ -54,7 +63,8 @@ export default class Upload extends Component {
             displayStatus: '',
             needLicense: '',
             itemId: '',
-            userId: "1"
+            userId: "1",
+            hasSent: false
         }
         this.bannedTags = ["Untagged Items", "Unknown Value", "tags", "title", "category", "condition", "description"];
     }
@@ -67,6 +77,14 @@ export default class Upload extends Component {
          .catch((error) => {
             console.log(error);
          })
+    }
+
+    returnHome() {
+        window.location = '/home';
+    }
+
+    refreshUpload() {
+        window.location = '/upload';
     }
 
     handleTagClick = (e) => {
@@ -167,7 +185,7 @@ export default class Upload extends Component {
                         }
                     })  
                 }
-            } else if (value !== '' && key !== "tagBar" && key !== "dbTags" && key !== "tagSelect"){
+            } else if (value !== '' && key !== "tagBar" && key !== "dbTags" && key !== "tagSelect" && key !== "hasSent"){
                 newItem[key] = value;
             }
         })
@@ -181,12 +199,14 @@ export default class Upload extends Component {
             imageURLs = res;
         }).then(() => {
             newItem["images"] = imageURLs;
-            axios.post('/items/add', newItem).then(res => console.log(res.data));
+            axios.post('/items/add', newItem).then((res) => {
+                console.log(res.data);
+                this.setState({hasSent : true});
+                console.log(this.state.hasSent);
+            });
         });
 
-   
 
-        /*window.location = '/';*/
 
     }
 
@@ -380,8 +400,13 @@ export default class Upload extends Component {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className="row">
+                        <div className="col-2">
                         <button type="submit" className="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                        <div className="col">
+                        {this.state.hasSent ? <VerifyUpload goToHome={this.returnHome} goToUpload={this.refreshUpload}/> : null}
+                        </div>
                     </div>
                 </form>
             </div>
