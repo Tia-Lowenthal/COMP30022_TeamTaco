@@ -32,7 +32,8 @@ const itemSchema = new Schema({
     dateAcquired: { type: Date },
     history: { type: String },
     owner: { type: String },
-    tags: [ String ]
+    tags: [ String ],
+    images: [ String ]
 }, {
     timestamps: true
 });

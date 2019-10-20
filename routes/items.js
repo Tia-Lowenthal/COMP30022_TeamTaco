@@ -38,6 +38,7 @@ router.route('/add').post((req, res) => {
     const history = req.body.history;
     const owner = req.body.owner;
     const tags = req.body.tags;
+    const images = req.body.images;
     
     const newItem = new Item({
         itemId,
@@ -69,7 +70,8 @@ router.route('/add').post((req, res) => {
         dateAcquired,
         history,
         owner,
-        tags
+        tags,
+        images
     })
 
 

@@ -3,9 +3,12 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import axios from 'axios';
 import './itemsearch.component.css';
+import placeholder from "./Assets/placeholder.jpg";
+
 
 const Item = props => (
     <div className="item-tile">
+        <img src={props.image}/><br/>
         <div className="item-title"><Link to= {`/items/${props.item.itemId}`}>{props.item.title}</Link></div>
         <i>{props.item.category}</i>   
         <div>{props.item.description}</div>
@@ -105,7 +108,12 @@ export default class ItemSearch extends Component {
 
     itemList() {
         return this.state.filtered.map(currentitem => {
-          return <Item item={currentitem} key={currentitem.itemId}/>;
+            if(currentitem.images.length >0){
+                return <Item item={currentitem} key={currentitem.itemId} image={currentitem.images[0]}/>;
+            }
+            else{
+                return <Item item={currentitem} key={currentitem.itemId} image={placeholder}/>;
+            }
         })
     }
 

@@ -4,6 +4,7 @@ import toInt from 'validator/lib/toInt';
 import isInt from 'validator/lib/isInt';
 import axios from 'axios';
 import TagGroup from './taggroup.component';
+import { resolve } from 'path';
 
 function generateItemId(){
     var today = new Date();
@@ -33,6 +34,7 @@ export default class Upload extends Component {
             image1: '',
             image2: '',
             image3: '',
+            images: [],
             tagBar: '',
             tagSelect: [],
             dbTags: [],
@@ -116,11 +118,31 @@ export default class Upload extends Component {
                 this.setState({[key]: toInt(val.replace(/\D/g,''), false)});
             }
         } else if (key === "image1" || key === "image2" || key === "image3") {
-            this.setState({[key]: e.target.files[0]});
+            var currImages= this.state.images;
+            currImages.push(e.target.files[0]);
+            this.setState({["images"]: currImages});
         } else{
             this.setState({[key]: val});
         }
     }
+
+
+    s3Request = (file) => {
+        return new Promise((resolve, reject) => {
+            let formData = new FormData();
+            formData.append("images", file);
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            };
+            axios.post('/images/add', formData, config).then((res) => {
+                resolve(res.data);
+            });
+        });
+
+    }
+
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -132,17 +154,9 @@ export default class Upload extends Component {
             const generatedId = generateItemId();
             if (key === "itemId"){
                 newItem[key] = generatedId;
-            } else if (value !== '' && (key === "image1" || key === "image2" || key === "image3")) {
-                let formData = new FormData();
-                formData.append("images", value);
-                formData.append("itemId", generatedId);
-                const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data'
-                    }
-                };
-                axios.post('/images/add', formData, config).then(res => console.log(res.data));
-            } else if (key === "tags") {
+            } 
+            
+            else if (key === "tags") {
                 if (value.length > 0) {
                     newItem[key] = value;
                     value.forEach((tag) => {
@@ -158,7 +172,19 @@ export default class Upload extends Component {
             }
         })
 
-        axios.post('/items/add', newItem).then(res => console.log(res.data));
+        var imagePromises = [];
+        var imageURLs = [];
+        for(var i = 0; i < this.state.images.length; i++){
+            imagePromises.push(this.s3Request(this.state.images[i]));
+        }
+        Promise.all(imagePromises).then(function(res) {
+            imageURLs = res;
+        }).then(() => {
+            newItem["images"] = imageURLs;
+            axios.post('/items/add', newItem).then(res => console.log(res.data));
+        });
+
+   
 
         /*window.location = '/';*/
 

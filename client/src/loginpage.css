@@ -1,0 +1,31 @@
+.title {
+    margin:40 px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.subhead {
+    margin-bottom: 20px
+}
+
+.signbutton {
+    margin-top: 17px;
+}
+
+.column1 {
+    float: left;
+    width: 50%;
+    text-align: center;
+    
+}
+
+.column2 {
+    float: left;
+    width: 50%;
+    text-align: center;
+    border-left: 3px solid black;
+}
+
+.row-sign{
+    margin-top: 70px;
+}

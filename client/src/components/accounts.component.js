@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import 'whatwg-fetch';
+import '../loginpage.css';
 
 
 
@@ -256,65 +257,72 @@ class Account extends Component {
 
     if (!token) {
       return (
+        
         <div>
-          <div>
-            {
-              (signInError) ? (
-                <p>{signInError}</p>
-              ) : (null)
-            }
-            <p>Sign In</p>
-            <input
-              type="email"
-              placeholder="Email"
-              value={signInEmail}
-              onChange={this.onTextboxChangeSignInEmail}
-            />
-            <br />
-            <input
-              type="password"
-              placeholder="Password"
-              value={signInPassword}
-              onChange={this.onTextboxChangeSignInPassword}
-            />
-            <br />
-            <button onClick={this.onSignIn}>Sign In</button>
+          <div class="title"><h2>Artifacts Register</h2></div>
+          <div class="row-sign">
+            <div class="column1">
+              {
+                (signInError) ? (
+                  <p>{signInError}</p>
+                ) : (null)
+              }
+              
+              <div class="subhead"><h4>Sign In</h4></div>
+              <input
+                type="email"
+                placeholder="Email"
+                value={signInEmail}
+                onChange={this.onTextboxChangeSignInEmail}
+              />
+              <br />
+              <input
+                type="password"
+                placeholder="Password"
+                value={signInPassword}
+                onChange={this.onTextboxChangeSignInPassword}
+              />
+              <br />
+              <div class="signbutton"><button onClick={this.onSignIn}>Sign In</button></div>
+              
+            </div>
+            
+            <div class="column2">
+              {
+                (signUpError) ? (
+                  <p>{signUpError}</p>
+                ) : (null)
+              }
+              <div class="subhead"><h4>Sign Up</h4></div>
+              <input
+                type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
+              <input
+                type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br />
+              <input
+                type="firstname"
+                placeholder="First Name"
+                value={signUpFirstname}
+                onChange={this.onTextboxChangeSignUpFirstname}
+              /><br />
+              <input
+                type="lastname"
+                placeholder="Last Name"
+                value={signUpLastname}
+                onChange={this.onTextboxChangeSignUpLastname}
+              /><br />
+              <div class="signbutton"><button onClick={this.onSignUp}>Sign Up</button></div>
+              
+            </div>
           </div>
-          <br />
-          <br />
-          <div>
-            {
-              (signUpError) ? (
-                <p>{signUpError}</p>
-              ) : (null)
-            }
-            <p>Sign Up</p>
-            <input
-              type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
-            <input
-              type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br />
-            <input
-              type="firstname"
-              placeholder="First Name"
-              value={signUpFirstname}
-              onChange={this.onTextboxChangeSignUpFirstname}
-            /><br />
-            <input
-              type="lastname"
-              placeholder="Last Name"
-              value={signUpLastname}
-              onChange={this.onTextboxChangeSignUpLastname}
-            /><br />
-            <button onClick={this.onSignUp}>Sign Up</button>
-          </div>
-
         </div>
       );
     }
 
+    
     return (
+      
       <div>
-        <p>Account</p>
+        <p>Are you sure you wish to logout?</p>
         <button onClick={this.logout}>Logout</button>
       </div>
     );
