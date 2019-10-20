@@ -23,7 +23,6 @@ class Account extends Component {
 
     this.state = {
       isLoading: true,
-      justLoggedIn: false,
       token: '',
       signUpError: '',
       signInError: '',
@@ -178,11 +177,8 @@ class Account extends Component {
     } = this.state;
 
     this.setState({
-      isLoading: true,
-      justLoggedIn: true
+      isLoading: true
     });
-
-    console.log("in sign in", this.state.justLoggedIn);
 
     // Post request to backend
     fetch('/users/login', {
@@ -221,10 +217,8 @@ class Account extends Component {
 
   logout() {
     this.setState({
-      isLoading: true,
-      justLoggedIn: false
+      isLoading: true
     });
-    console.log("in logout", this.state.justLoggedIn);
 
     const obj = getFromStorage('the_main_app');
     if (obj && obj.token) {
@@ -256,7 +250,6 @@ class Account extends Component {
   render() {
     const {
       isLoading,
-      justLoggedIn,
       token,
       signInError,
       signInEmail,
@@ -271,11 +264,8 @@ class Account extends Component {
     // if (isLoading) {
     //   return (<div><p>Loading...</p></div>);
     // }
-    // if (justLoggedIn) {
-    //   return (null);
-    // }
-    console.log("in render", justLoggedIn);
-    if (!token && !justLoggedIn) {
+    
+    if (!token) {
       return (
         
         <div>
