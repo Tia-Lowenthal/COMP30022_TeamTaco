@@ -82,10 +82,6 @@ export default class Upload extends Component {
          })
     }
 
-    returnHome() {
-        window.location = '/home';
-    }
-
     refreshUpload() {
         window.location = '/upload';
     }
@@ -408,7 +404,7 @@ export default class Upload extends Component {
                         <button type="submit" className="btn btn-primary btn-lg">Submit</button>
                         </div>
                         <div className="col">
-                        {this.state.hasSent ? <VerifyUpload goToHome={this.returnHome} goToUpload={this.refreshUpload}/> : null}
+                        {this.state.hasSent ? <VerifyUpload goToUpload={this.refreshUpload}/> : null}
                         </div>
                     </div>
                 </form>
