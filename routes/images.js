@@ -1,33 +1,9 @@
 const router = require('express').Router();
 let Images = require('../models/images.model');
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-  destination: function(req, file, callback) {
-    callback(null, './uploads');
-  },
-  filename: function(req, file, callback) {
-    callback(null, new Date().toISOString().replace(/:/g, '-') + file.originalname);
-  }
-});
-
-const fileFilter = (req, file, callback) => {
-  // only accept files of type jpeg, jpg, png, pdf and html
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png' || file.mimetype == 'application/pdf' || file.mimetype == 'text/html') {
-    callback(null, true);
-  } else {
-    callback(new Error('incorrect file type'), false);
-  }
-};
+const upload = require('./config/imageConfig.js');
 
 
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 4// only accept images up to size 4MB
-  },
-  fileFilter: fileFilter
-});
+const singleUpload = upload.single('images');
 
 
 router.route('/').get((req, res) => {
@@ -44,10 +20,15 @@ router.route('/:itemId').get((req, res) => {
 });
 
 
-router.route('/add').post(upload.single('images'), (req, res) => {
+router.route('/add').post(singleUpload, (req, res) => {
+  console.log(req.file);
+  res.send(req.file.location);
+});
+
+router.route('/mongoadd').post((req, res) => {
   console.log(req.file);  
   const itemId = req.body.itemId;
-  const images = req.file.path;
+  const images = req.body.images;
   
   const newImages = new Images({
       itemId,
@@ -56,7 +37,7 @@ router.route('/add').post(upload.single('images'), (req, res) => {
 
 
     newImages.save()
-        .then(() => res.json('Image added!'))
+        .then(() => res.json('Image added to MongoDB!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 

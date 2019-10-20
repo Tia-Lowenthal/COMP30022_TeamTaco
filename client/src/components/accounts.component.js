@@ -328,8 +328,8 @@ class Account extends Component {
       );
     }
 
-    
     return (null);
+
   }
 }
 
