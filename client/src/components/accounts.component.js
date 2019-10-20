@@ -258,9 +258,10 @@ class Account extends Component {
     if (!token) {
       return (
         
-        <div>
+        <div class="entire-page">
           <div class="title"><h2>Artifacts Register</h2></div>
           <div class="row-sign">
+            
             <div class="column1">
               {
                 (signInError) ? (
@@ -275,17 +276,18 @@ class Account extends Component {
                 value={signInEmail}
                 onChange={this.onTextboxChangeSignInEmail}
               />
-              <br />
+              <br /><br />
               <input
                 type="password"
                 placeholder="Password"
                 value={signInPassword}
                 onChange={this.onTextboxChangeSignInPassword}
               />
-              <br />
-              <div class="signbutton"><button onClick={this.onSignIn}>Sign In</button></div>
+              <br /><br />
+              <div ><button class="signbutton" onClick={this.onSignIn}>Sign In</button></div>
               
             </div>
+            
             
             <div class="column2">
               {
@@ -295,26 +297,28 @@ class Account extends Component {
               }
               <div class="subhead"><h4>Sign Up</h4></div>
               <input
-                type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
+                type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br /><br />
               <input
-                type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br />
+                type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br /><br />
               <input
                 type="firstname"
                 placeholder="First Name"
                 value={signUpFirstname}
                 onChange={this.onTextboxChangeSignUpFirstname}
-              /><br />
+              /><br /><br />
               <input
                 type="lastname"
                 placeholder="Last Name"
                 value={signUpLastname}
                 onChange={this.onTextboxChangeSignUpLastname}
-              /><br />
-              <div class="signbutton"><button onClick={this.onSignUp}>Sign Up</button></div>
+              /><br /><br />
+              <div ><button class="signbutton" onClick={this.onSignUp}>Sign Up</button></div>
               
             </div>
+            
           </div>
         </div>
+        
       );
     }
 
