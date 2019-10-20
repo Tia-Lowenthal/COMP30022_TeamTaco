@@ -1,0 +1,45 @@
+.heading {
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+.add-button {
+    background-color: #ff9a00;
+    border: 1px solid #ff9a00;
+    color:  white;
+    text-decoration: none;
+    border-radius: 6px;
+    height: 38px;
+    width: 100px;
+}
+
+.dropdown {
+    background-color: #ff9a00;
+    border: 1px solid #ff9a00;
+    color:  white;
+    text-decoration: none;
+    border-radius: 6px;
+    height: 38px;
+    width: 1110px;
+}
+
+.form-control {
+    border: 1px solid #ff9a00;
+    border-radius: 6px;
+}
+
+.form-control:focus{
+    border-color: #ff9a00;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.dropdown-toggle {
+    background-color: white;
+    border: 1px solid #ff9a00;
+    border-radius: 3px;
+}
