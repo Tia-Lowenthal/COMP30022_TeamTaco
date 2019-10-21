@@ -21,11 +21,13 @@ const TagOptionRender = props => (
 const VerifyUpdate = props => (
     <div className="row">
        New item successfully updated in the register!
+       <div className="col-1"></div>
        <Link to= {'/items/'+props.itemId}>
-            <button type = "button">Go to item</button>
+            <button type = "button" className="search-button">Go to item</button>
        </Link>
+       <div className="col-1"></div>
        <Link to= {'/home'}>
-            <button type = "button">Return home</button>
+            <button type = "button" className="search-button">Return home</button>
        </Link>
     </div>
 )
@@ -88,9 +90,15 @@ export default class Edit extends Component {
         window.location = '/home';
     }
 
-    //refreshItem() {
-        //window.location = '/item/'+this.state.itemId;
-    //}
+    onDelete = () => {
+        axios.delete('/items/'+ this.state.itemId)
+            .then(response => {
+                console.log("response", response);
+                this.setState({
+                fetchedItem: response.data[0]
+        })});
+        window.location = '/home';
+    }
 
     handleTagClick = (e) => {
         if (e.target.checked){
@@ -208,7 +216,10 @@ export default class Edit extends Component {
                 <Navbar/>
                 <br/>
                 <div className="upload-form">
-                <h3 className="heading">Edit Item</h3>
+                    <h3 className="heading">Edit Item</h3>
+                    <button type = "delete" className = "search-button" onClick={this.onDelete}>Delete Item</button>
+                <div className="row"></div>
+                <br/>
                 <form onSubmit={this.onSubmit}>
                     <div className="form-group row">
                         <div className="col-6">

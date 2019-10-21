@@ -58,15 +58,7 @@ export default class Items extends Component {
               })
         }
 
-    onDelete = () => {
-        axios.delete('/items/'+ this.currentItemId)
-            .then(response => {
-                console.log("response", response);
-                this.setState({
-                fetchedItem: response.data[0]
-        })});
-        window.location = '/home';
-    }
+
         
     render() {
         
@@ -82,8 +74,6 @@ export default class Items extends Component {
                     <br/>
                     <TagGroup tagArray={this.state.fetchedItem.tags} mode="static"/>
                     <br/>
-                    <button type = "delete" className = "search-button" onClick={this.onDelete}>Delete</button> 
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to= {'/edit/'+this.currentItemId}>
                     <button type = "edit" className = "search-button">Edit</button>
                     </Link>
