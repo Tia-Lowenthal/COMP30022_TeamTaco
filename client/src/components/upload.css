@@ -50,3 +50,23 @@
     padding-left: 50px;
     padding-right: 50px;
 }
+
+.uploadanother-button {
+    background-color: #ff9a00;
+    border: 1px solid #ff9a00;
+    color:  white;
+    text-decoration: none;
+    border-radius: 6px;
+    height: 38px;
+    width: 140px;
+}
+
+.uploadanother-button:hover {
+    background-color: #de8600;
+    color: white;
+    border: 1px solid #de8600;
+    text-decoration: none;
+    border-radius: 6px;
+    height: 38px;
+    width: 140px;
+}

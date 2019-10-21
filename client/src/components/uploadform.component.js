@@ -28,9 +28,11 @@ const TagOptionRender = props => (
 const VerifyUpload = props => (
     <div className="row">
        New item successfully added to the register!
-       <button type="button" onClick={props.goToUpload}>Upload another</button>
+       <div className="col-1"></div>
+       <button type="button" className="uploadanother-button"onClick={props.goToUpload}>Upload another</button>
+       <div className="col-1"></div>
        <Link to= {'/home'}>
-            <button type = "button">Return home</button>
+            <button type = "button" className="search-button">Return home</button>
        </Link>
     </div>
 )
@@ -256,6 +258,7 @@ export default class Upload extends Component {
                         <div className="col-4">
                             <label>Image 1</label>
                             <input type="file" className="form-control-file" name="image1" onChange={this.handleChange}></input>
+                            <small className="field">accepted file types: jpg, jpeg, png, pdf, html</small>
                         </div>
                         <div className="col-4">
                             <label>Image 2</label>
