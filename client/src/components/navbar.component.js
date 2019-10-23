@@ -13,7 +13,7 @@ export default class Navbar extends Component {
     render() {
         
         return (
-            <div class="whole-nav">
+            <div className="whole-nav">
                 <nav className="navbar navbar-expand-lg navbar-light">
                     <Link to="/home" className="navbar-brand navbar-logo"><img src = {logo}></img></Link>
                     <div className="collpase navbar-collapse">
@@ -25,7 +25,7 @@ export default class Navbar extends Component {
                         <Link to="/upload" className="nav-text">Upload</Link>
                         </li>
                         <li className="navbar-item">
-                        <div class="hide-this"><Account ref={account => this.account = account} /></div>
+                        <div className="hide-this"><Account ref={account => this.account = account} /></div>
                         <Link to="" onClick={this.triggerLogout.bind(this)}className="nav-text">Logout</Link>
                         </li>
                     </ul>

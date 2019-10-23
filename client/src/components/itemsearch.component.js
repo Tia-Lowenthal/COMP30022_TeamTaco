@@ -173,6 +173,11 @@ export default class ItemSearch extends Component {
     handleSearchClick = (e) => {
         let currentList = this.state.items;
         let currentSearchType = this.state.searchType.toLowerCase();
+        if (currentSearchType === "currentlocation") {
+            currentSearchType = "currentLocation";
+        } else if (currentSearchType === "placeoforigin") {
+            currentSearchType = "placeOfOrigin";
+        }
         let newList = [];
         // filter by title
         if (this.state.searchQuery !== ""){
