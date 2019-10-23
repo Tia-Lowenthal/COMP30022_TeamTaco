@@ -268,61 +268,61 @@ class Account extends Component {
     if (!token) {
       return (
         
-        <div class="entire-page">
-          <div class="title"><img src = {logo}></img></div>
-          <div class="row-sign">
+        <div className="entire-page">
+          <div className="title"><img src = {logo}></img></div>
+          <div className="row-sign">
             
-            <div class="column1">
+            <div className="column1">
               {
                 (signInError) ? (
                   <p>{signInError}</p>
                 ) : (null)
               }
               
-              <div class="subhead"><h4>Sign In</h4></div>
-              <input class="form-control"
+              <div className="subhead"><h4>Sign In</h4></div>
+              <input className="form-control"
                 type="email"
                 placeholder="Email"
                 value={signInEmail}
                 onChange={this.onTextboxChangeSignInEmail}
               />
               <br />
-              <input class="form-control"
+              <input className="form-control"
                 type="password"
                 placeholder="Password"
                 value={signInPassword}
                 onChange={this.onTextboxChangeSignInPassword}
               />
               <br />
-              <div ><button class="signbutton" onClick={this.onSignIn}>Sign In</button></div>
+              <div ><button className="signbutton" onClick={this.onSignIn}>Sign In</button></div>
               
             </div>
             
             
-            <div class="column2">
+            <div className="column2">
               {
                 (signUpError) ? (
                   <p>{signUpError}</p>
                 ) : (null)
               }
-              <div class="subhead"><h4>Register</h4></div>
-              <input class="form-control"
+              <div className="subhead"><h4>Register</h4></div>
+              <input className="form-control"
                 type="email" placeholder="Email" value={signUpEmail} onChange={this.onTextboxChangeSignUpEmail}/><br />
-              <input class="form-control"
+              <input className="form-control"
                 type="password" placeholder="Password" value={signUpPassword} onChange={this.onTextboxChangeSignUpPassword}/><br />
-              <input class="form-control"
+              <input className="form-control"
                 type="firstname"
                 placeholder="First Name"
                 value={signUpFirstname}
                 onChange={this.onTextboxChangeSignUpFirstname}
               /><br />
-              <input class="form-control"
+              <input className="form-control"
                 type="lastname"
                 placeholder="Last Name"
                 value={signUpLastname}
                 onChange={this.onTextboxChangeSignUpLastname}
               /><br />
-              <div ><button class="signbutton" onClick={this.onSignUp}>Register</button></div>
+              <div ><button className="signbutton" onClick={this.onSignUp}>Register</button></div>
               
             </div>
             
