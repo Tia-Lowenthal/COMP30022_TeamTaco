@@ -1,5 +1,5 @@
 /* This component (App.js) contains all the routes for each page in the web app
-    - Written by Shuzann Hoh and Kaia Reyes, for COMP30022 IT Project
+    - Written by Shuzann Hoh and Karina Reyes, for COMP30022 IT Project
 */
 
 import React, { Component } from "react";

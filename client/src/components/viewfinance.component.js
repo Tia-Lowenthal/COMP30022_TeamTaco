@@ -1,5 +1,5 @@
 /* This component (viewfinance.component.js) displays the finance details of the artifact on individual item page
-    - Written by Julia Zhang, for COMP30022 IT Project
+    - Written by Julia Zhang and Karina Reyes, for COMP30022 IT Project
 */
 import React, { Component } from 'react';
 import axios from 'axios';
@@ -61,11 +61,9 @@ export default class ViewFinance extends Component {
                      <li className="list-group-item"> <b>Valuer: </b>{this.state.fetchedItem.valuer}</li>
                      <li className="list-group-item"> <b>Insured value: </b> {"insuredValue" in this.state.fetchedItem ? "$" : null} {this.state.fetchedItem.insuredValue}</li>
                      <li className="list-group-item"> <b>Insurer: </b>{this.state.fetchedItem.insurer}</li>
-                     {this.state.fetchedItem.certifiedAuthentic ? (
-                         <li className="list-group-item"> <b>Certified as authentic: </b> Yes</li>
-                     ):(
-                        <li className="list-group-item"> <b>Certified as authentic: </b> No</li>
-                     )}
+                     {this.state.fetchedItem.certifiedAuthentic===true && <li className="list-group-item"> <b>Certified as authentic: </b> Yes</li>}
+                     {this.state.fetchedItem.certifiedAuthentic===false && <li className="list-group-item"> <b>Certified as authentic: </b> No</li>}
+                     {typeof(this.state.fetchedItem.certifiedAuthentic) === 'undefined' && <li className="list-group-item"> <b>Certified as authentic: </b></li>}
                      </ul>
                  </div>
             </div>
