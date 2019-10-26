@@ -1,3 +1,6 @@
+/* This component (viewhistory.component.js) displays the history details of the artifact on individual item page
+    - Written by Julia Zhang, for COMP30022 IT Project
+*/
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -33,6 +36,7 @@ export default class ViewHistory extends Component {
         } 
     }
     
+    //retrieve item data from backend
     componentDidMount() {
         axios.get('/items/' + this.props.currentItemId)
         .then(response => {

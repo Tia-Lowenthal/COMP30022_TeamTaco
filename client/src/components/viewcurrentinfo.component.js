@@ -1,3 +1,6 @@
+/* This component (viewcurrentinfo.component.js) displays the current information of the artifact on individual item page
+    - Written by Julia Zhang, for COMP30022 IT Project
+*/
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -32,6 +35,7 @@ export default class ViewCurrentInfo extends Component {
         } 
     }
     
+    // retrieve item data from backend
     componentDidMount() {
         axios.get('/items/' + this.props.currentItemId)
         .then(response => {

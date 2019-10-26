@@ -1,3 +1,7 @@
+/* This component (home.component.js) displays home page of the artifacts register
+    - Written by Julia Zhang, for COMP30022 IT Project
+*/
+
 import React, { Component } from 'react';
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
