@@ -1,8 +1,5 @@
-const assert = require('assert');
 var chai = require('chai')
 var chaiHttp = require('chai-http');
-supertest = require('supertest')
-let should = chai.should();
 chai.use(chaiHttp);
 const invalidUserCredentials = {
     "email": 'invalidemail@gmail.com', 
