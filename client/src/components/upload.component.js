@@ -1,3 +1,5 @@
+/* This component (upload.component.js) houses the uploading of new artifacts.
+- Written by Shuzann Hoh for COMP30022 IT Project*/
 import React, { Component } from 'react';
 
 import UploadForm from "./uploadform.component";
