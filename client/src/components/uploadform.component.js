@@ -1,3 +1,5 @@
+/* This component (uploadform.component.js) handles the addition of a new artifact to the register.
+- Written by Shuzann Hoh and Tia Lowenthal for COMP30022 IT Project*/
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import toBoolean from 'validator/lib/toBoolean';
@@ -8,6 +10,7 @@ import TagGroup from './taggroup.component';
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+// generates a unique item id from the date and time of creation
 function generateItemId(){
     var today = new Date();
     var date = parseInt(today.getFullYear().toString()+(today.getMonth()+1).toString()+today.getDate().toString());
@@ -16,6 +19,7 @@ function generateItemId(){
     return dateTime.toString();
 }
 
+// renders existing tags for selection
 const TagOptionRender = props => (
     <div>
         <input className="form-check-input" type="checkbox" value="" onClick={props.handleClick} id={props.id}/>
@@ -25,6 +29,7 @@ const TagOptionRender = props => (
     </div>
 )
 
+// confirms a successful addition to the register
 const VerifyUpload = props => (
     <div className="row">
        New item successfully added to the register!
@@ -74,6 +79,7 @@ export default class Upload extends Component {
         this.bannedTags = ["Untagged Items", "Unknown Value", "tags", "title", "category", "condition", "description"];
     }
 
+    // gets existing tags from database
     componentDidMount() {
         axios.get('/tags/')
          .then(response => {
@@ -84,10 +90,12 @@ export default class Upload extends Component {
          })
     }
 
+    // sends the user back to an unfilled upload page
     refreshUpload() {
         window.location = '/upload';
     }
 
+    // keeps track of what existing tags the user wishes to add
     handleTagClick = (e) => {
         if (e.target.checked){
             this.setState({tagSelect: this.state.tagSelect.concat(e.target.id)});
@@ -98,6 +106,7 @@ export default class Upload extends Component {
         }
     }
 
+    // adds tags to the item and updates the display
     handleAddTag = (e) => {
         var j;
         let currentTags = [...this.state.tags];
@@ -115,6 +124,7 @@ export default class Upload extends Component {
         }
     }
 
+    // removes tag from the item
     handleDeleteTag = (e) => {
         if (this.state.tags.includes(e.target.name)){
             this.setState({tags: this.state.tags.filter(function(tag) {
@@ -123,6 +133,7 @@ export default class Upload extends Component {
         }
     }
 
+    // manages changes to field inputs
     handleChange = (e) => {
         let key = e.target.name;
         let val = e.target.value;
@@ -146,6 +157,7 @@ export default class Upload extends Component {
     }
 
 
+    // adds a new image to s3 for storage
     s3Request = (file) => {
         return new Promise((resolve, reject) => {
             let formData = new FormData();
@@ -163,12 +175,13 @@ export default class Upload extends Component {
     }
 
 
+    // sends information to the database
     onSubmit = (e) => {
         e.preventDefault();
 
         var newItem = {};
 
-        // Only submit state attributes with given values
+        // only submit state attributes with given values
         Object.entries(this.state).forEach(([key, value]) => {
             const generatedId = generateItemId();
             if (key === "itemId"){
@@ -191,6 +204,7 @@ export default class Upload extends Component {
             }
         })
 
+        // store image and add URL to item information
         var imagePromises = [];
         var imageURLs = [];
         for(var i = 0; i < this.state.images.length; i++){

@@ -1,3 +1,5 @@
+/* This component (itemsearch.component.js) handles search and display of the full artifact collection.
+- Written by Shuzann Hoh, Julia Zhang and Tia Lowenthal for COMP30022 IT Project*/
 import React, { Component } from 'react';
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -6,6 +8,7 @@ import './itemsearch.component.css';
 import placeholder from "./Assets/placeholder.jpg";
 
 
+// displays an individual item
 const Item = props => (
     <div className="item-tile"><Link className="tile-link" to= {`/items/${props.item.itemId}`}>
         <div className="tile-image">
@@ -19,6 +22,7 @@ const Item = props => (
     </div>
 )
 
+// renders categories for filter selection
 const CategoryOptionRender = props => (
     <div>
         <input className="form-check-input" type="checkbox" value="" defaultChecked={true} onClick={props.handleClick} id={props.id}/>
@@ -28,6 +32,7 @@ const CategoryOptionRender = props => (
     </div>
 )
 
+// renders price ranges for filter selection
 const PriceOptionRender = props => (
     <div>
         <input className="form-check-input" type="checkbox" value="" defaultChecked={true} onClick={props.handleClick} id={props.id}/>
@@ -37,6 +42,7 @@ const PriceOptionRender = props => (
     </div>
 )
 
+// renders existing tags for filter selection
 const TagOptionRender = props => (
     <div>
         <input className="form-check-input" type="checkbox" value="" defaultChecked={true} onClick={props.handleClick} id={props.id}/>
@@ -88,6 +94,7 @@ export default class ItemSearch extends Component {
         ];
     }
 
+    // pulls information on all items and tags from the database
     componentDidMount() {
         axios.get('/items/')
          .then(response => {
@@ -109,6 +116,7 @@ export default class ItemSearch extends Component {
          })
     }
 
+    // creates an array of existing items
     itemList() {
         return this.state.filtered.map(currentitem => {
             if(currentitem.images.length >0){
@@ -133,6 +141,7 @@ export default class ItemSearch extends Component {
         return false;
     }
 
+    // defines the price ranges that can be filtered by
     priceBracket(price) {
         if (price <= 100){
             return "$0-100";
@@ -156,6 +165,7 @@ export default class ItemSearch extends Component {
         return (this.state.priceFilters.includes(this.priceBracket(item.estimatedValue)));
     }
 
+    // indicates if an item has any of the selected tags to filter by
     tagSearch(item) {
         if ("tags" in item && item.tags.length>0) {
             return item.tags.some(tag => this.state.tagFilters.includes(tag));
@@ -165,6 +175,7 @@ export default class ItemSearch extends Component {
         }
     }
 
+    // keeps track of input in the search bar
     handleSearchBar = (e) => {
         this.setState({searchQuery: e.target.value});
     }
@@ -251,12 +262,14 @@ export default class ItemSearch extends Component {
         } 
     }
 
+    // either checks or unchecks all filters at once
     handleAllChecks(boolArg, e) {
         this.handleCheckType(boolArg, "category", e);
         this.handleCheckType(boolArg, "price", e);
         this.handleCheckType(boolArg, "tag", e);
     }
 
+    // resets all search parameters to default state
     handleClearClick = (e) => {
         this.handleAllChecks(true, e);
         this.setState({filtered: this.state.items, searchQuery: '', searchType: "Title"});
@@ -284,6 +297,7 @@ export default class ItemSearch extends Component {
         }
     }
 
+    // handles tag checkboxes
     handleTagClick = (e) => {
         if (e.target.checked){
             this.setState({tagFilters: this.state.tagFilters.concat(e.target.id)});
@@ -295,6 +309,7 @@ export default class ItemSearch extends Component {
         console.log(this.state.tagFilters);
     }
 
+    // keeps track of the parameter the search bar is using
     handleSearchTypeChange = (e) => {
         this.setState({searchType: e.target.value});
     }

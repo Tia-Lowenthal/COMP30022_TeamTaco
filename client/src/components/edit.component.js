@@ -1,3 +1,5 @@
+/* This component (edit.component.js) handles the editing of individual artifacts.
+- Written by Shuzann Hoh for COMP30022 IT Project, derived from upload.component.js*/
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import toBoolean from 'validator/lib/toBoolean';
@@ -9,6 +11,7 @@ import Navbar from "./navbar.component";
 // eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
+// renders user-set tags for selection
 const TagOptionRender = props => (
     <div>
         <input className="form-check-input" type="checkbox" value="" onClick={props.handleClick} id={props.id}/>
@@ -18,6 +21,7 @@ const TagOptionRender = props => (
     </div>
 )
 
+// confirms when a successful item update is made
 const VerifyUpdate = props => (
     <div className="row">
        New item successfully updated in the register!
@@ -69,6 +73,7 @@ export default class Edit extends Component {
         this.bannedTags = ["Untagged Items", "Unknown Value", "tags", "title", "category", "condition", "description"];
     }
 
+    // gets item and tag information from database
     componentDidMount() {
         axios.get('/tags/')
          .then(response => {
@@ -90,6 +95,7 @@ export default class Edit extends Component {
         window.location = '/home';
     }
 
+    // executes deletion of an item
     onDelete = () => {
         axios.delete('/items/'+ this.state.itemId)
             .then(response => {
@@ -100,6 +106,7 @@ export default class Edit extends Component {
         window.location = '/home';
     }
 
+    // keeps track of what existing tags the user wishes to add
     handleTagClick = (e) => {
         if (e.target.checked){
             this.setState({tagSelect: this.state.tagSelect.concat(e.target.id)});
@@ -110,6 +117,7 @@ export default class Edit extends Component {
         }
     }
 
+    // adds tags to the item and updates the display
     handleAddTag = (e) => {
         var j;
         let currentTags = [...this.state.tags];
@@ -127,6 +135,7 @@ export default class Edit extends Component {
         }
     }
 
+    // removes tag from the item
     handleDeleteTag = (e) => {
         if (this.state.tags.includes(e.target.name)){
             this.setState({tags: this.state.tags.filter(function(tag) {
@@ -135,6 +144,7 @@ export default class Edit extends Component {
         }
     }
 
+    // manages changes to field inputs
     handleChange = (e) => {
         let key = e.target.name;
         let val = e.target.value;
@@ -157,36 +167,14 @@ export default class Edit extends Component {
         }
     }
 
-
-    s3Request = (file) => {
-        return new Promise((resolve, reject) => {
-            let formData = new FormData();
-            formData.append("images", file);
-            const config = {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            };
-            axios.post('/images/add', formData, config).then((res) => {
-                resolve(res.data);
-            });
-        });
-
-    }
-
-
+    // sends updated information to the database
     onSubmit = (e) => {
         e.preventDefault();
 
         var newItem = {};
 
-        // Only submit state attributes with given values
+        // only submit state attributes with given values
         Object.entries(this.state).forEach(([key, value]) => {
-            //const generatedId = generateItemId();
-            //if (key === "itemId"){
-                //newItem[key] = generatedId;
-            //} 
-            
             if (key === "tags") {
                 if (value.length > 0) {
                     newItem[key] = value;

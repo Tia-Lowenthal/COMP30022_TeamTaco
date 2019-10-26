@@ -1,5 +1,8 @@
+/* This component (taggroup.component.js) renders an array of tags.
+- Written by Shuzann Hoh for COMP30022 IT Project*/
 import React, { Component } from 'react';
 
+// renders tags in a form that can be interacted with
 const EditTag = props => (
     <div className="btn-group" role="group">
         <button type="button" className="btn btn-light btn-sm" >{props.id}</button>
@@ -7,6 +10,7 @@ const EditTag = props => (
     </div>
 )
 
+// renders non-interactive tags
 const StaticTag = props => (
     <div className="btn-group" role="group">
         <button type="button" className="btn btn-light btn-sm" >{props.id}</button>
@@ -14,6 +18,7 @@ const StaticTag = props => (
 )
 
 export default class TagGroup extends Component {
+    // displays all tags in a simple grid format
     render() {
         if (this.props.mode === "edit") {
             return (

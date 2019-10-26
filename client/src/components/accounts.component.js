@@ -1,3 +1,5 @@
+/* This component (accounts.component.js) handles account registration and sign in.
+- Written by Kaia Reyes and Tia Lowenthal for COMP30022 IT Project*/
 import React, { Component } from 'react';
 import 'whatwg-fetch';
 import '../loginpage.css';
@@ -9,6 +11,7 @@ import {
   setInStorage,
 } from '../utils/storage';
 
+// generates a unique user ID from the date and time of creation
 function generateUserId(){
     var today = new Date();
     var date = parseInt(today.getFullYear().toString()+(today.getMonth()+1).toString()+today.getDate().toString());
@@ -50,7 +53,7 @@ class Account extends Component {
     const obj = getFromStorage('the_main_app');
     if (obj && obj.token) {
       const { token } = obj;
-      // Verify token
+      // verify token
       fetch('/users/verify?token=' + token)
         .then(res => res.json())
         .then(json => {
@@ -72,52 +75,61 @@ class Account extends Component {
     }
   }
 
+  // registers input in email field when signing in
   onTextboxChangeSignInEmail(event) {
     this.setState({
       signInEmail: event.target.value,
     });
   }
-
+  
+  // registers input in password field when signing in
   onTextboxChangeSignInPassword(event) {
     this.setState({
       signInPassword: event.target.value,
     });
   }
 
+  // registers input in email field when registering
   onTextboxChangeSignUpEmail(event) {
     this.setState({
       signUpEmail: event.target.value,
     });
   }
 
+  // registers input in password field when registering
   onTextboxChangeSignUpPassword(event) {
     this.setState({
       signUpPassword: event.target.value,
     });
   }
 
+  // registers input in first name field
   onTextboxChangeSignUpFirstname(event) {
     this.setState({
       signUpFirstname: event.target.value,
     });
   }
 
+  // registers input in last name field
   onTextboxChangeSignUpLastname(event) {
     this.setState({
       signUpLastname: event.target.value,
     });
   }
 
+  // sends user to the home page
   handlePageChange () {
     window.location = "/home";
   }
 
+  // sends user to sign in page
   gotoSignin () {
     window.location = "/";
   }
 
+  // sends form information to database on registration
   onSignUp() {
-    // Grab state
+    // grab state
     const {
       signUpEmail,
       signUpPassword,
@@ -131,7 +143,7 @@ class Account extends Component {
       isLoading: true,
     });
 
-    // Post request to backend
+    // post request to backend
     fetch('/users/signup', {
       method: 'POST',
       headers: {
@@ -169,8 +181,9 @@ class Account extends Component {
     //this.handlePageChange();
   }
 
+  // sends login information to database
   onSignIn() {
-    // Grab state
+    // grab state
     const {
       signInEmail,
       signInPassword,
@@ -180,7 +193,7 @@ class Account extends Component {
       isLoading: true
     });
 
-    // Post request to backend
+    // post request to backend
     fetch('/users/login', {
       method: 'POST',
       headers: {
@@ -215,6 +228,7 @@ class Account extends Component {
     //this.handlePageChange();
   }
 
+  // handles the process of logging out
   logout() {
     this.setState({
       isLoading: true
