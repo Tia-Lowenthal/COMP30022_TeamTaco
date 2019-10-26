@@ -1,3 +1,7 @@
+/* This component (itemimages.component.js) displays item images on individual item page
+    - Written by Julia Zhang, for COMP30022 IT Project
+*/
+
 import React, { Component } from 'react';
 import axios from 'axios';
 import placeholder from "./Assets/placeholder.jpg"
@@ -18,7 +22,9 @@ export default class ItemImages extends Component {
     componentDidMount() {
         this.getImages();
     }
+    
 
+    //retrieving images of item from backend
     getImages() {
         axios.get('/items/' + this.props.currentItemId)
         .then(response => {
@@ -36,7 +42,7 @@ export default class ItemImages extends Component {
         
         return (
             <div>
-
+            {/*display images in carousel */}
             {!this.state.isLoading ? (
             <div>
             {this.state.fetchedItem.images.length>0 ? (
