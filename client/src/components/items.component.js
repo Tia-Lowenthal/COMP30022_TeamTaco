@@ -1,3 +1,7 @@
+/* This component (items.component.js) displays tags and the base outline of item page 
+    - Written by Julia Zhang, for COMP30022 IT Project
+*/
+
 import React, { Component } from 'react';
 import axios from 'axios';
 
@@ -44,6 +48,7 @@ export default class Items extends Component {
             } 
         }
         
+        // retrieve item data from backend
         componentDidMount() {
             axios.get('/items/'+ this.props.match.params.itemId)
             .then(response => {
