@@ -1,6 +1,8 @@
+const assert = require('assert');
 var chai = require('chai')
 var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
+var search = require('../client/src/components/itemsearch.component'.);
 const invalidUserCredentials = {
     "email": 'invalidemail@gmail.com', 
     "password": 'invalidpassword'
@@ -57,3 +59,15 @@ describe("upload_page", function(){
             });
     })
 })
+
+describe("search", function(){
+    it("should display correct item", () => {
+        chai.request('https://radiant-dusk-39702.herokuapp.com')
+            .get('/home')
+            .query({"searchQuery": 'traditional'})
+            .end(function(err, res) {
+                expect((res.statusCode).to.equal(200));
+            });
+    })
+})
+
