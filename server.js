@@ -1,3 +1,8 @@
+/* This file houses the backend server. 
+It utilises express and connects to a MongoDB database.
+- Written by Karina Reyes and Tia Lowenthal for COMP30022 IT Project*/
+
+
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');

@@ -1,3 +1,7 @@
+/* This file creates the tag model schema.
+- Written by Tia Lowenthal for COMP30022 IT Project*/
+
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

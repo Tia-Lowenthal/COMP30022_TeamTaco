@@ -1,3 +1,7 @@
+/* This file creates the userSession model schema.
+- Written by Karina Reyes for COMP30022 IT Project*/
+
+
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;

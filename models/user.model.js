@@ -1,3 +1,7 @@
+/* This file creates the user model schema and password related functions.
+- Written by Karina Reyes and Tia Lowenthal for COMP30022 IT Project*/
+
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
@@ -15,10 +19,14 @@ const userSchema = new Schema({
     timestamps: true
 });
 
+
+// hashes a given password
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
+
+// checks whether a given hash is the correct password
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
