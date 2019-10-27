@@ -1,10 +1,10 @@
 /* This component (navbar.component.js) displays the navigation bar on every page in the web app
-    - Written by Shuzann Hoh, for COMP30022 IT Project
+    - Written by Shuzann Hoh and Karina Reyes, for COMP30022 IT Project
 */
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Account from "./accounts.component";
-import '../loginpage.css';
+import './loginpage.css';
 import './navbar.css';
 import logo from "./Assets/logo2.png"
 

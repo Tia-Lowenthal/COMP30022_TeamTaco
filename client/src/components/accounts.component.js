@@ -1,8 +1,8 @@
 /* This component (accounts.component.js) handles account registration and sign in.
-- Written by Kaia Reyes and Tia Lowenthal for COMP30022 IT Project*/
+- Written by Karina Reyes for COMP30022 IT Project*/
 import React, { Component } from 'react';
 import 'whatwg-fetch';
-import '../loginpage.css';
+import './loginpage.css';
 import logo from "./Assets/logo2.png"
 
 

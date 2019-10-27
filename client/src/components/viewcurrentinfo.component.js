@@ -1,5 +1,5 @@
 /* This component (viewcurrentinfo.component.js) displays the current information of the artifact on individual item page
-    - Written by Julia Zhang, for COMP30022 IT Project
+    - Written by Julia Zhang and Karina Reyes, for COMP30022 IT Project
 */
 import React, { Component } from 'react';
 import axios from 'axios';
@@ -58,11 +58,9 @@ export default class ViewCurrentInfo extends Component {
                  <div className="collapse" id="currentinfocollapse">
                      <ul className="list-group list-group-flush">
                      <li className="list-group-item"><b>Current location:</b> {this.state.fetchedItem.currentLocation}</li>
-                     {this.state.fetchedItem.needLicense ? (
-                         <li className="list-group-item"> <b>License required:</b> Yes</li>
-                     ):(
-                        <li className="list-group-item"> <b>License required:</b> No</li>
-                     )}
+                     {this.state.fetchedItem.needLicense===true && <li className="list-group-item"> <b>License required:</b> Yes</li>}
+                     {this.state.fetchedItem.needLicense===false && <li className="list-group-item"> <b>License required:</b> No</li>}
+                     {typeof(this.state.fetchedItem.needLicense) === 'undefined' && <li className="list-group-item"> <b>License required:</b></li>}
                      <li className="list-group-item"> <b>Sale status:</b> {this.state.fetchedItem.saleStatus}</li>
                      <li className="list-group-item"> <b>Display status: </b> {this.state.fetchedItem.displayStatus}</li>
                      </ul>

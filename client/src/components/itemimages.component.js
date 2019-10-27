@@ -1,5 +1,5 @@
 /* This component (itemimages.component.js) displays item images on individual item page
-    - Written by Julia Zhang, for COMP30022 IT Project
+    - Written by Karina Reyes and Julia Zhang, for COMP30022 IT Project
 */
 
 import React, { Component } from 'react';
