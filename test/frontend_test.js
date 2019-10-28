@@ -2,7 +2,6 @@ const assert = require('assert');
 var chai = require('chai')
 var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
-var search = require('../client/src/components/itemsearch.component'.);
 const invalidUserCredentials = {
     "email": 'invalidemail@gmail.com', 
     "password": 'invalidpassword'
