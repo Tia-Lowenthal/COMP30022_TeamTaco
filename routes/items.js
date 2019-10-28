@@ -1,12 +1,17 @@
+/* This file defines post, get, delete, and update api requests for items
+- Written by Karina Reyes for COMP30022 IT Project*/
+
 const router = require('express').Router();
 let Item = require('../models/item.model');
 
+// get all items
 router.route('/').get((req, res) => {
     Item.find()
         .then(items => res.json(items))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// add a single item
 router.route('/add').post((req, res) => {
     const itemId = req.body.itemId;
     const userId = req.body.userId;
@@ -80,18 +85,21 @@ router.route('/add').post((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// get a single item
 router.route('/:itemId').get((req, res) => {
     Item.find({"itemId":req.params.itemId})
         .then(items => res.json(items))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// delete an item
 router.route('/:itemId').delete((req, res) => {
     Item.findOneAndDelete({"itemId":req.params.itemId})
         .then(() => res.json('Item deleted!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
+// update an item
 router.route('/update/:itemId').post((req, res) => {
     Item.findOne({"itemId":req.params.itemId}, {'new':true})
         .then(item => {

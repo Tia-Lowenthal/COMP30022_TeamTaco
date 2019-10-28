@@ -1,14 +1,18 @@
+/* This file defines signup, login, verify, and logout requests for users, as well as CRUD apis
+- Written by Karina Reyes and Tia Lowenthal for COMP30022 IT Project*/
+
 const router = require('express').Router();
 let User = require('../models/user.model');
 let UserSession = require('../models/usersession.model');
 
+// get all users
 router.route('/').get((req, res) => {
     User.find()
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
+// registers an account
 router.route('/signup').post((req, res) => {
     const userId = req.body.userId;
     const email = req.body.email;
@@ -87,7 +91,7 @@ router.route('/signup').post((req, res) => {
     });
 });
 
-
+// login a user
 router.route('/login').post((req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -152,7 +156,7 @@ router.route('/login').post((req, res) => {
   });
 });
 
-
+// logout a user
 router.route('/logout').get((req, res) => {
   // Get the token
   const { query } = req;
@@ -181,6 +185,7 @@ router.route('/logout').get((req, res) => {
   });
 });
 
+// verify the sign in
 router.route('/verify').get((req, res) => {
   // Get the token
   const { query } = req;
@@ -213,20 +218,21 @@ router.route('/verify').get((req, res) => {
   });
 });
 
+// gets a single user
 router.route('/:userId').get((req, res) => {
     User.find({"userId":req.params.userId})
         .then(users => res.json(users))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
+// deletes a user
 router.route('/:userId').delete((req, res) => {
     User.findOneAndDelete({"userId":req.params.userId})
         .then(() => res.json('User deleted!'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-
+// updates a user
 router.route('/update/:userId').post((req, res) => {
     User.findOne({"userId":req.params.userId}, {'new':true})
         .then(user => {
