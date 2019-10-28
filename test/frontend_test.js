@@ -1,3 +1,4 @@
+const assert = require('assert');
 var chai = require('chai')
 var chaiHttp = require('chai-http');
 chai.use(chaiHttp);
@@ -57,3 +58,15 @@ describe("upload_page", function(){
             });
     })
 })
+
+describe("search", function(){
+    it("should display correct item", () => {
+        chai.request('https://radiant-dusk-39702.herokuapp.com')
+            .get('/home')
+            .query({"searchQuery": 'traditional'})
+            .end(function(err, res) {
+                expect((res.statusCode).to.equal(200));
+            });
+    })
+})
+
