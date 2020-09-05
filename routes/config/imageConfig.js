@@ -3,8 +3,8 @@ const multer = require('multer');
 const multerS3 = require('multer-s3');
 
 aws.config.update({
-  secretAccessKey: 'JvPnZGsiVNrhHXlgQqpPRkWRr/jxS6oN57cZlLJl',
-  accessKeyId: 'AKIAJLYKUCRQZYMSXTHA',
+  secretAccessKey: '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',
+  accessKeyId: 'AKIAI2MTL5VUAB4TKOFA',
   region: 'ap-southeast-2'
 });
 
@@ -23,7 +23,7 @@ const upload = multer({
   storage: multerS3({
     acl: 'public-read',
     s3,
-    bucket: 'teamtaco',
+    bucket: 'image-uploads-tt',
     metadata: function (req, file, cb) {
       cb(null, {fieldName: 'TESTING_METADATA'});
     },
