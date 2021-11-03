@@ -34,7 +34,7 @@
     "react-router-dom": "^5.1.2",
     "styled-components": "^4.4.0",
     "supertest": "^4.0.2",
-    "validator": "^11.1.0",
+    "validator": "^13.7.0",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
